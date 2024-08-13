@@ -38,37 +38,40 @@ form{
     width: 50vw;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    gap: 1rem;
 }
-form label{
-    width: 100%;
-    display: flex;
-    
+.inp label{
+    flex:1;
+    font-weight: bold;
 }
-form input{
-    width: 100%;
+.inp input{
+    flex: 8;
     margin-top: .2rem;
     padding: .3rem;
     border-radius: .3rem;
     outline: none;
     border: .1rem solid #9e9e9e;
 }
-form input:focus{
-    border: .1rem solid #3863ffa1;
+.inp input:focus{
+    border: .1rem solid #3863ffaf;
+    outline: .1rem solid #3863ffa1;
 }
 form textarea{
-    min-height: 2rem;
-    margin-top: .2rem;
     padding: .3rem;
     border-radius: .3rem;
     outline: none;
     resize: vertical;
     border: .1rem solid #9e9e9e;
 }
+form p{
+    font-weight: bold;
+}
 form textarea:focus{
-    border: .1rem solid #3863ffa1;
+    border: .1rem solid #3863ffaf;
+    outline: .1rem solid #3863ffa1;
 }
 form input[type=submit]{
+    border-radius: .3rem;
     width: fit-content;
     padding: 0.5rem 1rem;
     background-color: royalblue;
@@ -79,4 +82,12 @@ form input[type=submit]{
 }
 form input[type=submit]:hover{
     box-shadow: 0 0 1rem rgba(65, 105, 225, 0.284);
+}
+.inp{
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+footer{
+    font-weight: bold;
 }

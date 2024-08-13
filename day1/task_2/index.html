@@ -18,21 +18,12 @@
     <div class="wrapper">
         <form action="#">
         <h1 style="text-align: center;">Contact Us</h1>
-        <table>
-            <tr>
-                <td style="width: 4rem;"><strong>Name: </strong></td>
-                <td><input type="text" placeholder="Enter your name here" required></td>
-            </tr>
-            <tr>
-                <td><strong>Email: </strong></td>
-                <td><input type="Email" placeholder="Enter your email here" required></td>
-            </tr>
-            <tr>
-                <td><strong>Phone: </strong></td>
-                <td><input type="tel" placeholder="Enter your phone number here" required></td>
-            </tr>
-        </table>
-        <label><strong>Message: </strong></label>
+        <div class="inp"><label>Name: </label><input type="text" placeholder="Enter your name here" required></div>
+        
+        <div class="inp"><label>Email: </label><input type="email" placeholder="Enter your email here" required></div>
+        
+        <div class="inp"><label>Phone: </label><input type="tel" placeholder="Enter your phone number here" required></div>
+        <p>Message: </p>
         <textarea name="" id="" rows="3rem" cols="8rem" placeholder="Tell something"></textarea>
         <input type="submit" value="Submit" width="fit-content">
     </form>
