@@ -36,17 +36,17 @@ table{
     background-color: #fff;
     border-collapse: collapse;
     border-spacing: 0;
-    border: .1rem solid rgba(0, 0, 0, 0.8);
+    border: .1rem dashed rgba(146, 146, 146, 0.8);
 }
 table th{
     text-align: left;
     padding: .5rem;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: #fff;
+    background-color: #dddddd;
+    border: .1rem dashed rgba(146, 146, 146, 0.8);
 }
 table td{
     padding: 0.5rem;
-    border: .1rem solid rgba(0, 0, 0, 0.8);
+    border: .1rem dashed rgba(146, 146, 146, 0.8);
 }
 main{
     height: 70vh;
