@@ -46,7 +46,6 @@ form{
 }
 .inp input{
     flex: 8;
-    margin-top: .2rem;
     padding: .3rem;
     border-radius: .3rem;
     outline: none;
