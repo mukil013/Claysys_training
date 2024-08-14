@@ -1,51 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>day2 | task2</title>
-    <link rel="stylesheet" href="./style/main.css">
-</head>
-<body>
-    <h1>CSS Selectors Practice</h1>
-    <nav>
+    <link rel="stylesheet" href="./style/main.css" />
+  </head>
+  <body>
+    <header>
+      <h1>CSS Selectors Practice</h1>
+      <nav>
         <ul>
-            <li>Home</li>
-            <li>About</li>
-            <li>Service</li>
-            <li>Contact</li>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Service</a></li>
+          <li><a href="#">Contact</a></li>
         </ul>
-    </nav>
+      </nav>
+    </header>
     <h1>HEADING</h1>
     <p>This is a sample paragraph</p>
     <div class="highlight">This is a class selector: .highlight</div>
     <div id="unique">ID Selector Example: #unique</div>
     <div class="inp">
-        <p>Attribute Selector Example:</p>
-        <input type="text">
+      <p>Attribute Selector Example:</p>
+      <input type="text" />
     </div>
     <div class="one">
-        <p>Descendant Selector Example: div p</p>
+      <p>Descendant Selector Example: div p</p>
     </div>
     <div class="oneOne">
-       <ul>
-        Child Selector Example: ul > li 
+      <ul>
+        Child Selector Example: ul > li
         <li>one</li>
         <li>two</li>
         <li>three</li>
-        </ul> 
+      </ul>
     </div>
-    
+
     <div class="two">
-        Adjacent Sibling Selector Example: h2 + p
-        <h2>heading</h2>
-        <p>paragraph</p>
+      Adjacent Sibling Selector Example: h2 + p
+      <h2>heading</h2>
+      <p>paragraph</p>
     </div>
     <div class="three">
-        General Sibling Selector Example: h2 ~ p
-        <h2>heading</h2>
-        <p>paragraph</p>
+      General Sibling Selector Example: h2 ~ p
+      <h2>heading</h2>
+      <p>paragraph</p>
     </div>
     <footer>&copy; 2024 CSS Selectors Practice</footer>
-</body>
+  </body>
 </html>

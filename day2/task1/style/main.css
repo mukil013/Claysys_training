@@ -30,6 +30,14 @@ nav ul{
 nav ul li{
     list-style-type: none;
 }
+nav ul li a{
+    text-decoration: none;
+    color: #fff;
+}
+header{
+    width: 100dvw;
+    text-align: center;
+}
 .one{
     width: 30vw;
     line-height: 2rem;
