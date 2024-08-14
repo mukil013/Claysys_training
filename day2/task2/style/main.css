@@ -30,48 +30,50 @@ nav ul{
 nav ul li{
     list-style-type: none;
 }
-.one{
-    width: 30vw;
-    line-height: 2rem;
-    font-size: 1rem;
-    color: #444;
+h1, p{
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
-.boxes{
-    width: 100dvw;
-    height: 30vh;
-    display: flex;
-}
-.box{
-    margin: 1rem;
-    padding: 1rem;
-    border: .1rem solid #333;
-    border-radius: 1rem;
-    background-color: #444444a1;
-    color: #222;
-    text-align: justify;
-}
-.two ul li{
-    transition: .2s all ease;
-}
-.two ul li:nth-child(1):hover{
-    font-size: 2rem;
-}
-.two ul li:nth-child(2):active{
-    font-size: 2rem;
-}
-.three{
-    width: 50%;
-    text-align: justify;
-}
-.three p::before{
-    content: 'using Before';
+.highlight{
     font-size: 1.5rem;
+    font-variant:small-caps;
+}
+#unique{
+    font-size: 1.5rem;
+    font-variant:normal;
+}
+.inp{
+    text-align: center;
+    word-spacing: 1rem;
+}
+.inp input[type=text]{
+    outline: none; 
+    border-radius: .2rem;
+    border: .1rem solid #9e9e9e;
+    padding: .2rem;
+    margin: .5rem;
+}
+.inp input[type=text]:focus{
+    outline: .1rem solid rgba(65, 105, 225, 0.403);
+    border: .1rem solid royalblue;
+}
+.one p{
+    font-style: italic;
+}
+.oneOne ul > li{
     letter-spacing: 1rem;
 }
-.three p::after{
-    content: 'using after';
-    font-size: 1.5rem;
-    letter-spacing: 1rem;
+.two , .three{
+    font-weight: bold;
+}
+.two h2 + p{
+    font-size: 2rem;
+    color: rgb(82, 82, 82);
+    font-weight: normal;
+}
+.three h2 ~ p{
+    font-size: 2rem;
+    color: rgb(82, 82, 82);
+    font-weight: normal;
 }
 footer{
     text-align: center;
