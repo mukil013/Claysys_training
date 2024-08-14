@@ -1,67 +1,72 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
-body{
-    height: 100dvh;
-    width: 100dvw;
-    background-color: #ffffff;
+body {
+  height: 100dvh;
+  width: 100dvw;
+  background-color: #ffffff;
 }
-nav{
-    height: 3rem;
-    width: 100svw;
-    display: grid;
-    place-items: center;
-    margin-top: 1rem;
-    background-color: rgba(0, 0, 0, 0.8);
+nav {
+  height: 3rem;
+  width: 100svw;
+  display: grid;
+  place-items: center;
+  margin-top: 1rem;
+  background-color: rgba(0, 0, 0, 0.8);
 }
-nav ul{
-    height: 100%;
-    width: 30%;
-    color: #fff;
-    border-radius: .5rem;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+nav ul {
+  height: 100%;
+  width: 30%;
+  color: #fff;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
-nav ul li{
-    list-style-type: none;
-    font-size: 1.2rem;
+nav ul li {
+  list-style-type: none;
+  font-size: 1.2rem;
 }
-table{
-    width: 100%;
-    height: fit-content;
-    background-color: #fff;
-    border-collapse: collapse;
-    border-spacing: 0;
-    border: .1rem dashed rgba(146, 146, 146, 0.8);
+nav ul li a {
+  text-decoration: none;
+  color: #fff;
 }
-table th{
-    text-align: left;
-    padding: .5rem;
-    background-color: #dddddd;
-    border: .1rem dashed rgba(146, 146, 146, 0.8);
+table {
+  width: 100%;
+  height: fit-content;
+  background-color: #fff;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 0.1rem dashed rgba(146, 146, 146, 0.8);
 }
-table td{
-    padding: 0.5rem;
-    border: .1rem dashed rgba(146, 146, 146, 0.8);
+table th {
+  text-align: left;
+  padding: 0.5rem;
+  background-color: #dddddd;
+  border: 0.1rem dashed rgba(146, 146, 146, 0.8);
 }
-main{
-    height: 70vh;
-    width: 100vw;
-    display: flex;
-    padding: 1rem;
+table td {
+  padding: 0.5rem;
+  border: 0.1rem dashed rgba(146, 146, 146, 0.8);
 }
-aside{
-    width: 30vw;
-    text-indent: 1rem;
-    list-style-position: inside;
+main {
+  height: 70vh;
+  width: 100vw;
+  display: flex;
+  padding: 1rem;
 }
-aside dl dd{
-    margin-left: 1rem;
+aside {
+  width: 30vw;
+  text-indent: 1rem;
+  list-style-position: inside;
 }
-footer{
-    text-align: center;
+aside dl dd {
+  margin-left: 1rem;
+}
+footer {
+  text-align: center;
 }

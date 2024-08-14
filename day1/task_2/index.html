@@ -1,33 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Html form</title>
-    <link rel="stylesheet" href="./style/main.css">
-</head>
-<body>
-    <h1 style="text-align: center;">Contact Form Exercise</h1>
-    <nav>
+    <link rel="stylesheet" href="./style/main.css" />
+  </head>
+  <body>
+    <header>
+      <h1 style="text-align: center">Contact Form Exercise</h1>
+      <nav>
         <ul>
-            <li>Home</li>
-            <li>About</li>
-            <li>Contact</li>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
         </ul>
-    </nav>
+      </nav>
+    </header>
+
     <div class="wrapper">
-        <form action="#">
-        <h1 style="text-align: center;">Contact Us</h1>
-        <div class="inp"><label>Name: </label><input type="text" placeholder="Enter your name here" required></div>
-        
-        <div class="inp"><label>Email: </label><input type="email" placeholder="Enter your email here" required></div>
-        
-        <div class="inp"><label>Phone: </label><input type="tel" placeholder="Enter your phone number here" required></div>
-        <p>Message: </p>
+      <form action="#">
+        <h1 style="text-align: center">Contact Us</h1>
+        <div class="inp">
+          <label>Name: </label
+          ><input type="text" placeholder="Enter your name here" required />
+        </div>
+
+        <div class="inp">
+          <label>Email: </label
+          ><input type="email" placeholder="Enter your email here" required />
+        </div>
+
+        <div class="inp">
+          <label>Phone: </label
+          ><input
+            type="tel"
+            placeholder="Enter your phone number here"
+            required
+          />
+        </div>
+        <p>Message:</p>
         <textarea rows="3" placeholder="Tell something"></textarea>
-        <input type="submit" value="Submit">
-    </form>
+        <input type="submit" value="Submit" />
+      </form>
     </div>
-    <footer style="text-align: center;">&copy; 2024 My First HTML Form</footer>
-</body>
+    <footer style="text-align: center">&copy; 2024 My First HTML Form</footer>
+  </body>
 </html>
