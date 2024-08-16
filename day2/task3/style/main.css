@@ -1,3 +1,10 @@
+:root{
+    --leftOfInside: 20%;
+    --topOfInside: 40%;
+
+    --left: 80%;
+    --top: 10%;
+}
 *{
     padding: 0;
     margin: 0;
@@ -21,11 +28,14 @@ body{
 }
 .box .drag{
     position: absolute;
-    top: 15%;
-    left: 50%;
+    top: var(--topOfInside);
+    left: var(--leftOfInside);
+    user-select: none;
+    cursor: grab;
 }
 .drag{
+    cursor: grab;
     position: absolute;
-    top: 25%;
-    left: 10%;
+    top: var(--top);
+    left: var(--left);
 }
