@@ -74,6 +74,8 @@ aside {
   font-size: large;
 }
 .searchBar {
+  z-index: 5;
+  position: relative;
   display: flex;
   align-items: center;
   padding: 0.2rem;
@@ -105,12 +107,29 @@ aside {
   border-radius: 100%;
   background-color: #fff;
   box-shadow: 0 0 0.5rem #6f6f6f48;
+  position: relative;
+  border: none;
+  outline: none;
+}
+.notification::before{
+  position: absolute;
+  top: 0;
+  right: 0;
+  content: '';
+  height: .8rem;
+  width: .8rem;
+  background-color: rgb(255, 83, 83);
+  border-radius: 100%;
 }
 .profilePic {
   height: 100%;
   display: flex;
   align-items: center;
   gap: 0.2rem;
+  position: relative;
+  border: none;
+  background-color: transparent;
+  outline: none;
 }
 .profilePic i {
   color: #22222258;
@@ -266,7 +285,7 @@ aside nav ul li:hover{
 }
 aside nav ul li:hover  .svg{
   background-color: #fff;
-  border-radius: .2rem;
+  border-radius: .4rem;
   fill: rgb(0, 204, 255);
 }
 .svg{
@@ -274,4 +293,84 @@ aside nav ul li:hover  .svg{
   width: 2rem;
   height: 2rem;
   fill: #e8eaed;
+}
+.profilePopUp{
+  display: none;
+  height: fit-content;
+  width: 15rem;
+  background-color: #ffffff55;
+  border-radius: .5rem;
+  position: absolute;
+  top: 125%;
+  right: 0%;
+  box-shadow: 0 0 1rem #3333335a;
+  backdrop-filter: blur(.5rem);
+  animation: profilePopUp .2s forwards alternate;
+}
+.profilePopUp ul{
+  display: flex;
+  flex-direction: column;
+}
+.profilePopUp ul li{
+  list-style-type: none;
+  border-bottom: 1px solid #9e9e9e7e;
+  padding: 1em;
+}
+.profilePopUp ul li:last-child{
+  font-weight: bold;
+  border-bottom: none;
+  color: rgb(252, 91, 91);
+}
+
+@keyframes profilePopUp {
+  0%{
+    opacity: 0;
+    scale: 0;
+    top: -100%;
+  }
+  100%{
+    opacity: 1;
+    scale: 1;
+    top: 125%;
+  }
+}
+
+.notificationPopUp{
+  display: none;
+  height: fit-content;
+  width: 15rem;
+  padding: 1rem;
+  background-color: #ffffff55;
+  border-radius: .5rem;
+  position: absolute;
+  top: 125%;
+  right: 0;
+  box-shadow: 0 0 1rem #3333335a;
+  backdrop-filter: blur(.5rem);
+  animation: profilePopUp .2s forwards alternate;
+}
+.notificationPopUp ul li{
+  list-style: inside;
+  font-size: .8rem;
+  list-style-type: none;
+}
+.dropdownItems{
+  display: none;
+  font-size: .8rem;
+  position: absolute;
+  top: 125%;
+  left: 0;
+  height: fit-content;
+  width: 100%;
+  padding: 1rem;
+  background-color: #ffffff55;
+  border-radius: .5rem;
+  box-shadow: 0 0 1rem #3333335a;
+  backdrop-filter: blur(.5rem);
+  z-index: 2;
+  animation: profilePopUp .2s forwards alternate;
+}
+.dropdownItems ul li{
+  padding: 1rem;
+  list-style: none;
 }
