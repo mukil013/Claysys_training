@@ -1,0 +1,277 @@
+* {
+  padding: 0%;
+  margin: 0%;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+body {
+  background-image: linear-gradient(
+    45deg,
+    rgb(165, 255, 165),
+    rgb(145, 145, 255),
+    rgb(165, 255, 165)
+  );
+  margin: 1rem 0;
+  height: fit-content;
+  width: 100vw;
+  background-size: cover;
+  display: grid;
+  place-items: center;
+}
+section {
+  width: 95%;
+  border: 0.1rem solid #ffffff7c;
+  border-radius: 1.5rem;
+  padding: 1rem;
+}
+main {
+  box-shadow: 0 0 2rem #3333335a;
+  background-color: #fff;
+  border-radius: 1.5rem;
+  height: 100%;
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+}
+aside {
+  flex: .7;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.logo{
+  font-size: 1.2rem;
+}
+.logo span:first-child{
+  color: rgb(0, 204, 255);
+  font-weight: bold;
+}
+.logo span:last-child{
+  color: rgb(0, 189, 28);
+  font-weight: bold;
+}
+.content {
+  padding: 1rem;
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: 1rem;
+  background-color: rgb(215, 241, 255);
+}
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.titleBar {
+  height: 2.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: large;
+}
+.searchBar {
+  display: flex;
+  align-items: center;
+  padding: 0.2rem;
+  height: 100%;
+  width: 20vw;
+  background-color: #fff;
+  border-radius: 0.3rem;
+  box-shadow: 0 0 0.5rem #6f6f6f48;
+}
+.searchBar i {
+  height: 50%;
+  flex: 1;
+  display: grid;
+  place-items: center;
+  border-right: 1px solid #9e9e9e79;
+  color: #222;
+}
+.searchBar input[type="text"] {
+  flex: 7;
+  padding: 0 0.5rem;
+  border: none;
+  outline: none;
+}
+.notification {
+  aspect-ratio: 1/1;
+  display: grid;
+  place-content: center;
+  height: 100%;
+  border-radius: 100%;
+  background-color: #fff;
+  box-shadow: 0 0 0.5rem #6f6f6f48;
+}
+.profilePic {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+.profilePic i {
+  color: #22222258;
+}
+.profilePic img {
+  border-radius: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 1/1;
+}
+.one {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.left {
+  font-size: 1.2rem;
+}
+.left span {
+  font-size: 0.8rem;
+}
+.right button {
+  font-size: 0.8rem;
+  padding: 0.5rem 1.2rem;
+  gap: 0.5rem;
+  align-items: center;
+  display: flex;
+  border: none;
+  outline: none;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  box-shadow: 0 0 0.5rem #6f6f6f48;
+}
+.tag {
+  width: fit-content;
+  background-color: rgb(0, 160, 0);
+  color: #fff;
+  border-radius: 18px;
+  padding: 0.1rem 0.5rem;
+}
+.ptag {
+  width: fit-content;
+  background-color: rgb(189, 244, 253);
+  color: rgb(0, 204, 255);
+  border-radius: 18px;
+  padding: 0.2rem 0.5rem;
+}
+.btns {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.btns button {
+  aspect-ratio: 1/1;
+  height: 2rem;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
+  background-color: #e2f3ff80;
+}
+table {
+  border-radius: 0.5rem;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 0 0.5rem #adadad48;
+}
+table tr td {
+  text-align: left;
+  height: 100%;
+  width: 100%;
+  margin: 0.2rem;
+}
+table tr {
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+}
+.bigTable tr:nth-child(1) {
+  border-bottom: 1px solid #9e9e9e;
+}
+.miniTable {
+  margin-top: 1rem;
+  box-shadow: none;
+  border: 1px solid #9e9e9e;
+  border-spacing: 0;
+}
+.miniTable tr{
+  border-bottom: 1px solid #9e9e9e;
+}
+.miniTable tr:nth-child(-1){
+  border-bottom: none;
+}
+.miniTable tr:last-child{
+  border-bottom: none;
+}
+.miniTable tr td:first-child {
+  width: 20rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.miniTableParent p{
+  font-size: 1.2rem;
+}
+.btnsForMiniTable{
+  padding-inline: 2.5rem;
+  width: 100%;
+  display: flex;
+  column-gap: 1rem;
+  justify-content: end;
+  margin: .8rem 0;
+}
+.btnsForMiniTable button{
+  aspect-ratio: 4/1;
+  height: 2.5rem;
+  padding: .5rem 1rem;
+}
+.btnsForMiniTable button:nth-child(1){
+  border: 1px solid rgb(0, 204, 255);
+  background-color: transparent;
+  color: rgb(0, 204, 255);
+}
+.btnsForMiniTable button:nth-child(2){
+  border: none;
+  background-color: rgb(0, 204, 255);
+  color: #fff;
+}
+.miniTable tr:nth-last-child(2){
+  border-bottom: none;
+}
+aside nav ul{
+  height: 50vh;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+aside ul li{
+  width: 100%;
+  height: 3.5rem;
+  aspect-ratio: 2/1;
+  padding: .2rem .5rem;
+  gap: 1rem;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  border-radius: .5rem;
+}
+aside nav ul li:hover{
+  background-color: rgb(0, 204, 255);
+  color: #fff;
+}
+aside nav ul li:hover  .svg{
+  background-color: #fff;
+  border-radius: .2rem;
+  fill: rgb(0, 204, 255);
+}
+.svg{
+  padding: .3rem;
+  width: 2rem;
+  height: 2rem;
+  fill: #e8eaed;
+}

@@ -25,15 +25,28 @@ nav{
     width: 100%;
     display: grid;
     place-items: center;
-    background-color: #222;
-    color: #fff;
+    color: #222;
 }
 nav ul{
-    gap: 4rem;
+    height: 100%;
+    width: 100%;
+    margin-top: .5rem;
+    gap: 10%;
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 nav ul li{
     list-style-type: none;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    transition: .5s all ease-in-out;
+}
+nav ul li:hover{
+    transition: .2s all ease-in-out;
+    border: .1rem dashed #fb6f92;
+    background-color: #ffc2d1;
+    color: #fff;
 }
 .flex_container{
     max-width: 50vw;

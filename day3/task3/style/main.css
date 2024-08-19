@@ -13,7 +13,7 @@ body{
     "b c c"
     "d d d";
     grid-gap: 1rem;
-    grid-template-rows: 12% 75% 10%;
+    grid-template-rows: 15% 75% 10%;
 }
 nav{
     border-bottom-left-radius: .5rem;
@@ -73,7 +73,7 @@ footer{
         "b b b"
         "c c c"
         "d d d";
-        grid-template-rows: 12% 10% 76% 10%;
+        grid-template-rows: 22% 10% 76% 10%;
     }
     .head{
         font-size: 1rem;
