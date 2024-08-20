@@ -239,7 +239,7 @@ table tr{
 }
 .bigTable th{
   font-weight: normal;
-  font-size: 1rem;
+  font-size: .8rem;
 }
 .miniTable tr {
   border-bottom: 1px solid #22222255;
@@ -529,7 +529,7 @@ aside nav ul li:hover .svg {
   }
   .bigTable{
     width: 80vw;
-  }
+  } 
   .miniTableParent{
     width: 80vw;
   }
