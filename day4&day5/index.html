@@ -104,6 +104,9 @@
               </li>
             </ul>
           </nav>
+          <button id="ham">
+            <i class="fa-solid fa-bars"></i>
+          </button>
         </aside>
         <div class="content">
           <div class="titleBar">
@@ -138,6 +141,9 @@
                 <i class="fa-solid fa-angle-down fa-xs"></i>
                 <div class="profilePopUp">
                   <ul>
+                    <li>
+                      <h1>Welcome Mukil!!!</h1>
+                      <img src="./media/daniel-k-cheung-zky0BmMT5m8-unsplash.jpg" alt="profilePic"></li>
                     <li>Settings</li>
                     <li>Log out</li>
                   </ul>
@@ -151,13 +157,23 @@
               <span>24 Orders - 9:05 am</span>
             </div>
             <div class="right">
-              <button>
+              <button id="pickUpBtn">
                 Pickups<br />
                 <i class="fa-solid fa-angle-down fa-xs"></i>
               </button>
+              <div class="pickUpPopUp">
+                <ul>
+                  <li>Pickups 1</li>
+                  <li>Pickups 2</li>
+                  <li>Pickups 3</li>
+                  <li>Pickups 4</li>
+                  <li>Pickups 5</li>
+                  <li>Pickups 6</li>
+                </ul>
+              </div>
             </div>
           </div>
-          <table>
+          <table class="completed">
             <td>#2593</td>
             <td>Jordan Smith</td>
             <td>31 Jul 2020</td>
@@ -172,15 +188,17 @@
           </table>
           <table class="bigTable">
             <tr>
-              <td>OrderId</td>
-              <td>Customer</td>
-              <td>Date</td>
-              <td>Price</td>
-              <td>Status</td>
-              <td class="btns">
+              <th>OrderId</th>
+              <th>Customer</th>
+              <th>Date</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th class="btns">
                 Action
-                <button><i class="fa-solid fa-angle-up fa-xs"></i></button>
-              </td>
+                <button id="expander">
+                  <i class="fa-solid fa-angle-up fa-xs"></i>
+                </button>
+              </th>
             </tr>
             <tr>
               <td><p>#2540</p></td>
@@ -257,7 +275,7 @@
               </td>
             </tr>
           </table>
-          <table>
+          <table class="extra">
             <td>#2541</td>
             <td>Harrison Sarrat</td>
             <td>31 Jul 2020</td>
