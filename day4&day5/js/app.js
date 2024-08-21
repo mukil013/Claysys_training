@@ -8,7 +8,7 @@ let searchBar = document.querySelector(".searchBar input[type=text]");
 let searchDropDown = document.querySelector(".dropdownItems");
 
 let bigTableExpand = document.querySelector("#expander");
-let miniTable = document.querySelector(".miniTableParent");
+let miniTable = document.querySelector(".order-table-parent");
 
 let flag = 0,
   flag1 = 0,
@@ -68,6 +68,14 @@ hamMenu.addEventListener("click", () => {
     nav.style.display = "block";
     hamFlag = 1;
   } else {
+    nav.style.display = "none";
+    hamFlag = 0;
+  }
+});
+
+window.addEventListener("resize", () => {
+  if (window.innerWidth > 837) nav.style.display = "block";
+  else {
     nav.style.display = "none";
     hamFlag = 0;
   }

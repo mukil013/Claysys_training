@@ -245,46 +245,46 @@ table tr{
   align-items: center;
   padding: 0.5rem;
 }
-.completed {
+.first-table {
   background: rgba(92, 255, 92, 0.382);
 }
-.miniTableParent {
+.order-table-parent {
   width: 100%;
   min-width: 95%;
   display: none;
   animation: profilePopUp 0.2s forwards alternate;
 }
-.bigTable tr:nth-child(2) {
+.second-table tr:nth-child(2) {
   border-top: 1px solid var(--border-color-black);
 }
-.miniTable {
+.order-details {
   margin-top: 1rem;
   box-shadow: none;
   border: 1px solid var(--border-color-black);
   border-spacing: 0;
 }
-.bigTable th{
+.second-table th{
   font-weight: normal;
   font-size: .8rem;
 }
-.miniTable tr {
+.order-details tr {
   border-bottom: 1px solid var(--border-color-black);
 }
-.miniTable tr:first-child {
+.order-details tr:first-child {
   border-bottom: none;
 }
-.miniTable tr:last-child {
+.order-details tr:last-child {
   border-bottom: none;
 }
-.miniTable tr td:first-child {
+.order-details tr td:first-child {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.miniTableParent p {
+.order-table-parent p {
   font-size: 1.2rem;
 }
-.btnsForMiniTable {
+.btns-for-order-details {
   padding-inline: 2.5rem;
   width: 100%;
   display: flex;
@@ -292,22 +292,22 @@ table tr{
   justify-content: end;
   margin: 0.8rem 0;
 }
-.btnsForMiniTable button {
+.btns-for-order-details button {
   aspect-ratio: 4/1;
   height: 2.5rem;
   padding: 0.5rem 1rem;
 }
-.btnsForMiniTable button:nth-child(1) {
+.btns-for-order-details button:nth-child(1) {
   border: 1px solid rgb(0, 204, 255);
   background-color: transparent;
   color: rgb(0, 204, 255);
 }
-.btnsForMiniTable button:nth-child(2) {
+.btns-for-order-details button:nth-child(2) {
   border: none;
   background-color: rgb(0, 204, 255);
   color: #fff;
 }
-.miniTable tr:nth-last-child(2) {
+.order-details tr:nth-last-child(2) {
   border-bottom: none;
 }
 aside nav ul {
@@ -478,7 +478,7 @@ aside nav ul li:hover .svg {
   table{
     width: 100%;
   }
-  .miniTableParent{
+  .order-table-parent{
     width: 100%;
     overflow-x: scroll;
   }
@@ -568,10 +568,10 @@ aside nav ul li:hover .svg {
     display: flex;
     justify-content: space-around;
   }
-  .miniTableParent{
+  .order-table-parent{
     width: 70vw;
   }
-  .bigTable th{
+  .second-table th{
     font-size: .8rem;
   }
 }
