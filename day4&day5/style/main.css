@@ -20,7 +20,7 @@
 body {
   background-image: var(--gradient);
   height: fit-content;
-  width: 100svw;
+  width: 100vw;
   padding: 1rem;
   background-size: cover;
   display: flex;
@@ -212,6 +212,7 @@ aside {
   background-color: #e2f3ff80;
 }
 table {
+  width: 100%;
   border-radius: 0.5rem;
   background: #fff;
   box-shadow: 0 0 0.5rem var(--box-shadow);
@@ -232,6 +233,8 @@ table tr{
   background: rgba(92, 255, 92, 0.382);
 }
 .miniTableParent {
+  width: 100%;
+  min-width: 95%;
   display: none;
   animation: profilePopUp 0.2s forwards alternate;
 }
@@ -239,7 +242,6 @@ table tr{
   border-top: 1px solid var(--border-color-black);
 }
 .miniTable {
-  width: 100%;
   margin-top: 1rem;
   box-shadow: none;
   border: 1px solid var(--border-color-black);
@@ -293,7 +295,6 @@ table tr{
   border-bottom: none;
 }
 aside nav ul {
-  height: 50vh;
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
@@ -446,39 +447,34 @@ aside nav ul li:hover .svg {
   border-bottom: none;
 }
 #ham {
-  position: absolute;
   display: none;
   background-color: transparent;
   border: none;
   outline: none;
 }
-@media screen and (max-width: 768px) { 
+@media screen and (max-width: 838px) { 
   aside{
     gap: 0;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
   }
-  .completed{
-    width: 100%;
-  }
-  .extra{
-    width: 100%;
-  }
-  .bigTable{
+  table{
     width: 100%;
   }
   .miniTableParent{
     width: 100%;
-    overflow: auto;
+    overflow-x: scroll;
   }
   section{
     border: none;
-    padding: none;
   }
   body{
     padding: 0;
   }
   main{
-    height: fit-content;
-    width: 98vw;
+    border: 1px solid var(--border-color-black);
+    box-shadow: none;
     flex-direction: column;
   }
   .content {
@@ -489,16 +485,15 @@ aside nav ul li:hover .svg {
   }
   aside nav{
     z-index: 10;
-    position: relative;
   }
   aside nav ul {
     z-index: 50%;
     display: none;
     position: absolute;
-    top: 0%;
-    right: 0%;
-    width: 100%;
+    top: 100%;
+    left: 0;
     height: fit-content;
+    width: 100%;
     border-radius: 1rem;
     padding: 1rem;
     background-color: #ffffff88;
@@ -515,13 +510,22 @@ aside nav ul li:hover .svg {
     }
   }
   #ham {
-    right: 100%;
-    top: 22%;
-    right: 5%;
     display: block;
   }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 555px) {
+  body{
+    padding: 0;
+  }
+  main{
+    width: 100%;
+  }
+  .content{
+    width: 100%;
+  }
+  .menu{
+    width: 100%;
+  }
   .searchBar{
     flex: 1;
   }
@@ -532,16 +536,6 @@ aside nav ul li:hover .svg {
     height: fit-content;
     width: 100%;
   }
-  .completed{
-    width: 100%;
-  }
-  .extra{
-    width: 100%;
-  }
-  .bigTable{
-    width: 80vw;
-    overflow-x: scroll;
-  } 
   table tr th:first-child{
     display: none;
   }
@@ -554,34 +548,41 @@ aside nav ul li:hover .svg {
   table tr th:nth-child(3){
     display: none;
   }
-  table tr td:nth-child(6){
-    display: none;
-  }
-  table tr th:nth-child(6){
-    display: none;
-  }
-  .miniTableParent{
-    width: 100svw;
-  }
   .menu{
-    width: 100%;
     display: flex;
     justify-content: space-around;
+  }
+  .miniTableParent{
+    width: 70vw;
   }
   .bigTable th{
     font-size: .8rem;
   }
 }
-@media screen and (max-width: 376px) {
+@media screen and (max-width: 445px) {
   .notification{
     display: none;
   }
-}
-@media screen and (max-width: 420px){
   .profilePic{
     display: none;
   }
-  .searchBar{
+}
+@media screen and (max-width: 400px) {
+  section{
+    width: 40rem;
+  }
+}
+@media screen and (max-width: 370px) {
+  body{
+    background-color: #fff;
+    background-image: none;
+  }
+  section{
     width: 100%;
+    padding: 0;
+  }
+  main{
+    border: none;
+    min-width: 364px;
   }
 }
