@@ -74,8 +74,9 @@ hamMenu.addEventListener("click", () => {
 });
 
 window.addEventListener("resize", () => {
-  if (window.innerWidth > 837) nav.style.display = "block";
-  else {
+  if (window.innerWidth > 837) {
+    nav.style.display = "block";
+  } else {
     nav.style.display = "none";
     hamFlag = 0;
   }
