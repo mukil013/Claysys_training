@@ -1,3 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.poppins-regular {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 :root{
   --gradient : linear-gradient(
     45deg,
@@ -15,7 +23,7 @@
   padding: 0%;
   margin: 0%;
   box-sizing: border-box;
-  font-family: system-ui;
+  font-family: Poppins;
 }
 body {
   background-image: var(--gradient);
@@ -185,18 +193,26 @@ aside {
   box-shadow: 0 0 0.5rem var(--box-shadow);
 }
 .tag {
-  width: fit-content;
   background-color: rgb(0, 160, 0);
   color: #fff;
   border-radius: 18px;
   padding: 0.25rem 0.5rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: fit-content;
+  width: 50%;
 }
 .ptag {
-  width: fit-content;
   background-color: rgb(189, 244, 253);
   color: rgb(0, 204, 255);
   border-radius: 18px;
   padding: 0.3rem 0.5rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: fit-content;
+  width: 50%;
 }
 .btns {
   display: flex;
@@ -221,7 +237,6 @@ table tr td, table th {
   text-align: left;
   height: 100%;
   width: 100%;
-  margin: 0.2rem;
 }
 table tr{
   font-size: 0.8rem;
@@ -452,7 +467,7 @@ aside nav ul li:hover .svg {
   border: none;
   outline: none;
 }
-@media screen and (max-width: 838px) { 
+@media only screen and (max-width: 838px) {
   aside{
     gap: 0;
     justify-content: space-between;
@@ -513,7 +528,7 @@ aside nav ul li:hover .svg {
     display: block;
   }
 }
-@media screen and (max-width: 555px) {
+@media only screen and (max-width: 555px) {
   body{
     padding: 0;
   }
@@ -559,7 +574,14 @@ aside nav ul li:hover .svg {
     font-size: .8rem;
   }
 }
-@media screen and (max-width: 445px) {
+@media only screen and (max-width: 445px) {
+  body{
+    background-image: none;
+    background-color: #fff;
+  }
+  main{
+    border: none;
+  }
   .notification{
     display: none;
   }
@@ -567,12 +589,12 @@ aside nav ul li:hover .svg {
     display: none;
   }
 }
-@media screen and (max-width: 400px) {
+@media only screen and (max-width: 400px) {
   section{
     width: 40rem;
   }
 }
-@media screen and (max-width: 370px) {
+@media only screen and (max-width: 370px) {
   body{
     background-color: #fff;
     background-image: none;
