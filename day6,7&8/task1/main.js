@@ -1,24 +1,21 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+let calculator = document.querySelector("body form");
+let interest = document.querySelector(".interest");
+let total = document.querySelector(".total")
+let addInfo = document.querySelector(".add-info")
+let res = 0;
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
-
-setupCounter(document.querySelector('#counter'))
+calculator.addEventListener("submit", (e) => {
+  let p = document.querySelector("#p").value
+  let n = document.querySelector("#n").value
+  let r = document.querySelector("#r").value
+  e.preventDefault();
+  if(p < 500 || p > 10000){
+    alert("Enter principal amount from $500 to $10000")
+    calculator.reset()
+  }else{
+    res = (p*n*r)/100
+    interest.textContent = res
+    total.textContent = Number(p)+Number(res)
+    addInfo.textContent = 0
+  }
+});

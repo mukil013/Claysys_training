@@ -1,13 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>task 1</title>
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <div id="app"></div>
+    <div class="container">
+      <form>      
+        <h1>Advance Simple Interest Calculator</h1>
+      <label>Principal Amount:</label>
+      <input type="number" name="" id="p" />
+      <label>Rate of Interest (%):</label>
+      <input type="number" name="" id="r" />  
+      <label>Time (Years):</label>
+      <input type="number" name="" id="n" />
+      <input type="submit" value="Calculate Interest" />
+    </form>
+    <p>Interest:</p>
+    <div class="interest"></div>
+    <p>Total Amount:</p>
+    <div class="total"></div>
+    <p>Additional Information:</p>
+    <div class="add-info"></div>
+    </div>
+    
     <script type="module" src="/main.js"></script>
   </body>
 </html>
