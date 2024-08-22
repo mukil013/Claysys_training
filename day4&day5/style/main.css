@@ -1,4 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/*
+  I used poppins from google fonts for this project
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 .poppins-regular {
   font-family: "Poppins", sans-serif;
@@ -6,18 +10,27 @@
   font-style: normal;
 }
 
-:root{
-  --gradient : linear-gradient(
+/*
+  using :root to use css variable for using similar attribute over and over again 
+*/
+
+:root {
+  --gradient: linear-gradient(
     45deg,
     rgb(165, 255, 165),
     rgb(145, 145, 255),
     rgb(165, 255, 165)
   );
-  --border-color : #ffffff7c;
+  --border-color: #ffffff7c;
   --box-shadow: #33333332;
   --content-bg: rgb(215, 241, 255);
   --border-color-black: #22222255;
 }
+
+/*
+  Resetting the default values given by the browser
+  and adding universal font-family to poppins
+*/
 
 * {
   padding: 0%;
@@ -25,6 +38,7 @@
   box-sizing: border-box;
   font-family: Poppins;
 }
+
 body {
   background-image: var(--gradient);
   height: fit-content;
@@ -42,7 +56,7 @@ section {
   width: 100%;
   border: 0.1rem solid var(--border-color);
   border-radius: 1.5rem;
-  padding: .5rem .5rem;
+  padding: 0.5rem 0.5rem;
 }
 main {
   box-shadow: 0 0 2rem var(--box-shadow);
@@ -53,6 +67,11 @@ main {
   padding: 1rem;
   display: flex;
 }
+
+/*
+  This will contain the logo and the navigation bar
+*/
+
 aside {
   position: relative;
   flex: 1;
@@ -60,6 +79,37 @@ aside {
   padding: 1rem;
   display: flex;
   flex-direction: column;
+}
+aside nav ul {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+aside ul li {
+  width: 100%;
+  height: 3.5rem;
+  aspect-ratio: 2/1;
+  padding: 0.2rem 0.5rem;
+  gap: 1rem;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  border-radius: 0.5rem;
+}
+aside nav ul li:hover {
+  background-color: rgb(0, 204, 255);
+  color: #fff;
+}
+aside nav ul li:hover .svg {
+  background-color: #fff;
+  border-radius: 0.4rem;
+  fill: rgb(0, 204, 255);
+}
+.svg {
+  padding: 0.3rem;
+  width: 2rem;
+  height: 2rem;
+  fill: #e8eaed;
 }
 .logo {
   width: 10rem;
@@ -73,11 +123,16 @@ aside {
   color: rgb(0, 189, 28);
   font-weight: bold;
 }
+
+/*
+  Right side content wrapper
+*/
+
 .content {
   width: 83%;
   height: fit-content;
   padding: 1rem;
-  display: flex;                    
+  display: flex;
   flex-direction: column;
   gap: 1rem;
   border-radius: 1rem;
@@ -227,23 +282,32 @@ aside {
   outline: none;
   background-color: #e2f3ff80;
 }
+
+/*
+  Adding default value for table in the document
+*/
+
 table {
   width: 100%;
   border-radius: 0.5rem;
   background: #fff;
   box-shadow: 0 0 0.5rem var(--box-shadow);
 }
-table tr td, table th {
+table tr td,
+table th {
   text-align: left;
   height: 100%;
   width: 100%;
 }
-table tr{
+table tr {
   font-size: 0.8rem;
   display: flex;
   align-items: center;
   padding: 0.5rem;
 }
+/*
+  Tables inside the main content
+*/
 .first-table {
   background: rgba(0, 161, 0, 0.179);
 }
@@ -256,10 +320,10 @@ table tr{
 .second-table tr:nth-child(2) {
   border-top: 1px solid var(--border-color-black);
 }
-table tr td:first-child{
+table tr td:first-child {
   padding-left: 1rem;
 }
-table tr th{
+table tr th {
   padding-left: 1rem;
 }
 .order-details {
@@ -268,9 +332,9 @@ table tr th{
   border: 1px solid var(--border-color-black);
   border-spacing: 0;
 }
-.second-table th{
+.second-table th {
   font-weight: normal;
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 .order-details tr {
   border-bottom: 1px solid var(--border-color-black);
@@ -281,7 +345,7 @@ table tr th{
 .order-details tr:last-child {
   border-bottom: none;
 }
-.order-table-parent{
+.order-table-parent {
   margin-bottom: 2%;
 }
 .order-details tr td:first-child {
@@ -320,37 +384,11 @@ table tr th{
 .order-details tr:nth-last-child(2) {
   border-bottom: none;
 }
-aside nav ul {
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: column;
-}
-aside ul li {
-  width: 100%;
-  height: 3.5rem;
-  aspect-ratio: 2/1;
-  padding: 0.2rem 0.5rem;
-  gap: 1rem;
-  list-style: none;
-  display: flex;
-  align-items: center;
-  border-radius: 0.5rem;
-}
-aside nav ul li:hover {
-  background-color: rgb(0, 204, 255);
-  color: #fff;
-}
-aside nav ul li:hover .svg {
-  background-color: #fff;
-  border-radius: 0.4rem;
-  fill: rgb(0, 204, 255);
-}
-.svg {
-  padding: 0.3rem;
-  width: 2rem;
-  height: 2rem;
-  fill: #e8eaed;
-}
+
+/*
+  Pop-up Styling
+*/
+
 .profilePopUp {
   z-index: 10;
   display: none;
@@ -478,27 +516,32 @@ aside nav ul li:hover .svg {
   border: none;
   outline: none;
 }
+
+/*
+  Tablet View
+*/
+
 @media only screen and (max-width: 856px) {
-  aside{
+  aside {
     gap: 0;
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
   }
-  table{
+  table {
     width: 100%;
   }
-  .order-table-parent{
+  .order-table-parent {
     width: 100%;
     overflow-x: scroll;
   }
-  section{
+  section {
     border: none;
   }
-  body{
+  body {
     padding: 0;
   }
-  main{
+  main {
     border: 1px solid var(--border-color-black);
     box-shadow: none;
     flex-direction: column;
@@ -509,7 +552,7 @@ aside nav ul li:hover .svg {
     align-items: center;
     flex-direction: column;
   }
-  aside nav{
+  aside nav {
     z-index: 10;
   }
   aside nav ul {
@@ -527,7 +570,7 @@ aside nav ul li:hover .svg {
     backdrop-filter: blur(0.5rem);
     animation: hamAni 0.2s forwards linear;
   }
-  @keyframes hamAni{
+  @keyframes hamAni {
     0% {
       opacity: 0;
     }
@@ -539,80 +582,95 @@ aside nav ul li:hover .svg {
     display: block;
   }
 }
+
+/*
+  Mobile(large) View
+*/
+
 @media only screen and (max-width: 600px) {
-  body{
+  body {
     padding: 0;
   }
-  main{
+  main {
     width: 100%;
   }
-  .content{
+  .content {
     width: 100%;
   }
-  .menu{
+  .menu {
     width: 100%;
   }
-  .searchBar{
+  .searchBar {
     flex: 1;
   }
-  .titleBar{
+  .titleBar {
     flex-direction: column-reverse;
     justify-content: center;
     align-items: start;
     height: fit-content;
     width: 100%;
   }
-  table tr th:first-child{
+  table tr th:first-child {
     display: none;
   }
-  table tr td:first-child{
+  table tr td:first-child {
     display: none;
   }
-  table tr td:nth-child(3){
+  table tr td:nth-child(3) {
     display: none;
   }
-  table tr th:nth-child(3){
+  table tr th:nth-child(3) {
     display: none;
   }
-  .menu{
+  .menu {
     display: flex;
     justify-content: space-around;
   }
-  .order-table-parent{
+  .order-table-parent {
     width: 70vw;
   }
-  .second-table th{
-    font-size: .8rem;
+  .second-table th {
+    font-size: 0.8rem;
   }
 }
+
+/*
+  Mobile(medium) View
+*/
+
 @media only screen and (max-width: 530px) {
-  body{
+  body {
     background-image: none;
     background-color: #fff;
   }
-  main{
+  main {
     border: none;
   }
-  .notification{
+  .notification {
     display: none;
   }
-  .profilePic{
+  .profilePic {
     display: none;
   }
 }
+
+/*
+  Mobile(small) View
+*/
+
 @media (max-width: 412px) {
-  .searchBar{
+  .searchBar {
     padding-right: 0;
   }
-  body{
+  body {
     background-color: #fff;
     background-image: none;
   }
-  section{
+  section {
     width: 100%;
     padding: 0;
   }
-  main{
+  main {
     border: none;
     min-width: 364px;
   }

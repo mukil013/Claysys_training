@@ -1,3 +1,5 @@
+//All the html tag defined here basically for pop-up
+
 let profilePopUp = document.querySelector(".profilePopUp");
 let profileBtn = document.querySelector(".profilePic");
 
@@ -10,10 +12,6 @@ let searchDropDown = document.querySelector(".dropdownItems");
 let bigTableExpand = document.querySelector("#expander");
 let miniTable = document.querySelector(".order-table-parent");
 
-let flag = 0,
-  flag1 = 0,
-  hamFlag = 0;
-
 let hamMenu = document.querySelector("#ham");
 let nav = document.querySelector("aside nav ul");
 
@@ -21,6 +19,12 @@ let pickUpBtn = document.querySelector("#pickUpBtn");
 let pickUpPopUp = document.querySelector(".pickUpPopUp");
 
 let content = document.querySelector(".content");
+
+//local variag
+let flag = 0,
+  hamFlag = 0;
+
+//focus and blur event for profile, notification and search bar
 
 profileBtn.addEventListener("focus", () => {
   profilePopUp.style.display = "block";
@@ -42,6 +46,8 @@ searchBar.addEventListener("focus", () => {
 searchBar.addEventListener("blur", () => {
   searchDropDown.style.display = "none";
 });
+
+//click events for table, pickup, and ham-menu
 
 bigTableExpand.addEventListener("click", () => {
   if (flag === 0) {
@@ -72,6 +78,8 @@ hamMenu.addEventListener("click", () => {
     hamFlag = 0;
   }
 });
+
+//This is added to fix a bug for notification on resizing
 
 window.addEventListener("resize", () => {
   if (window.innerWidth > 857) {
