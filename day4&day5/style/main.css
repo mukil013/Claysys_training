@@ -105,7 +105,6 @@ aside {
   align-items: center;
   padding: 0.2rem;
   padding-right: 2vw;
-  min-width: fit-content;
   background-color: #fff;
   border-radius: 0.3rem;
   box-shadow: 0 0 0.5rem var(--box-shadow);
@@ -119,6 +118,7 @@ aside {
   color: #222;
 }
 .searchBar input[type="text"] {
+  width: 100%;
   padding: 0 0.5rem;
   border: none;
   outline: none;
@@ -600,12 +600,10 @@ aside nav ul li:hover .svg {
     display: none;
   }
 }
-@media only screen and (max-width: 400px) {
-  section{
-    width: 40rem;
+@media (max-width: 412px) {
+  .searchBar{
+    padding-right: 0;
   }
-}
-@media only screen and (max-width: 370px) {
   body{
     background-color: #fff;
     background-image: none;
