@@ -40,7 +40,7 @@ form{
 form h1{
   font-size: 1.5rem;
 }
-form input[type=number]{
+form input[type=text]{
   padding: .5rem 1rem;
   border: 1px solid #33333355;
   outline: none;
