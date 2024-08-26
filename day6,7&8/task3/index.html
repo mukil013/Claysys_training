@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>task 3</title>
+    <link rel="stylesheet" href="./style/main.css" />
+    <script src="./js/app.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Student Grades Manager</h1>
+      <form>
+        <label>Student Name:</label>
+        <input type="text" id="name" placeholder="Enter student name" required/>
+        <p id="name-error">Enter a valid name</p>
+        <label>Grade:</label>
+        <input type="text" id="grade" placeholder="Enter grade" required/>
+        <p id="grade-error">Enter a valid grade</p>
+        <input type="submit" value="Add Student">
+      </form>
+      <button id="display-grade">Display Grades</button>
+      <div class="display">
+        <h3>Grade List:</h3>
+        <ul></ul>
+      </div>
+      <button id="avg-btn">Calculate Average Grade</button>
+      <strong>Average Grade:</strong>
+      <p id="avg-grade"></p>
+    </div>
+    <div class="message">
+      Data added
+    </div>
+  </body>
+</html>

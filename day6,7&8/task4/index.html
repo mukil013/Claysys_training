@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>task 4</title>
+    <link rel="stylesheet" href="./style/main.css" />
+    <script
+      src="https://kit.fontawesome.com/bd7a669660.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./js/app.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Inventory System</h1>
+      <form>
+        <label>Name:</label>
+        <input type="text" id="name" required/>
+        <p id="error-for-product">Enter a valid product name</p>
+        <label>Price:</label>
+        <input type="text" id="price" required/>
+        <p id="error-for-price">Enter a valid price</p>
+        <label>Quantity:</label>
+        <input type="text" id="quantity" required/>
+        <p id="error-for-quantity">Enter a valid quantity</p>
+        <input type="submit" value="Add Product" />
+      </form>
+      <strong>Inventory List</strong>
+      <table>
+        <tr>
+          <th>Product Name</th>
+          <th>Price</th>
+          <th>Quantity</th>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
