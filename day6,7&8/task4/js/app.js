@@ -1,6 +1,6 @@
 let table = document.querySelector("table");
 let tick = document.querySelector("#tick"), cross = document.querySelector("#cross");
-let counter = 0;
+let counter = 0, inventory = []
 
 class Product {
   constructor(name, price, quantity) {
@@ -60,8 +60,6 @@ function duplicateCheckForName(val) {
   }
 }
 
-var inventory = [];
-
 function formSubmit(e) {
 
   e.preventDefault();
@@ -97,6 +95,7 @@ function formSubmit(e) {
   tr.append(edit);
   tr.append(del);
   tr.setAttribute("valueInTheRow", counter);
+  
   table.append(tr);
 
   counter++;
