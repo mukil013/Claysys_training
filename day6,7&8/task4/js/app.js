@@ -129,7 +129,6 @@ function formSubmit(e) {
 
       tr.append(edit);
       tr.append(del);
-      table.append();
 
     });
 
