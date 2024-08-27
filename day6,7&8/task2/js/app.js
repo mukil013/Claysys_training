@@ -5,6 +5,7 @@ function addTask(){
   let del = document.createElement("button") , li = document.createElement("li") , p = document.createElement("p") , checkBox = document.createElement("input") , edit = document.createElement("button"), div = document.createElement("div")
   checkBox.type = "checkbox";
   let task = document.querySelector("#task-adder"), listView = document.querySelector("ul"), btn = document.querySelector("#add-button");
+  if(task.value === "") return 
   p.textContent = task.value;
   p.setAttribute("valueOfli", counter)
 
