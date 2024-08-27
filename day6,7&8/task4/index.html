@@ -14,18 +14,26 @@
   <body>
     <div class="container">
       <h1>Inventory System</h1>
-      <form>
+      <form onsubmit="formSubmit(event)"">
         <label>Name:</label>
-        <input type="text" id="name" required/>
+        <div class="name">
+          <input type="text" id="name" oninput="duplicateCheckForName(this.value)" required autocomplete="off"/>
+          <i class="fa-solid fa-circle-check" id="tick"></i>
+          <i class="fa-solid fa-circle-xmark" id="cross"></i>
+        </div>
         <p id="error-for-product">Enter a valid product name</p>
         <label>Price:</label>
-        <input type="text" id="price" required/>
+        <input type="text" id="price" required autocomplete="off" />
         <p id="error-for-price">Enter a valid price</p>
         <label>Quantity:</label>
-        <input type="text" id="quantity" required/>
+        <input type="text" id="quantity" required autocomplete="off" />
         <p id="error-for-quantity">Enter a valid quantity</p>
-        <input type="submit" value="Add Product" />
+        <input type="submit" value="Add Product" id="submit"/>
       </form>
+      <div class="updateAndSave">
+        <button id="update">Apply Update</button>
+        <button id="save">Save Changes</button>
+      </div>
       <strong>Inventory List</strong>
       <table>
         <tr>

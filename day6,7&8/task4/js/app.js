@@ -1,4 +1,6 @@
-let form = document.querySelector("form"), table = document.querySelector("table"), counter = 0;
+let table = document.querySelector("table");
+let tick = document.querySelector("#tick"), cross = document.querySelector("#cross");
+let counter = 0;
 
 class Product {
   constructor(name, price, quantity) {
@@ -9,14 +11,19 @@ class Product {
 }
 
 let prodName = document.querySelector("#name"), price = document.querySelector("#price"), quantity = document.querySelector("#quantity");
+
 let errorForName = document.querySelector("#error-for-product"), errorForPrice = document.querySelector("#error-for-price"), errorForQuantity = document.querySelector("#error-for-quantity");
 
 prodName.addEventListener("blur", () => {
-  if (prodName.value === "" || prodName.value === " ")
+  if (prodName.value === "" || prodName.value === " ") {
     errorForName.style.display = "block";
+  }
+  errorForName.style.display = "";
+  tick.style.display = "";
+  cross.style.display = "";
 });
 prodName.addEventListener("focus", () => {
-  errorForPrice.style.display = "";
+  errorForName.style.display = "";
 });
 
 price.addEventListener("blur", () => {
@@ -28,37 +35,53 @@ price.addEventListener("focus", () => {
 });
 
 quantity.addEventListener("blur", () => {
-  if ( quantity.value === "" || quantity.value === " " || isNaN(quantity.value))
+  if (quantity.value === "" || quantity.value === " " || isNaN(quantity.value))
     errorForQuantity.style.display = "block";
 });
 quantity.addEventListener("focus", () => {
   errorForQuantity.style.display = "";
 });
 
-let inventory = [];
+function duplicateCheckForName(val) {
+  for (let i = 0; i < inventory.length; i++) {
+    if (inventory[i].name === val) {
+      console.log(inventory[i].name + " = " + val);
+      tick.style.display = "";
+      cross.style.display = "block";
+      errorForName.style.display = "block";
+      break;
+    } else if (val === "" || val === " ") {
+      tick.style.display = "";
+      cross.style.display = "";
+    } else {
+      tick.style.display = "block";
+      cross.style.display = "";
+    }
+  }
+}
 
-form.addEventListener("submit", (e) => {
-  //This is to prevent the default action performed by the form (refreshing)
+var inventory = [];
+
+function formSubmit(e) {
+
   e.preventDefault();
-  //This is  to add the input field values into class and creating it as new object and storing it the obj variable
+
   let obj = new Product(prodName.value, price.value, quantity.value);
+  let tr = document.createElement("tr"), del = document.createElement("button"), edit = document.createElement("button");
+  let tData = "", localCounter = 1;
 
-  inventory[counter++] = obj;
+  inventory[counter] = obj;
 
-  let tr = document.createElement("tr"), del = document.createElement("button");
   del.id = "del";
-  del.innerHTML = "<i class='fa-solid fa-trash'></i>";
-
-  let tData = "", localCounter = 1, storeQuantity = 0;
+  del.innerHTML = '<i class="fa-solid fa-trash"></i>';
+  
+  edit.innerHTML = '<i class="fa-solid fa-pen"></i>';
+  edit.id = "edit";
+  edit.setAttribute("valueInTheRow", counter);
 
   Object.values(obj).map((val) => {
-    if (localCounter === 3) {
-      tData += `<td><input type="text" id="quantity-updater" value="${val}"></td>`;
-      storeQuantity = val;
-    }else if (localCounter === 2)
-      tData += `<td>$${val}</td>`;
-    else 
-      tData += `<td>${val}</td>`;
+    if (localCounter === 2) tData += `<td id="two">$${val}</td>`;
+    else tData += `<td>${val}</td>`;
     localCounter++;
   });
 
@@ -70,17 +93,52 @@ form.addEventListener("submit", (e) => {
   });
 
   tr.innerHTML += tData;
-  tr.append(del);
-  table.append(tr);
-  form.reset();
 
-  let update = document.querySelectorAll("#quantity-updater");
-  update.forEach((i) => {
-    i.addEventListener("blur", () => {
-      if (i.value === "")
-        i.value = storeQuantity;
-      else
-        storeQuantity = i.value;
+  tr.append(edit);
+  tr.append(del);
+  tr.setAttribute("valueInTheRow", counter);
+  table.append(tr);
+
+  counter++;
+
+  e.target.reset();
+
+  let submit = document.getElementById("submit");
+  let updateAndSave = document.querySelector(".updateAndSave") , update = document.querySelector("#update");
+  
+  edit.addEventListener("focus", () => {
+    submit.style.display = "none";
+    updateAndSave.style.display = "flex";
+    
+    let n = tr.getAttribute("valueInTheRow");
+
+    prodName.value = inventory[n].name;
+    price.value = inventory[n].price;
+    quantity.value = inventory[n].quantity;
+
+    update.addEventListener("click", () => {
+      inventory[n].name = prodName.value;
+      inventory[n].price = price.value;
+      inventory[n].quantity = quantity.value;
+
+      tData = "";
+      tData += `<td>${inventory[n].name}</td>`;
+      tData += `<td>$${inventory[n].price}</td>`;
+      tData += `<td>${inventory[n].quantity}</td>`;
+
+      tr.innerHTML = tData;
+
+      tr.append(edit);
+      tr.append(del);
+      table.append();
+
     });
+
+    document.querySelector("#save").addEventListener("click", () => {
+      e.target.reset();
+      submit.style.display = "block";
+      updateAndSave.style.display = "";
+    });
+
   });
-});
+}
