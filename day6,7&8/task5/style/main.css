@@ -53,3 +53,16 @@ ul li{
   color: red;
   display: none;
 }
+ul li p:nth-child(2){
+  animation: loader .4s linear forwards alternate infinite;
+}
+@keyframes loader {
+  0%{
+    filter: blur(.2rem);
+    opacity: .5;
+  }
+  100%{
+    filter: blur(.5rem);
+    opacity: 1;
+  }
+}
