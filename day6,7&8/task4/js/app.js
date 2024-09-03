@@ -1,6 +1,10 @@
 let table = document.querySelector("table");
-let tick = document.querySelector("#tick"), cross = document.querySelector("#cross");
-let counter = 0, inventory = []
+let tick = document.querySelector("#tick"),
+  cross = document.querySelector("#cross");
+let counter = 0,
+  inventory = [],
+  flag = false,
+  dupCheck = true;
 
 class Product {
   constructor(name, price, quantity) {
@@ -10,9 +14,13 @@ class Product {
   }
 }
 
-let prodName = document.querySelector("#name"), price = document.querySelector("#price"), quantity = document.querySelector("#quantity");
+let prodName = document.querySelector("#name"),
+  price = document.querySelector("#price"),
+  quantity = document.querySelector("#quantity");
 
-let errorForName = document.querySelector("#error-for-product"), errorForPrice = document.querySelector("#error-for-price"), errorForQuantity = document.querySelector("#error-for-quantity");
+let errorForName = document.querySelector("#error-for-product"),
+  errorForPrice = document.querySelector("#error-for-price"),
+  errorForQuantity = document.querySelector("#error-for-quantity");
 
 prodName.addEventListener("blur", () => {
   if (prodName.value === "" || prodName.value === " ") {
@@ -43,100 +51,115 @@ quantity.addEventListener("focus", () => {
 });
 
 function duplicateCheckForName(val) {
-  for (let i = 0; i < inventory.length; i++) {
-    if (inventory[i].name === val) {
-      console.log(inventory[i].name + " = " + val);
-      tick.style.display = "";
-      cross.style.display = "block";
-      errorForName.style.display = "block";
-      break;
-    } else if (val === "" || val === " ") {
-      tick.style.display = "";
-      cross.style.display = "";
-    } else {
-      tick.style.display = "block";
-      cross.style.display = "";
+  if (!flag) {
+    for (let i = 0; i < inventory.length; i++) {
+      if (inventory[i].name === val) {
+        tick.style.display = "";
+        cross.style.display = "block";
+        dupCheck = false;
+        break;
+      } else if (val === "" || val === " ") {
+        tick.style.display = "";
+        cross.style.display = "";
+      } else {
+        tick.style.display = "block";
+        cross.style.display = "";
+        dupCheck = true;
+      }
     }
   }
 }
 
 function formSubmit(e) {
-
   e.preventDefault();
 
-  let obj = new Product(prodName.value, price.value, quantity.value);
-  let tr = document.createElement("tr"), del = document.createElement("button"), edit = document.createElement("button");
-  let tData = "", localCounter = 1;
+  if (dupCheck) {
+    document.querySelector("#duplicate").style.display = "";
+    let obj = new Product(prodName.value, price.value, quantity.value);
+    let tr = document.createElement("tr"),
+      del = document.createElement("button"),
+      edit = document.createElement("button");
+    let tData = "",
+      localCounter = 1;
 
-  inventory[counter] = obj;
+    inventory[counter] = obj;
 
-  del.id = "del";
-  del.innerHTML = '<i class="fa-solid fa-trash"></i>';
-  
-  edit.innerHTML = '<i class="fa-solid fa-pen"></i>';
-  edit.id = "edit";
-  edit.setAttribute("valueInTheRow", counter);
+    del.id = "del";
+    del.innerHTML = '<i class="fa-solid fa-trash"></i>';
 
-  Object.values(obj).map((val) => {
-    if (localCounter === 2) tData += `<td id="two">$${val}</td>`;
-    else tData += `<td>${val}</td>`;
-    localCounter++;
-  });
+    edit.innerHTML = '<i class="fa-solid fa-pen"></i>';
+    edit.id = "edit";
+    edit.setAttribute("valueInTheRow", counter);
 
-  del.addEventListener("click", () => {
-    inventory.splice(tr.rowIndex - 1, 1);
-    table.removeChild(tr);
-    counter--;
-    console.log(inventory);
-  });
+    Object.values(obj).map((val) => {
+      if (localCounter === 2) tData += `<td id="two">$${val}</td>`;
+      else tData += `<td>${val}</td>`;
+      localCounter++;
+    });
 
-  tr.innerHTML += tData;
+    del.addEventListener("click", () => {
+      inventory.splice(tr.rowIndex - 1, 1);
+      table.removeChild(tr);
+      counter--;
+      console.log(inventory);
+    });
 
-  tr.append(edit);
-  tr.append(del);
-  tr.setAttribute("valueInTheRow", counter);
-  
-  table.append(tr);
+    tr.innerHTML += tData;
 
-  counter++;
+    tr.append(edit);
+    tr.append(del);
+    tr.setAttribute("valueInTheRow", counter);
 
-  e.target.reset();
+    table.append(tr);
 
-  let submit = document.getElementById("submit");
-  let updateAndSave = document.querySelector(".updateAndSave") , update = document.querySelector("#update");
-  
-  edit.addEventListener("focus", () => {
-    submit.style.display = "none";
-    updateAndSave.style.display = "flex";
+    counter++;
+
+    e.target.reset();
+
+    let submit = document.getElementById("submit");
+    let updateAndSave = document.querySelector(".updateAndSave"),
+      update = document.querySelector("#update");
+
+    edit.addEventListener("focus", () => {
+      document.querySelector("#duplicate").style.display = "";
+
+      submit.style.display = "none";
+      updateAndSave.style.display = "flex";
+
+      let n = tr.getAttribute("valueInTheRow");
+
+      prodName.value = inventory[n].name;
+      price.value = inventory[n].price;
+      quantity.value = inventory[n].quantity;
+
+      update.addEventListener("click", () => {
+        inventory[n].name = prodName.value;
+        inventory[n].price = price.value;
+        inventory[n].quantity = quantity.value;
+
+        tData = "";
+        tData += `<td>${inventory[n].name}</td>`;
+        tData += `<td>$${inventory[n].price}</td>`;
+        tData += `<td>${inventory[n].quantity}</td>`;
+
+        tr.innerHTML = tData;
+
+        tr.append(edit);
+        tr.append(del);
+      });
+
+      flag = true;
+
+      document.querySelector("#save").addEventListener("click", () => {
+        e.target.reset();
+        submit.style.display = "block";
+        updateAndSave.style.display = "";
+        flag = false;
+      });
+
+    });
     
-    let n = tr.getAttribute("valueInTheRow");
-
-    prodName.value = inventory[n].name;
-    price.value = inventory[n].price;
-    quantity.value = inventory[n].quantity;
-
-    update.addEventListener("click", () => {
-      inventory[n].name = prodName.value;
-      inventory[n].price = price.value;
-      inventory[n].quantity = quantity.value;
-
-      tData = "";
-      tData += `<td>${inventory[n].name}</td>`;
-      tData += `<td>$${inventory[n].price}</td>`;
-      tData += `<td>${inventory[n].quantity}</td>`;
-
-      tr.innerHTML = tData;
-
-      tr.append(edit);
-      tr.append(del);
-
-    });
-
-    document.querySelector("#save").addEventListener("click", () => {
-      e.target.reset();
-      submit.style.display = "block";
-      updateAndSave.style.display = "";
-    });
-
-  });
+  } else {
+    document.querySelector("#duplicate").style.display = "block";
+  }
 }

@@ -3,6 +3,7 @@
   margin: 0;
   box-sizing: border-box;
   font-family: system-ui;
+  transition: .5s all linear;
 }
 
 body{
@@ -31,6 +32,7 @@ form{
   align-self: stretch;
   gap: 12px;
   margin-bottom: 12px;
+  transition: display .5s linear;
 }
 form p {
   font-size: .7rem;
