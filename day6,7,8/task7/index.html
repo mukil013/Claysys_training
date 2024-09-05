@@ -10,19 +10,23 @@
   <body>
     <div class="container">
       <h1>Add User</h1>
-      <form>
-        <input type="text" id="name">
-        <input type="email" id="email">
-        <select id="role">
-          <option>Admin</option>
-          <option>Super-User</option>
-          <option>User</option>
-        </select>
-        <input type="submit" value="Add User" id="submit">
-        <button id="update">Update User</button>
-      </form>
+      <div class="form">
+        <form>
+          <label>Name:</label>
+          <input type="text" id="name">
+          <label>Email:</label>
+          <input type="email" id="email">
+          <label>Role:</label>
+          <select id="role">
+            <option>Admin</option>
+            <option>User</option>
+          </select>
+          <input type="submit" value="Add User" id="submit">
+        </form>
+      </div>
+      <button id="update">Update User</button>
       <h1>User List</h1>
-      <ul></ul>
+      <ol></ol>
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>

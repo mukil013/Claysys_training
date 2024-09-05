@@ -1,5 +1,6 @@
 let users: any = [],
-  counter: number = 0;
+  counter: number = 0,
+  tempIndex: number = 0;
 
 class addUser<T> {
   name: T;
@@ -12,19 +13,22 @@ class addUser<T> {
   }
 }
 
-let ul = document.querySelector("ul") as HTMLUListElement;
+let ul = document.querySelector("ol") as HTMLOListElement;
 let form = document.querySelector("form") as HTMLFormElement;
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
+
   let name = document.querySelector("#name") as HTMLInputElement;
   let email = document.querySelector("#email") as HTMLInputElement;
-  let role = document.querySelector("#role") as HTMLInputElement;
+  let role = document.querySelector("#role") as HTMLSelectElement;
+
   users.push(new addUser(name.value, email.value, role.value));
 
-  let li = document.createElement("li");
+  let div = document.createElement("div");
+  let btnContainer = document.createElement("span");
 
-  let content = ` <p>${users.length}</p> <p id="user-name">${users[counter].name}</p> <p id="user-email">${users[counter].email}</p> <p id="user-role">${users[counter].role}</p>`;
+  let content = `<span><li></li><p id="name-${counter}">${users[counter].name}</p></span> <p id="email-${counter}">${users[counter].email}</p> <p id="role-${counter}">${users[counter].role}</p>`;
 
   let deleteButton = document.createElement("button");
   deleteButton.id = "deleteButton";
@@ -34,44 +38,57 @@ form.addEventListener("submit", (e) => {
   editButton.id = "editButton";
   editButton.textContent = "Edit";
 
-  li.innerHTML += content;
-
-  li.append(deleteButton);
-  li.append(editButton);
-  li.setAttribute("itemNumber", `${counter}`);
-  ul.append(li);
+  div.innerHTML = content;
+  btnContainer.append(editButton, deleteButton)
+  div.append(btnContainer)
+  div.setAttribute("itemNumber", `${counter}`);
+  div.id = `${counter}`;
+  ul.append(div);
 
   counter++;
 
   deleteButton.addEventListener("click", () => {
-    users.splice(Number(li.getAttribute("itemNumber")), 1);
-    ul.removeChild(li);
+    users.splice(div.getAttribute("itemNumber"),1)
+    ul.removeChild(div);
     console.log(users);
     counter--;
   });
 
   editButton.addEventListener("click", () => {
-    let tempCounter = Number(li.getAttribute("itemNumber"));
+    tempIndex = Number(div.getAttribute("itemNumber"));
 
-    name.value = users[tempCounter].name;
-    email.value = users[tempCounter].email;
-    role.value = users[tempCounter].role;
+    name.value = users[tempIndex].name;
+    email.value = users[tempIndex].email;
+    role.value = users[tempIndex].role;
 
     let updateBtn = document.querySelector("#update") as HTMLButtonElement;
 
-    updateBtn.addEventListener("click", () => {
-      users[tempCounter].name = name.value;
-      users[tempCounter].email = email.value;
-      users[tempCounter].role = role.value;
+    updateBtn.style.display = "block";
 
-      document.querySelector("#user-name")!.textContent =
-        users[tempCounter].name;
-      document.querySelector("#user-email")!.textContent =
-        users[tempCounter].email;
-      document.querySelector("#user-role")!.textContent =
-        users[tempCounter].role;
+    updateBtn.addEventListener(
+      "click",
+      () => {
+        users[tempIndex].name = name.value;
+        users[tempIndex].email = email.value;
+        users[tempIndex].role = role.value;
 
-      console.log(users);
-    });
+        console.log(document.querySelector(`#name-${tempIndex}`));
+        console.log(document.querySelector(`#email-${tempIndex}`));
+        console.log(document.querySelector(`#role-${tempIndex}`));
+
+        document.querySelector(`#name-${tempIndex}`)!.textContent =
+          users[tempIndex].name;
+        document.querySelector(`#email-${tempIndex}`)!.textContent =
+          users[tempIndex].email;
+        document.querySelector(`#role-${tempIndex}`)!.textContent =
+          users[tempIndex].role;
+
+        updateBtn.style.display = "";
+        form.reset()
+        console.log(users);
+      },
+      { once: true }
+    );
   });
+  form.reset()
 });

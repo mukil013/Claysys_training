@@ -1,4 +1,4 @@
-let btns = document.querySelectorAll(".operations ul li button"), display = document.querySelector(".display") as HTMLDivElement ,first = true
+let btns = document.querySelectorAll(".operations ul li button"), display = document.querySelector(".display") as HTMLDivElement, first = true
 
 btns.forEach(i => {
   i.addEventListener("click" , () => {
@@ -6,8 +6,16 @@ btns.forEach(i => {
       display.textContent = ""
       first = false
     }
-    if(i.textContent === "=") display.textContent = eval(display.textContent!)
-    else if(i.textContent === "C"){
+    if(i.textContent === "="){ 
+      let result = Number(eval(display.textContent!))
+      if(!isFinite(result) || display.textContent === "0"){ 
+        alert("Enter a vaild number") 
+        display.textContent = "0"
+        first = true
+      }
+      else display.textContent = String(result)
+    }
+    else if(i.textContent === 'C'){
       display.textContent = "0"
       first = true
     }
