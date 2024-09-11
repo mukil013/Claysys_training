@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quizzer | Admin</title>
+    <link rel="stylesheet" href="./style/adminPanel.css" />
+    <script type="module" src="./script/adminPanel.ts"></script>
+  </head>
+  <body>
+    <nav>
+      <div class="logo">Quizzer | admin</div>
+      <ul>
+        <li>
+          Dark mode
+          <label class="switch">
+            <label class="switch">
+              <input type="checkbox"/>
+              <span class="slider round"></span> </label
+          ></label>
+        </li>
+        <li><button id="account">Account</button></li>
+      </ul>
+      <div class="accountMenu">
+        <ul>
+          <li><p id="logged-as"></p></li>
+          <li><button id="log-out">Logout</button></li>
+        </ul>
+      </div>
+    </nav>
+    <main>
+      <aside>
+        <ul>
+          <li><button id="course-btn">Course List</button></li>
+          <li><button id="leader-btn">LeaderBoard</button></li>
+          <li><button id="user-btn">User Management</button></li>
+        </ul>
+      </aside>
+      <div class="content">
+        <div class="static_text">
+          <h1>Nothing to show</h1>
+        </div>
+        <div class="course-list" active="false">
+          <h1>Course List</h1>
+          <ul></ul>
+        </div>
+        <div class="leader-board" active="false">
+          <h1>Leader Board</h1>
+          <table>
+            <thead>
+              <tr class="header">
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Course</th>
+                <th>Score</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            
+          </table>
+        </div>
+        <div class="user-management" active="false">
+          <h1>User Management</h1>
+          <span>Total user : <h3 id="userCount">0</h3></span>
+          <table id="user-table">
+            <thead>
+              <tr class="header">
+                <th>Email</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <button id="add">+</button>
+        <dialog id="add-form">
+          <button id="back">Back</button>
+          <div class="form">
+            <label for="title">Course title</label>
+            <input type="text" id="title" placeholder="Course Title" >
+            <textarea type="text" id="description" placeholder="Course description" cols="4" ></textarea>
+            <ul id="questions">
+              <li>
+                <textarea type="text" id="qtitle" placeholder="Question" cols="4" ></textarea>
+                <ul class="options"></ul>
+                <label>Correct Answer</label>
+                <select id="correct-answer"></select>
+              </li>
+              <button id="add-question">Add question</button>
+            </ul>
+            <input type="submit" value="Add Course" id="dialog-sumbit">
+          </div>
+        </dialog>
+      </div>
+    </main>
+  </body>
+</html>

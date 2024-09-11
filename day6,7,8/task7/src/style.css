@@ -13,6 +13,7 @@ body{
   place-items: center;
 } 
 h1{
+  padding: 6px 0;
   width: 100%;
   border-bottom: 1px solid #33333355;
 }
@@ -20,22 +21,28 @@ h1{
   position: sticky;
   top: 10%;
   padding: 1rem;
-  width: 50vw;
+  width: 55vw;
   min-height: 50vh;
   max-height: fit-content;
   border: 1px solid #33333355;
   border-radius: 8px;
 }
-form{
+.form{
   height: 6rem;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+form{
+  width: 90%;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
-form input ,select{
+form input , select{
   height: 2rem;
-  aspect-ratio: 4/1;
+  aspect-ratio: 5/1;
   padding: 4px;
   background-color: #fff;
   border: 1px solid #33333355;
@@ -71,18 +78,21 @@ ol div button{
 ol div span{
   display: flex;
 }
-.form{
-  position: relative;
-}
-#update{
+#update , #add-user{
   border-radius: 4px; 
   height: 2rem;
-  position: absolute;
-  top: 5.7rem;
-  right: 1.6rem;
   aspect-ratio: 3/1;
   background-color: royalblue;
   color: #fff;
   border: none;
+}
+#update{
+  display: none;
+}
+
+#errorMsg{
+  margin: 1rem .5rem;
+  font-size: .8rem;
+  color: red;
   display: none;
 }

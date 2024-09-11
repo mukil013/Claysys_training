@@ -2,10 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./src/style.css">
-    <title>Task 7</title>
+    <title>task 7 | User Management</title>
   </head>
   <body>
     <div class="container">
@@ -13,18 +12,19 @@
       <div class="form">
         <form>
           <label>Name:</label>
-          <input type="text" id="name">
+          <input type="text" id="name" required>
           <label>Email:</label>
-          <input type="email" id="email">
+          <input type="email" id="email" required>
           <label>Role:</label>
           <select id="role">
             <option>Admin</option>
             <option>User</option>
           </select>
-          <input type="submit" value="Add User" id="submit">
         </form>
+        <button id="add-user">Add User</button>
+        <button id="update">Update User</button>
       </div>
-      <button id="update">Update User</button>
+      <p id="errorMsg">Invalid or duplicate values</p>
       <h1>User List</h1>
       <ol></ol>
     </div>
