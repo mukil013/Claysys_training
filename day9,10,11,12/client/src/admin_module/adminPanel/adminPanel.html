@@ -31,7 +31,7 @@
     <main>
       <aside>
         <ul>
-          <li><button id="course-btn">Course List</button></li>
+          <li><button id="course-btn">Add/Edit Quiz</button></li>
           <li><button id="leader-btn">LeaderBoard</button></li>
           <li><button id="user-btn">User Management</button></li>
         </ul>
@@ -41,7 +41,7 @@
           <h1>Nothing to show</h1>
         </div>
         <div class="course-list" active="false">
-          <h1>Course List</h1>
+          <h1>Add/Edit Quiz</h1>
           <ul></ul>
         </div>
         <div class="leader-board" active="false">
@@ -74,22 +74,35 @@
         </div>
         <button id="add">+</button>
         <dialog id="add-form">
-          <button id="back">Back</button>
-          <div class="form">
-            <label for="title">Course title</label>
-            <input type="text" id="title" placeholder="Course Title" >
-            <textarea type="text" id="description" placeholder="Course description" cols="4" ></textarea>
-            <ul id="questions">
-              <li>
-                <textarea type="text" id="qtitle" placeholder="Question" cols="4" ></textarea>
-                <ul class="options"></ul>
-                <label>Correct Answer</label>
-                <select id="correct-answer"></select>
-              </li>
-              <button id="add-question">Add question</button>
-            </ul>
-            <input type="submit" value="Add Course" id="dialog-sumbit">
-          </div>
+          <div>
+            <button id="back">Back</button>
+              <label for="title">Quiz title : 
+              <input type="text" id="title" placeholder="Course Title" ></label>
+              <label>Quiz description : </label><textarea style="width: 100%;" type="text" id="description" rows="4" placeholder="Enter Your Description"></textarea>
+              <div id="dialog-form">
+                <p id="quesion-number">Question number : 1</p>
+                <li>
+                  <textarea type="text" id="qtitle" rows="4" placeholder="Enter Your Question"></textarea>
+                  <ul id="options">
+                    <li><label>option 1 : <input type="text"></label></li>
+                    <li><label>option 2 : <input type="text"></label></li>
+                    <li><label>option 3 : <input type="text"></label></li>
+                    <li><label>option 4 : <input type="text"></label></li>
+                  </ul>
+                  <label>Correct Answer : </label>
+                  <select id="correct-answer">
+                    <option selected disabled>Select Your answer</option>
+                    <option>option 1</option>
+                    <option>option 2</option>
+                    <option>option 3</option>
+                    <option>option 4</option>
+                  </select>
+                  <input type="number" placeholder="Mark for the question" id ="marks">
+                </li>
+                <button id="save-question">Save question</button>
+              </div>
+              <button id="dialog-sumbit">Add Quiz</button>
+            </div>
         </dialog>
       </div>
     </main>

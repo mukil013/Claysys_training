@@ -1,22 +1,30 @@
-export interface course{
+import { users } from "./userModel";
+
+export interface course {
   title: string,
   description: string,
-  questions: [
-    qno: number,
-    question: string,
-    options: string[],
-    correctAnswer: number,
-    marks: number
-  ],
-  userHistory: string[],
-  userLeaderBoard: string[]
+  questions: question[],
+  userTaken: userTaken | null
 }
 
-export function addCourse(course: course[]): void{
-  localStorage.setItem('course-list' , JSON.stringify(course))
-} 
+export interface question {
+  qno: number,
+  question: string,
+  options: string[],
+  correctAnswer: string,
+  markForTheQuestion: number
+}
 
-export function viewCourse():course[]{
-  let courseList = localStorage.getItem('course-list')
-  return courseList ? JSON.parse(courseList) : []
+interface userTaken{
+  name: users,
+  scoreBoard: users
+}
+
+export function addCourse(course: course[]): void {
+  localStorage.setItem("course-list", JSON.stringify(course));
+}
+
+export function viewCourse(): course[] {
+  let courseList = localStorage.getItem("course-list");
+  return courseList ? JSON.parse(courseList) : [];
 }

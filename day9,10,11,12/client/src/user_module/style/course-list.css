@@ -4,7 +4,7 @@
   box-sizing: border-box;
   font-size: 16px;
   font-family: Helvetica;
-  transition: .2s all ease;
+  transition: 0.2s all ease;
   scroll-behavior: smooth;
 }
 body {
@@ -12,7 +12,7 @@ body {
   height: 100vh;
   width: 100vw;
   display: grid;
-  grid-template-areas: "nav" ,"main";
+  grid-template-areas: "nav", "main";
   grid-template-rows: 1fr 12fr;
 }
 nav {
@@ -32,81 +32,82 @@ nav ul {
   align-items: center;
   width: fit-content;
   height: 100%;
-} 
+}
 nav ul li {
   padding: 1rem;
   list-style: none;
 }
-nav ul li:nth-child(1){
+nav ul li:nth-child(1) {
   height: 100%;
   display: flex;
   align-items: center;
   gap: 4px;
 }
-nav ul li:nth-child(2) button{
+nav ul li:nth-child(2) button {
   background-color: transparent;
   border: none;
   outline: none;
 }
-#utils{
-  height:100%;
-  display: flex;
-  align-items: center;
-}
-#utils li{
+#utils {
   height: 100%;
   display: flex;
   align-items: center;
 }
-#utils li button{
+#utils li {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+#utils li button {
   border: none;
   outline: none;
   background: transparent;
 }
-#utils li:nth-child(1){
+#utils li:nth-child(1) {
   border: none;
 }
-#utils li button:focus , #account:active{
+#utils li button:focus,
+#account:active {
   color: royalblue;
 }
-.accountMenu{
+.accountMenu {
   background-color: #fff;
   position: absolute;
   top: 100%;
-  right: 1% ;
+  right: 1%;
   height: fit-content;
   border: 1px solid #33333355;
   display: none;
 }
-.accountMenu ul{
+.accountMenu ul {
   display: flex;
   flex-direction: column;
   padding: 1rem;
 }
-.accountMenu ul li{
+.accountMenu ul li {
   padding: 1rem;
   text-align: center;
-  transition: .2s all ease;
+  transition: 0.2s all ease;
 }
-.accountMenu ul li button{
+.accountMenu ul li button {
   height: 100%;
   width: 100%;
   background-color: transparent;
   border: none;
   outline: none;
-  transition: .2s all ease;
+  transition: 0.2s all ease;
 }
-.accountMenu ul li button:hover{
+.accountMenu ul li button:hover {
   color: royalblue;
 }
-.accountMenu ul li:nth-child(1){
+.accountMenu ul li:nth-child(1) {
   border-inline: none;
   border-bottom: 1px solid #33333355;
 }
-.accountMenu ul li:nth-child(2) button{
+.accountMenu ul li:nth-child(2) button {
   color: red;
 }
-.accountMenu ul li:nth-child(2) button:hover{
+.accountMenu ul li:nth-child(2) button:hover {
   color: royalblue;
 }
 .logo {
@@ -117,61 +118,30 @@ main {
   overflow: hidden;
   grid-area: "main";
   display: grid;
-  grid-template-areas: "aside""content";
-  grid-template-columns: 1.5fr 6fr;
-}
-main aside {
-  grid-area: "aside";
-  border-right: 1px solid #33333355;
-  height: 100%;
-  width: 20vw;
-  display: flex;
-  flex-direction: column;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  padding: 1rem;
-}
-main aside ol{
-  padding-top: 1rem;
-}
-main aside ol li{
-  padding: 1rem;
-  list-style-position: inside;
-
-}
-main aside h1{
-  font-size: 1.5rem;
-}
-main aside button{
-  background-color: transparent;
-  border: none;
-  outline: none;
-}
-main aside button:focus{
-  color: royalblue;
+  grid-template-areas: "content";
+  grid-template-columns: 100%;
 }
 main ul {
   grid-area: "content";
   width: 100%;
   padding: 1rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
   gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
   overflow: scroll;
 }
 main ul li {
   list-style: none;
   min-width: 20rem;
-  height: 25vh;
-  width: 22.5vw;
+  height: 20vh;
+  width: 20vw;
   border-radius: 12px;
   border: 1px solid #33333355;
   padding: 1rem;
 }
 main ul li h1 {
-  padding: .5rem 0;
+  padding: 0.5rem 0;
 }
 main ul li div {
   text-align: right;
@@ -276,7 +246,7 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
-#back{
+#back {
   margin: 0;
   color: #9e9e9e;
   border: none;
@@ -284,30 +254,32 @@ input:checked + .slider:before {
   border-radius: 0.3rem;
   transition: 0.2s all ease-in-out;
 }
-#start-quiz{
+#start-quiz {
   margin-left: 1rem;
   background-color: green;
   color: #fff;
 }
-#know-more{
+#know-more {
   color: #9e9e9e;
   border: none;
   outline: none;
   border-radius: 0.3rem;
   transition: 0.2s all ease-in-out;
 }
-#know-more:hover , #back:hover{
+#know-more:hover,
+#back:hover {
   color: royalblue;
 }
-.start-quiz-dialog{
-  margin: .5rem 0;
+.start-quiz-dialog {
+  margin: 0.5rem 0;
   height: 15%;
   display: flex;
   flex-direction: row;
   align-items: baseline;
   justify-content: end;
 }
-.dark-mode , .dark-mode > *{
+.dark-mode,
+.dark-mode > * {
   border-color: #ffffff22;
   background-color: #222;
   color: #fff;

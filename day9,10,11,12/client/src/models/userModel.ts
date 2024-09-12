@@ -1,6 +1,9 @@
 export interface users {
   email: string;
   password: string;
+  name: string,
+  courseAttempt: string[],
+  marks: number[] | null
 }
 
 

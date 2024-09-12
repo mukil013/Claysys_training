@@ -1,12 +1,17 @@
 import { getUser, setUser } from "../../../models/userModel";
-import { addCourse, viewCourse } from "../../../models/courseModel";
+import {
+  course,
+  addCourse,
+  viewCourse,
+  question,
+} from "../../../models/courseModel";
 
 let account = document.querySelector(".accountMenu") as HTMLDivElement;
 let accountBtn = document.querySelector("#account") as HTMLButtonElement;
 let LogOut = document.querySelector("#log-out") as HTMLButtonElement;
 let checkBox = document.querySelector("nav input") as HTMLInputElement;
 let main = document.querySelectorAll(
-  "body, #account, .accountMenu li > *, .accountMenu, #add, main > *, .content ul li,.leader-board ol div, .leader-board table, .user-management table > *, #add-form form input, #add-form form textarea"
+  "body, #account, .accountMenu li > *, .accountMenu, #add, main > *, .content ul li,.leader-board ol div, .leader-board table, .user-management table > *, #add-form input, #add-form textarea, #add-form select, #add-form button"
 );
 let courseListItems = document.querySelector(
   ".course-list ul"
@@ -115,27 +120,65 @@ userBtn.addEventListener("click", () => {
   staticTxt.style.display = "none";
 });
 
-let addDialog = document.querySelector("#add-form") as HTMLDialogElement,
-  dialogForm = document.querySelector("#dialog-sumbit") as HTMLButtonElement;
+let addDialog = document.querySelector("#add-form") as HTMLDialogElement;
+let save = document.querySelector("#dialog-sumbit") as HTMLButtonElement;
+let buttonForques = document.querySelector(
+  "#save-question"
+) as HTMLButtonElement;
 
 addBtn.addEventListener("click", () => {
   addDialog.showModal();
 
-  dialogForm.addEventListener(
+  let questionNumber: number = 1;
+  let courseListStorage: course[] = viewCourse();
+  let qtitle = document.querySelector("#qtitle") as HTMLTextAreaElement;
+  let title = document.querySelector("#title") as HTMLInputElement;
+  let marks = document.querySelector("#marks") as HTMLInputElement;
+  let description = document.querySelector(
+    "#description"
+  ) as HTMLTextAreaElement;
+  let correctAns = document.querySelector(
+    "#correct-answer"
+  ) as HTMLSelectElement;
+  let optionsFromInput = document.querySelectorAll("#options li input");
+  let questionsArray: question[] = [];
+  let questionNumberForDisplay = document.querySelector(
+    "#quesion-number"
+  ) as HTMLParagraphElement;
+
+  questionNumberForDisplay.textContent = `Question number : ${questionNumber}`;
+
+  buttonForques.addEventListener("click", () => {
+    title.style.cursor = "not-allowed";
+    description.style.cursor = "not-allowed";
+    title.readOnly = true;
+    description.readOnly = true;
+    let option: string[] = [];
+    optionsFromInput.forEach((el) => {
+      let ele = el as HTMLInputElement;
+      option.push(ele.value);
+    });
+
+    let question: question = {
+      qno: questionNumber++,
+      question: qtitle.value,
+      options: option,
+      correctAnswer: correctAns.value,
+      markForTheQuestion: marks.valueAsNumber,
+    };
+
+    questionsArray.push(question);
+  });
+
+  save.addEventListener(
     "click",
     () => {
-      let questionNumber:number = 0
-      let title = document.querySelector("#title") as HTMLInputElement;
-      let description = document.querySelector("#description") as HTMLTextAreaElement
-      let qtitle = document.querySelector("#qtitle") as HTMLTextAreaElement
-      let questions = document.querySelector("#questions") as HTMLUListElement
-      let addBtn = document.querySelector("#add-question") as HTMLButtonElement
-      let li = document.createElement("li") as HTMLLIElement;
-      let dialogLi = document.createElement("li") as HTMLLIElement;
+      title.readOnly = false;
+      description.readOnly = false;
+      let li = document.createElement("li");
 
       content = `
       <h1>${title.value}</h1>
-      <button>Add Questions</button>
       <button>Edit</button>
       <button class="delBtnForCourse">Delete</button>
       `;
@@ -143,19 +186,30 @@ addBtn.addEventListener("click", () => {
       li.innerHTML += content;
       courseListItems.append(li);
 
-      let courseTitle = {
+      let listItems = document.querySelectorAll(".course-list ul li");
+
+      document.querySelectorAll(".delBtnForCourse").forEach((el, i) => {
+        el.addEventListener("click", () => {
+          courseListItems.removeChild(listItems[i]);
+          courseListStorage.splice(i, 1);
+          addCourse(courseListStorage);
+        });
+      });
+
+      let courseInit: course = {
         title: title.value,
         description: description.value,
-        questions: [{
-          qno: questionNumber,
-          qtitle: qtitle
-        }]
+        questions: questionsArray,
+        userTaken: null,
       };
-      addBtn.addEventListener("click" , () => {
-        questions.append(dialogLi)
-      })
-      // courseListStorage.push(courseTitle);
-      // addCourse(courseListStorage);
+
+      courseListStorage.push(courseInit);
+
+      console.log(courseListStorage);
+
+      addCourse(courseListStorage);
+      console.log(viewCourse());
+
       addDialog.close();
     },
     { once: true }
@@ -175,7 +229,6 @@ window.addEventListener("load", () => {
     let li = document.createElement("li") as HTMLLIElement;
     content = `
                <h1 class="course-title">${el.title}</h1>
-               <button>Add Questions</button>
                <button id="editBtn">Edit</button>
                <button class="delBtnForCourse">Delete</button>
                `;
@@ -192,7 +245,8 @@ window.addEventListener("load", () => {
         courseListItems.removeChild(listItems[i]);
         courseListStorage.splice(i, 1);
         addCourse(courseListStorage);
-      },{once:true}
+      },
+      { once: true }
     );
   });
 });
