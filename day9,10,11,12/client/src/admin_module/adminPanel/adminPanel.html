@@ -6,20 +6,20 @@
     <title>Quizzer | Admin</title>
     <link rel="stylesheet" href="./style/adminPanel.css" />
     <script type="module" src="./script/adminPanel.ts"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   </head>
   <body>
     <nav>
       <div class="logo">Quizzer | admin</div>
       <ul>
         <li>
-          Dark mode
           <label class="switch">
             <label class="switch">
-              <input type="checkbox"/>
+              <input type="checkbox" />
               <span class="slider round"></span> </label
           ></label>
         </li>
-        <li><button id="account">Account</button></li>
+        <li><button id="account"><i class="fa-solid fa-user"></i></button></li>
       </ul>
       <div class="accountMenu">
         <ul>
@@ -56,12 +56,14 @@
                 <th>Actions</th>
               </tr>
             </thead>
-            
           </table>
         </div>
         <div class="user-management" active="false">
           <h1>User Management</h1>
-          <span>Total user : <h3 id="userCount">0</h3></span>
+          <span
+            >Total user :
+            <h3 id="userCount">0</h3></span
+          >
           <table id="user-table">
             <thead>
               <tr class="header">
@@ -74,37 +76,64 @@
         </div>
         <button id="add">+</button>
         <dialog id="add-form">
-          <div>
-            <button id="back">Back</button>
-              <label for="title">Quiz title : 
-              <input type="text" id="title" placeholder="Course Title" ></label>
-              <label>Quiz description : </label><textarea style="width: 100%;" type="text" id="description" rows="4" placeholder="Enter Your Description"></textarea>
-              <div id="dialog-form">
-                <p id="quesion-number">Question number : 1</p>
+          <form id="add-quiz">
+            <button type="button" id="back">Back</button>
+            <label for="title"
+              >Quiz title :
+              <input type="text" id="title" placeholder="Course Title"
+            /></label>
+            <label>Quiz description : </label
+            ><textarea
+              style="width: 100%"
+              type="text"
+              id="description"
+              rows="4"
+              placeholder="Enter Your Description"
+            ></textarea>
+            <input type="submit" value="Add Quiz">
+          </form>
+          <form id="add-question-form">
+            <button type="button" id="save-changes">Save and Exit</button>
+            <button type="button" id="preview">Preview</button>
+            <div id="question-number">Question number : 1</div>
+              <textarea
+                type="text"
+                id="qtitle"
+                rows="4"
+                placeholder="Enter Your Question"
+              ></textarea>
+              <ul id="options">
                 <li>
-                  <textarea type="text" id="qtitle" rows="4" placeholder="Enter Your Question"></textarea>
-                  <ul id="options">
-                    <li><label>option 1 : <input type="text"></label></li>
-                    <li><label>option 2 : <input type="text"></label></li>
-                    <li><label>option 3 : <input type="text"></label></li>
-                    <li><label>option 4 : <input type="text"></label></li>
-                  </ul>
-                  <label>Correct Answer : </label>
-                  <select id="correct-answer">
-                    <option selected disabled>Select Your answer</option>
-                    <option>option 1</option>
-                    <option>option 2</option>
-                    <option>option 3</option>
-                    <option>option 4</option>
-                  </select>
-                  <input type="number" placeholder="Mark for the question" id ="marks">
+                  <label>option 1 : <input type="text" /></label>
                 </li>
-                <button id="save-question">Save question</button>
-              </div>
-              <button id="dialog-sumbit">Add Quiz</button>
-            </div>
+                <li>
+                  <label>option 2 : <input type="text" /></label>
+                </li>
+                <li>
+                  <label>option 3 : <input type="text" /></label>
+                </li>
+                <li>
+                  <label>option 4 : <input type="text" /></label>
+                </li>
+              </ul>
+              <label>Correct Answer : </label>
+              <select id="correct-answer">
+                <option selected disabled>Select Your answer</option>
+                <option>option 1</option>
+                <option>option 2</option>
+                <option>option 3</option>
+                <option>option 4</option>
+              </select><br/>
+              <label>Marks for the question : </label>
+              <input type="number" placeholder="Mark for the question" id="marks"><br/>
+            <input type="submit" value="Save question">
+          </form>
         </dialog>
       </div>
+      <dialog id="preview-dialog">
+        <button type="button" id="preview-back">Back</button>
+        <ul></ul>
+      </dialog>
     </main>
   </body>
 </html>

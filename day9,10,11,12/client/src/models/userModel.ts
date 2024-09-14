@@ -1,8 +1,8 @@
 export interface users {
   email: string;
   password: string;
-  name: string,
-  courseAttempt: string[],
+  name: string | null,
+  courseAttempt: string[] | null,
   marks: number[] | null
 }
 

@@ -1,10 +1,7 @@
-import { users } from "./userModel";
-
 export interface course {
   title: string,
   description: string,
-  questions: question[],
-  userTaken: userTaken | null
+  questions: question[]
 }
 
 export interface question {
@@ -13,11 +10,6 @@ export interface question {
   options: string[],
   correctAnswer: string,
   markForTheQuestion: number
-}
-
-interface userTaken{
-  name: users,
-  scoreBoard: users
 }
 
 export function addCourse(course: course[]): void {

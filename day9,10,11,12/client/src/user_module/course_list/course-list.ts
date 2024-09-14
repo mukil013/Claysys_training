@@ -5,7 +5,7 @@ let accountBtn = document.querySelector("#account") as HTMLButtonElement;
 let LogOut = document.querySelector("#log-out") as HTMLButtonElement;
 let checkBox = document.querySelector("nav input") as HTMLInputElement;
 let main = document.querySelectorAll(
-  "main, nav ul li a, body, #dialog, main ul li > *, main ul li, #dialog input[type=text], #account, #utils li button, .accountMenu li > *, .accountMenu"
+  "main, nav ul li a, body, #dialog > * , main ul li , main ul li, #dialog input[type=text], #account, #utils li button, .accountMenu li > *, .accountMenu"
 );
 let mainUl = document.querySelector("#view-course") as HTMLUListElement;
 
@@ -21,7 +21,7 @@ viewCourse().forEach((i) => {
                   <button class="back">Back</button>
                   <p><b>Description :</b> ${description}</p>
                   <div>
-                    <input type="text" placeholder="Enter your name">
+                    <input type="text" placeholder="Enter your name" class="user-name">
                     <a><button class="start-quiz">Start Quiz</button></a>
                   </div>
                 </dialog>
@@ -35,17 +35,20 @@ let knowMore = document.querySelectorAll("#know-more")
 let back = document.querySelectorAll(".back")
 let dialog = document.querySelectorAll("dialog")
 let startQuiz = document.querySelectorAll(".start-quiz")
+let userName = document.querySelectorAll(".user-name")
 
 let accountFlag = true;
 knowMore.forEach((el,i) => {
   el.addEventListener("click", () => {
     dialog[i].showModal();
+    let inputVal = userName[i] as HTMLInputElement
     back[i].addEventListener("click", () => {
       dialog[i].close();
     });
     startQuiz[i].addEventListener("click" , () => {
       window.location.href = "../quiz-page/quiz-page.html"
-      localStorage.setItem("currentQuiz" , i.toString())
+      sessionStorage.setItem("currentQuiz" , i.toString())
+      sessionStorage.setItem("currentUser" , inputVal.value)
     })
   });
 })

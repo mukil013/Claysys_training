@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Borel&display=swap');
+
 * {
   padding: 0;
   margin: 0;
@@ -47,6 +49,13 @@ nav ul li:nth-child(1){
   align-items: center;
   gap: 1rem;
 }
+.logo{
+  background-image: linear-gradient(45deg,red,pink,royalblue);
+  background-clip: text;
+  color: transparent;
+  font-family: borel;
+  font-size: 1.2rem;
+}
 #account:active{
   color: royalblue;
 }
@@ -84,15 +93,11 @@ nav ul li:nth-child(1){
 .accountMenu ul li button{
   color: red;
 }
-.logo {
-  font-weight: bold;
-  font-size: 1.2rem;
-}
 .switch {
   position: relative;
   display: inline-block;
-  width: 3em;
-  height: 1.5em;
+  width: 4em;
+  height: 2em;
 }
 
 .switch input {
@@ -116,11 +121,13 @@ nav ul li:nth-child(1){
 .slider:before {
   position: absolute;
   content: "";
-  width: 1em;
-  height: 1em;
+  width: 1.5em;
+  height: 1.5em;
   left: 4px;
   bottom: 4px;
-  background-color: white;
+  background-image: url('../../../../assets/dark_mode_24dp_9E9E9E_FILL0_wght400_GRAD0_opsz24.png');
+  background-size: cover;
+  background-color: #fff;
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
@@ -130,7 +137,8 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-  transform: translateX(22px);
+  background-image: url('../../../../assets/wb_sunny_24dp_FFF_FILL0_wght400_GRAD0_opsz24.png');
+  transform: translateX(2em);
   background-color: #222;
 }
 
@@ -153,7 +161,7 @@ main{
 }
 main aside{
   height: 100%;
-  width: 20em;
+  width: 15em;
   border-right: 1px solid #33333355;
 }
 main aside ul{
@@ -227,40 +235,67 @@ main aside ul li button{
 }
 .course-list ul {
   grid-area: "content";
-  width: 100%;
-  height: 100%;
+  width: fit-content;
   padding: 1rem;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  grid-template-rows: repeat(4,1fr);
   gap: 1rem;
+  row-gap: 1rem;
+  counter-reset: count;
 }
 .course-list ul li {
   list-style: none;
   min-width: 20rem;
-  height: 25vh;
-  width: 22.5vw;
+  width: 20vw;
   border-radius: 12px;
   border: 1px solid #9e9e9e55;
-  padding: 1rem; 
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+  counter-increment: count 1;
 }
 .course-list ul li h1 {
-  padding: .5rem 0;
-}
-.course-list ul li div {
-  text-align: right;
-  padding: 1rem;
-  border-top: 1px solid #33333355;
-}
-.course-list ul li div p {
-  height: 3rem;
+  font-size: 1.5rem;
   width: 100%;
+  padding: .5rem 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  text-align: justify;
 }
-.course-list ul li div button {
-  padding: 0.5rem 1rem;
+.course-list ul li h1::before{
+  content: counter(count)' . ';
+  font-size: 1.5rem;
+  opacity: .5;
+  border-radius: 100%;
+}
+.course-list ul li div{
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  gap: 1rem;
+}
+.course-list ul li button {
+  height: 2rem;
+  aspect-ratio: 2/1;
+  border: none;
+  outline: none;
+  background-color: #9e9e9e55;
+  color: #9e9e9e;
+  border-radius: 6px;
+}
+.course-list ul li button:nth-child(2){
+  background-color: rgba(255, 0, 0, 0.493);
+  color: #fff;
+}
+.course-list ul li button:nth-child(2):hover{
+  background-color: rgba(255, 0, 0, 0.3);
+  color: red;
+}
+.course-list ul li button:hover{
+  color: royalblue;
 }
 .leader-board{
   height: 100%;
@@ -332,6 +367,26 @@ main aside ul li button{
 .user-management table tr:nth-child(2n-2){
   background-color: #9e9e9e55;
 }
+.user-management table button{
+  height: 2rem;
+  aspect-ratio: 2/1;
+  border: none;
+  outline: none;
+  background-color: #9e9e9e55;
+  color: #9e9e9e;
+  border-radius: 6px;
+}
+.user-management table button:hover{
+  color: royalblue;
+}
+.user-management table  button:nth-child(2){
+  background-color: rgba(255, 0, 0, 0.493);
+  color: #fff;
+}
+.user-management table  button:nth-child(2):hover{
+  background-color: rgba(255, 0, 0, 0.3);
+  color: red;
+}
 main aside ul li button:focus{
   color: royalblue;
   border-color:royalblue;
@@ -353,7 +408,7 @@ main aside ul li button:focus{
 }
 #add-form{
   height: fit-content;
-  width: 50%;
+  width: 50vw;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -365,18 +420,18 @@ main aside ul li button:focus{
   transition: all .2s linear;
 }
 #add-form::backdrop{
-  backdrop-filter: blur(.8rem);
+  backdrop-filter: blur(5px);
 }
-#add-form button{
-  padding: 0.3rem 1rem;
+#add-form button , #add-form input[type=submit]{
+  padding: 6px 12px;
   border: none;
   border-radius: 6px;
   color: #9e9e9e;
 }
-#add-form button:hover{
+#add-form button:hover , #add-form input[type=submit]:hover{
   color: royalblue;
 }
-#add-form button.dark-mode{
+#add-form button.dark-mode , #add-form input[type=submit]{
   background-color: #333;
 }
 #add-form textarea.dark-mode{
@@ -391,7 +446,6 @@ main aside ul li button:focus{
   resize: none;
   border-radius: 6px;
   border: 1px solid #33333355;
-  outline: none;
 }
 #userCount{
   padding: 1rem 0.5rem;
@@ -407,6 +461,87 @@ main aside ul li button:focus{
   gap: 1rem;
   padding: 1rem;
 }
+#dialog-form button{
+  background-color: #9e9e9e55;
+  color: #9e9e9e;
+}
 #back{
   width: fit-content;
+  background-color: #9e9e9e55;
+  color: #9e9e9e;
+}
+#add-form input{
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #9e9e9e55;
+}
+#add-form input[type=submit]{
+  background-color: #9e9e9e55;
+  color: #9e9e9e;
+}
+#dialog-form li input[type="number"]{
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #9e9e9e55;
+}
+#add-form textarea{
+  resize: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #33333355;
+}
+#options{
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+#options li input{
+  width: 30vw;
+  border: 1px solid #9e9e9e55;
+}
+#add-question-form select{
+  background: #9e9e9e55;
+  padding: 4px 8px;
+  color: #fff;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  border: none;
+  margin: 4px;  
+}
+#add-question-form select option:disabled{
+  color: #9e9e9e55;
+}
+#title{
+  width: 100%;
+  margin-top: 12px;
+}
+#add-question-form{
+  display: none;
+}
+#add-question-form input{
+  margin: 8px 0;
+}
+#add-question-form textarea{
+  width: 100%;
+  margin: 12px 0;
+}
+#add-question-form button{
+  background-color: #9e9e9e55;
+  color: #9e9e9e;
+}
+#save-changes{
+  margin-bottom: 12px;
+}
+#preview-dialog{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  height: 100vh;
+  width: 50vw;
+  background-color: #fff;
 }
