@@ -15,10 +15,10 @@ form.addEventListener("submit", (e) => {
       window.location.replace("/src/admin_module/adminPanel/adminPanel.html");
     }
     else{
-      userData.forEach((i) => {
-        if (i.password === password.value) {
+      userData.forEach((el,i) => {
+        if (el.password === password.value) {
           window.location.replace("../user_module/course_list/courseList.html");
-          console.log("working");
+          sessionStorage.setItem("userIndex" , i.toString());
           return;
         }
       });

@@ -14,12 +14,12 @@
       <ul>
         <li>
           <label class="switch">
-            <label class="switch">
+            <label class="switch" title="Dark mode & Light mode">
               <input type="checkbox" />
               <span class="slider round"></span> </label
           ></label>
         </li>
-        <li><button id="account"><i class="fa-solid fa-user"></i></button></li>
+        <li><button id="account" title="Account"><i class="fa-solid fa-user"></i></button></li>
       </ul>
       <div class="accountMenu">
         <ul>
@@ -81,6 +81,7 @@
             <label for="title"
               >Quiz title :
               <input type="text" id="title" placeholder="Course Title"
+              required
             /></label>
             <label>Quiz description : </label
             ><textarea
@@ -89,6 +90,7 @@
               id="description"
               rows="4"
               placeholder="Enter Your Description"
+              required
             ></textarea>
             <input type="submit" value="Add Quiz">
           </form>
@@ -101,28 +103,29 @@
                 id="qtitle"
                 rows="4"
                 placeholder="Enter Your Question"
+                required
               ></textarea>
               <ul id="options">
                 <li>
-                  <label>option 1 : <input type="text" /></label>
+                  <label>option 1 : <input type="text" required/> </label>
                 </li>
                 <li>
-                  <label>option 2 : <input type="text" /></label>
+                  <label>option 2 : <input type="text" required/> </label>
                 </li>
                 <li>
-                  <label>option 3 : <input type="text" /></label>
+                  <label>option 3 : <input type="text" required/> </label>
                 </li>
                 <li>
-                  <label>option 4 : <input type="text" /></label>
+                  <label>option 4 : <input type="text" required/> </label>
                 </li>
               </ul>
-              <label>Correct Answer : </label>
-              <select id="correct-answer">
+              <label>Correct Option : </label>
+              <select id="correct-answer" required>
                 <option selected disabled>Select Your answer</option>
-                <option>option 1</option>
-                <option>option 2</option>
-                <option>option 3</option>
-                <option>option 4</option>
+                <option value = 1 >1</option>
+                <option value = 2>2</option>
+                <option value = 3>3</option>
+                <option value = 4>4</option>
               </select><br/>
               <label>Marks for the question : </label>
               <input type="number" placeholder="Mark for the question" id="marks"><br/>

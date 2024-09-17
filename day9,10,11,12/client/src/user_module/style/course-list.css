@@ -26,7 +26,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 0 1rem;
-  border-bottom: 1px solid #33333355;
+  border-bottom: 1px solid #9e9e9e55;
 }
 nav ul {
   display: flex;
@@ -49,9 +49,6 @@ nav ul li:nth-child(2) button {
   background-color: transparent;
   border: none;
   outline: none;
-}
-.logo{
-  background-image: url('../../../assets/paulina-milde-jachowska-kZXIFK1uSTk-unsplash.jpg');
 }
 #utils {
   height: 100%;
@@ -122,42 +119,47 @@ nav ul li:nth-child(2) button {
 main {
   overflow: hidden;
   grid-area: "main";
-  display: grid;
+  display: flex;
   grid-template-areas: "content";
-  grid-template-columns: 100%;
 }
 main ul {
   grid-area: "content";
-  width: 100%;
   padding: 1rem;
-  display: flex;
   gap: 1rem;
-  display: grid;
-  grid-template-columns: repeat(4,1fr);
-  grid-template-rows: repeat(4,1fr);
+  display: flex;
+  align-content: flex-start;
+  justify-content: center;
+  flex-flow: wrap;
   overflow: scroll;
+  counter-reset: 0;
+  align-items: center;
 }
 main ul li {
   list-style: none;
   text-wrap:nowrap;
-  height: 100%;
-  width: 100%;
+  height: fit-content;
+  width: 25rem;
   border-radius: 12px;
-  border: 1px solid #33333355;
+  border: 1px solid #9e9e9e55;
   padding: 1rem;
+  counter-increment: count 1;
 }
 main ul li h1 {
   padding: 0.5rem 0;
   font-size: 1.5rem;
-  font-variant-ligatures: common-ligatures;
-  font-family: fira code;
+  font-family: Helvetica;
+  overflow: hidden;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 main ul li div {
   text-align: right;
   padding: 1rem;
-  border-top: 1px solid #33333355;
+  border-top: 1px solid #9e9e9e55;
 }
 main ul li div p {
+  opacity: .5;
   height: 3rem;
   width: 100%;
   overflow: hidden;
@@ -167,8 +169,17 @@ main ul li div p {
 }
 main ul li div button {
   padding: 0.5rem 1rem;
+  background-color: #9e9e9e22;
+}
+main ul li h1::before{
+  content: counter(count)' . ';
+  font-size: 1.5rem;
+  opacity: .5;
+  border-radius: 100%;
 }
 #dialog {
+  background-color: #ffffff;
+  color: #222;
   text-align: left;
   height: 50vh;
   min-width: 80vw;
@@ -177,9 +188,13 @@ main ul li div button {
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 1rem;
-  border: 1px solid #33333355;
+  border: 1px solid #9e9e9e55;
   border-radius: 0.5rem;
   position: relative;
+  transition: none;
+}
+#dialog > *{
+  transition: none;
 }
 #dialog p {
   padding: 1rem;
@@ -194,14 +209,34 @@ main ul li div button {
   border: none;
   outline: none;
   border-radius: 4px;
+  background-color: #9e9e9e22;
+  color: #9e9e9e;
+}
+#dialog button:nth-child(1):hover{
+  color: royalblue;
+}
+#dialog form{
+  width: 100%;
+  height: 20%;
+  border-top: 1px solid #9e9e9e55;
+  display: flex;
+  align-items: center;
+  justify-content: end;
 }
 #dialog input {
-  padding: 0.3rem 0.5rem;
+  border: 1px solid #9e9e9e55;
+  border-radius: 2px;
+  padding: 0.35rem 0.5rem;
+  margin-right: 12px;
 }
 #dialog::backdrop {
+  background: #00000022;
   backdrop-filter: blur(1rem);
 }
-
+#dialog.dark-mode{
+  background-color: #222;
+  color: #fff;
+}
 .switch {
   position: relative;
   display: inline-block;

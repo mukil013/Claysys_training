@@ -133,7 +133,6 @@ let courseInit: course = {
 let courseListStorage: course[] = viewCourse();
 
 addBtn.addEventListener("click", () => {
-  let questionNumber: number = 1;
   let addForm = document.querySelector("#add-quiz") as HTMLFormElement;
   let questionForm = document.querySelector(
     "#add-question-form"
@@ -152,9 +151,12 @@ addBtn.addEventListener("click", () => {
   ) as HTMLSelectElement;
   let optionsFromInput = document.querySelectorAll("#options li input");
   let questionsArray: question[] = [];
+
   let questionNumberForDisplay = document.querySelector(
     "#question-number"
   ) as HTMLDivElement;
+
+  let temp = false
 
   courseInit = {
     title: "",
@@ -164,10 +166,9 @@ addBtn.addEventListener("click", () => {
 
   questionForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    console.log("working");
-    questionNumberForDisplay.textContent = `Question number : ${questionNumber}`;
-    title.readOnly = true;
-    description.readOnly = true;
+    
+    questionNumberForDisplay.textContent = `Question number : ${questionsArray.length+2}`;
+
     let option: string[] = [];
     optionsFromInput.forEach((el) => {
       let ele = el as HTMLInputElement;
@@ -175,18 +176,19 @@ addBtn.addEventListener("click", () => {
     });
 
     let question: question = {
-      qno: questionNumber,
+      qno: questionsArray.length+1,
       question: qtitle.value,
       options: option,
-      correctAnswer: correctAns.value,
+      correctAnswer: Number(correctAns.value),
       markForTheQuestion: marks.valueAsNumber,
     };
 
     questionsArray.push(question);
     courseInit.questions = questionsArray;
     questionForm.reset();
-    console.log(courseListStorage);
-    questionNumber++;
+    console.log(questionsArray);
+    
+    temp = true
   });
 
   let previewBtn = document.querySelector("#preview") as HTMLButtonElement;
@@ -199,22 +201,39 @@ addBtn.addEventListener("click", () => {
   let previewListView = document.querySelector(
     "#preview-dialog ul"
   ) as HTMLUListElement;
+  
 
   previewBtn.addEventListener("click", () => {
     previewDialog.showModal();
-    let li = document.createElement("li");
     let previewContent = ''
-    questionsArray.forEach(i => {
-      previewContent = `<p>${i.qno}</p>
-                        <p>${i.question}</p>`
-      i.options.forEach(el => {
-        previewContent += `<p>${el}</p>`
+    let li = document.createElement("li");
+    for(let i = 0; i < questionsArray.length; i++){
+      li.innerHTML = ""
+      if(temp){
+      previewContent = `<p>Question no : ${questionsArray[i].qno}</p><br />
+                        <p>Question : ${questionsArray[i].question}</p><br />
+                        <p>Options</p>
+                        <ol>`
+      questionsArray[i].options.forEach(el => {
+        previewContent += `<li>${el}</li>`
       })
-      previewContent += `<p>${i.correctAnswer}</p>
-                        <p>${i.markForTheQuestion}</p>`
+      previewContent += `</ol>
+                        <br />
+                        <p>Correct Answer : ${questionsArray[i].correctAnswer}</p><br />
+                        <p>Mark for the Question : ${questionsArray[i].markForTheQuestion}</p>
+                        <button class="delInPreview" >Delete</button>`
+      li.innerHTML += previewContent
+      previewListView.appendChild(li);
+      }
+      if(i === questionsArray.length - 1) temp = false
+    }
+    (document.querySelectorAll("#delInPreview")).forEach((el,i) => {
+      (el as HTMLButtonElement).addEventListener('click' , () => {
+        questionsArray.splice(i, 1)
+        previewListView.removeChild(li)
+        console.log(i);
+      })
     })
-    li.innerHTML = previewContent
-    previewListView.appendChild(li)
   });
   previewBtnBack.addEventListener("click", () => {
     previewDialog.close();
@@ -260,9 +279,8 @@ window.addEventListener("load", () => {
   courseListStorage.forEach((el) => {
     let li = document.createElement("li") as HTMLLIElement;
     content = `
-               <h1 class="course-title">${el.title}</h1>
+               <h1 class="course-title">${el.title.toUpperCase()}</h1>
                <div>
-               <button id="editBtn">Edit</button>
                <button class="delBtnForCourse">Delete</button>
                </div>
                `;

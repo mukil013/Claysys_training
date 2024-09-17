@@ -5,7 +5,7 @@ let accountBtn = document.querySelector("#account") as HTMLButtonElement;
 let LogOut = document.querySelector("#log-out") as HTMLButtonElement;
 let checkBox = document.querySelector("nav input") as HTMLInputElement;
 let main = document.querySelectorAll(
-  "main, nav ul li a, body, #dialog > * , main ul li , main ul li, #dialog input[type=text], #account, #utils li button, .accountMenu li > *, .accountMenu"
+  "main, nav ul li a, body, main ul li, main ul li div button, #account, #utils li button, .accountMenu li > *, .accountMenu"
 );
 let mainUl = document.querySelector("#view-course") as HTMLUListElement;
 
@@ -13,7 +13,7 @@ let content = "";
 viewCourse().forEach((i) => {
   let description = i.description
   content = `<li>
-              <h1>${i.title}</h1>
+              <h1>${i.title.toUpperCase()}</h1>
               <div>
                 <p>${description}</p>
                 <button id="know-more">Know more</button>
@@ -21,8 +21,8 @@ viewCourse().forEach((i) => {
                   <button class="back">Back</button>
                   <p><b>Description :</b> ${description}</p>
                   <div>
-                    <input type="text" placeholder="Enter your name" class="user-name">
-                    <a><button class="start-quiz">Start Quiz</button></a>
+                    <input type="text" placeholder="Enter your name" class="user-name" required>
+                    <button type="button" class="start-quiz">Start Quiz</button>
                   </div>
                 </dialog>
               </div> 
@@ -41,14 +41,24 @@ let accountFlag = true;
 knowMore.forEach((el,i) => {
   el.addEventListener("click", () => {
     dialog[i].showModal();
+    if (checkBox.checked) {
+    dialog[i].classList.add("dark-mode");
+    }else{
+      dialog[i].classList.remove("dark-mode");
+    }
     let inputVal = userName[i] as HTMLInputElement
     back[i].addEventListener("click", () => {
       dialog[i].close();
     });
     startQuiz[i].addEventListener("click" , () => {
+      let userNameVal = ((userName[i]) as HTMLInputElement).value
+      if(userNameVal != ""){
       window.location.href = "../quiz-page/quiz-page.html"
       sessionStorage.setItem("currentQuiz" , i.toString())
       sessionStorage.setItem("currentUser" , inputVal.value)
+      }else{
+        alert("Enter your name to start quiz")
+      }
     })
   });
 })
@@ -71,10 +81,12 @@ checkBox.addEventListener("click", () => {
     main.forEach((i) => {
       i.classList.add("dark-mode");
     });
+    localStorage.setItem("dark-mode" , "true")
   } else {
     main.forEach((i) => {
       i.classList.remove("dark-mode");
     });
+    localStorage.setItem("dark-mode" , "false")
   }
 });
 
@@ -82,10 +94,12 @@ window.addEventListener("load", () => {
   if (checkBox.checked) {
     main.forEach((i) => {
       i.classList.add("dark-mode");
+      console.log(localStorage.getItem("dark-mode"));
     });
   } else {
     main.forEach((i) => {
       i.classList.remove("dark-mode");
+      console.log(localStorage.getItem("dark-mode"));
     });
   }
 });

@@ -8,7 +8,7 @@ export interface question {
   qno: number,
   question: string,
   options: string[],
-  correctAnswer: string,
+  correctAnswer: number,
   markForTheQuestion: number
 }
 

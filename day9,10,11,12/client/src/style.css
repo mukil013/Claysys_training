@@ -70,7 +70,7 @@ h1{
   height: 25vh;
   width: 25vw;
   border: 1px solid #fff;
-  background-color: beige;
+  background-color: #9e9e9e55;
   transition: all .2s ease;
   padding: 1rem;
 }
