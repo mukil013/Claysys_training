@@ -68,7 +68,7 @@ nav ul li:nth-child(2) button {
 #utils li:nth-child(1) {
   border: none;
 }
-#utils li button:focus,
+#utils li button[active],
 #account:active {
   color: royalblue;
 }
@@ -303,14 +303,14 @@ input:checked + .slider:before {
   background-color: green;
   color: #fff;
 }
-#know-more {
+.know-more, .quick-quiz {
   color: #9e9e9e;
   border: none;
   outline: none;
   border-radius: 0.3rem;
   transition: 0.2s all ease-in-out;
 }
-#know-more:hover,
+.know-more:hover, .quick-quiz:hover,
 #back:hover {
   color: royalblue;
 }
@@ -327,4 +327,7 @@ input:checked + .slider:before {
   border-color: #ffffff22;
   background-color: #222;
   color: #fff;
+}
+#course-history{
+  display: none;
 }

@@ -16,10 +16,11 @@ form.addEventListener("submit", (e) => {
     }
     else{
       userData.forEach((el,i) => {
-        if (el.password === password.value) {
+        if (el.password === password.value && el.email === email.value) {
           window.location.replace("../user_module/course_list/courseList.html");
           sessionStorage.setItem("userIndex" , i.toString());
-          return;
+          console.log(i);
+          return
         }
       });
       form.reset();

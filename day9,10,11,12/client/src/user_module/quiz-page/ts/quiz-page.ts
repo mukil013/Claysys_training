@@ -1,14 +1,20 @@
-import { course, viewCourse } from "../../../models/courseModel";
-import { courseAttempt, getUser, setUser, users } from "../../../models/userModel";
+import { addCourse, course, viewCourse } from "../../../models/courseModel";
+import {
+  courseAttempt,
+  getUser,
+  setUser,
+  users,
+} from "../../../models/userModel";
 
 let timer = document.querySelector(".timer") as HTMLParagraphElement;
 let time = 60;
 
 setInterval(() => {
   timer.textContent = `${(time--).toString()}s`;
-  if (time === 0) window.location.href = "/src/user_module/course_list/courseList.html";
-  if(time <= 15){
-    timer.style.color = "red"
+  if (time === 0)
+    window.location.href = "/src/user_module/course_list/courseList.html";
+  if (time <= 15) {
+    timer.style.color = "red";
   }
 }, 1000);
 
@@ -88,43 +94,73 @@ next.forEach((el, i) => {
     let inputs = listEl[i].querySelectorAll('input[type="radio"]');
 
     inputs.forEach((el, indexVal) => {
-      if ((el as HTMLInputElement).checked) currentAnswer = indexVal + 1;
-      return
-    });
-    if (currentAnswer === contentItems.questions[i].correctAnswer){
-      score += contentItems.questions[i].markForTheQuestion;
-    }
-    let submitBtn = document.querySelector("#submit-quiz") as HTMLButtonElement;
-    let userData:users[] = getUser()
-
-    submitBtn.addEventListener(
-      "click",
-      () => {
-        inputs.forEach( (el, i) => {
-          if((el as HTMLInputElement).checked) currentAnswer = i+1
-        })
-        if(currentAnswer === contentItems.questions[i].correctAnswer) score += contentItems.questions[i].markForTheQuestion
-        let indexOfUser = Number(sessionStorage.getItem("userIndex"))
-
-        let userSumbit:users = userData[indexOfUser]
-        let userNameVal =  sessionStorage.getItem("currentUser") || ""
-
-        let tempCourseAttempt:courseAttempt = {
-          user: userNameVal,
-          name: contentItems.title,
-          mark: score
+      if ((el as HTMLInputElement).checked){
+        currentAnswer = indexVal;
+        if (currentAnswer === contentItems.questions[i].correctAnswer-1) {
+          score += contentItems.questions[i].markForTheQuestion;
         }
-
-        let courseIndex:number = userSumbit.courseAttempt.length
-        userSumbit.courseAttempt[courseIndex] = tempCourseAttempt
-
-        setUser(userData)
-        console.log(getUser());
-        console.log(userSumbit);
-        
-        window.location.href = "/src/user_module/course_list/courseList.html";
       }
-    );
+    });
+
+    // Check if this is the last question and update the score
+    // const len = contentItems.questions.length;
+    // if (currentAnswer === contentItems.questions[len - 1].correctAnswer) {
+    //   score += contentItems.questions[len - 1].markForTheQuestion;
+    // }
+
+    // Assuming you have a submit button with id "submit-quiz"
+    const submitBtn = document.querySelector(
+      "#submit-quiz"
+    ) as HTMLButtonElement;
+    const userData: users[] = getUser();
+    console.log(i);
+    
+    submitBtn.addEventListener("click", () => { 
+      let indexOfLast = i+1
+      let inputFeild = listEl[indexOfLast].querySelectorAll('input[type="radio"]');
+      inputFeild.forEach((el, indexVal) => {
+        if ((el as HTMLInputElement).checked){
+          currentAnswer = indexVal;
+          if (currentAnswer === contentItems.questions[indexOfLast].correctAnswer-1) {
+            console.log(contentItems.questions[indexOfLast]);
+            score += contentItems.questions[indexOfLast].markForTheQuestion;
+          }
+        }
+      });
+
+      console.log("Total score:", score);
+
+      const indexOfUser = Number(sessionStorage.getItem("userIndex"));
+      const userSubmit: users = userData[indexOfUser];
+
+      // Explicitly cast userSubmit.courseAttempt to an array of courseAttempt
+
+
+      let courseList:course[] = viewCourse()
+
+      const tempCourseAttempt: courseAttempt = {
+        userName: userData[indexOfUser].name,
+        name: contentItems.title,
+        mark: score,
+      };
+
+      // Check if the quiz attempt already exists for this user
+      const existingAttempt = userSubmit.courseAttempt.find(
+        (ele) => ele.name === tempCourseAttempt.name
+      );
+
+      console.log(score);
+      
+
+      if (!existingAttempt) {
+        userSubmit.courseAttempt.push(tempCourseAttempt);
+        courseList[currentQuiz].courseAttempt.push(tempCourseAttempt)
+        addCourse(courseList)
+        setUser(userData);
+      }
+      
+      window.location.href = "/src/user_module/quiz-page/quiz-summary.html";
+    });
   });
 });
 

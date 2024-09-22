@@ -1,7 +1,10 @@
+import { courseAttempt } from "./userModel";
+
 export interface course {
   title: string,
   description: string,
   questions: question[]
+  courseAttempt: courseAttempt[]
 }
 
 export interface question {

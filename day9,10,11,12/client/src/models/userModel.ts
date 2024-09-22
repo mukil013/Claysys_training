@@ -1,11 +1,12 @@
 export interface users {
+  name: string,
   email: string;
   password: string;
   courseAttempt: courseAttempt[]
 }
 
 export interface courseAttempt{
-  user: string,
+  userName?: string,
   name : string,
   mark: number
 }

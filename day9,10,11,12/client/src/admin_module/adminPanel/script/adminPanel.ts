@@ -1,4 +1,4 @@
-import { getUser, setUser } from "../../../models/userModel";
+import { getUser, setUser, users } from "../../../models/userModel";
 import {
   course,
   addCourse,
@@ -27,7 +27,7 @@ let userManagement = document.querySelector(
 let accountFlag = true;
 let loggedAs = document.querySelector("#logged-as") as HTMLParagraphElement;
 
-loggedAs.textContent = "admin@123.com";
+loggedAs.textContent = "admin";
 
 accountBtn.addEventListener("click", () => {
   if (accountFlag) {
@@ -128,9 +128,11 @@ let courseInit: course = {
   title: "",
   description: "",
   questions: [],
+  courseAttempt: [],
 };
 
 let courseListStorage: course[] = viewCourse();
+let questionsArray: question[] = [];
 
 addBtn.addEventListener("click", () => {
   let addForm = document.querySelector("#add-quiz") as HTMLFormElement;
@@ -140,123 +142,115 @@ addBtn.addEventListener("click", () => {
 
   addDialog.showModal();
 
-  let qtitle = document.querySelector("#qtitle") as HTMLTextAreaElement;
   let title = document.querySelector("#title") as HTMLInputElement;
-  let marks = document.querySelector("#marks") as HTMLInputElement;
-  let description = document.querySelector(
-    "#description"
-  ) as HTMLTextAreaElement;
-  let correctAns = document.querySelector(
-    "#correct-answer"
-  ) as HTMLSelectElement;
-  let optionsFromInput = document.querySelectorAll("#options li input");
-  let questionsArray: question[] = [];
 
-  let questionNumberForDisplay = document.querySelector(
-    "#question-number"
-  ) as HTMLDivElement;
+  title.addEventListener("blur", () => {
+    if (courseListStorage.length != 0) {
+      courseListStorage.forEach((i) => {
+        if (i.title.toLowerCase() === title.value.toLowerCase()) {
+          alert("course already exist");
+          addForm.reset();
+          return;
+        }
+      });
+    }
+    courseInit.title = title.value;
+    let qtitle = document.querySelector("#qtitle") as HTMLTextAreaElement;
+    let marks = document.querySelector("#marks") as HTMLInputElement;
+    let correctAns = document.querySelector(
+      "#correct-answer"
+    ) as HTMLSelectElement;
+    let optionsFromInput = document.querySelectorAll("#options li input");
 
-  let temp = false
+    let questionNumberForDisplay = document.querySelector(
+      "#question-number"
+    ) as HTMLDivElement;
 
-  courseInit = {
-    title: "",
-    description: "",
-    questions: [],
-  };
+    (
+      document.querySelector("#save-question") as HTMLButtonElement
+    ).addEventListener("click", () => {
+      let len = questionsArray.length;
+      questionNumberForDisplay.textContent = `Question number: ${len + 1}`;
 
-  questionForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    
-    questionNumberForDisplay.textContent = `Question number : ${questionsArray.length+2}`;
-
-    let option: string[] = [];
-    optionsFromInput.forEach((el) => {
-      let ele = el as HTMLInputElement;
-      option.push(ele.value);
+      let option: string[] = [];
+      optionsFromInput.forEach((el) => {
+        let ele = el as HTMLInputElement;
+        const optionValue = ele.value.trim();
+        if (optionValue) {
+          option.push(optionValue);
+        }
+      });
+      let question: question = {
+        qno: len + 1,
+        question: qtitle.value.trim(),
+        options: option,
+        correctAnswer: Number(correctAns.value),
+        markForTheQuestion: marks.valueAsNumber,
+      };
+      if (question.question && question.options.length > 0) {
+        questionsArray.push(question);
+        courseInit.questions = questionsArray;
+        questionForm.reset();
+      }
     });
 
-    let question: question = {
-      qno: questionsArray.length+1,
-      question: qtitle.value,
-      options: option,
-      correctAnswer: Number(correctAns.value),
-      markForTheQuestion: marks.valueAsNumber,
-    };
+    let previewBtn = document.querySelector("#preview") as HTMLButtonElement;
+    let previewBtnBack = document.querySelector(
+      "#preview-back"
+    ) as HTMLButtonElement;
+    let previewDialog = document.querySelector(
+      "#preview-dialog"
+    ) as HTMLDialogElement;
+    let previewListView = document.querySelector(
+      "#preview-dialog ul"
+    ) as HTMLUListElement;
 
-    questionsArray.push(question);
-    courseInit.questions = questionsArray;
-    questionForm.reset();
-    console.log(questionsArray);
-    
-    temp = true
-  });
+    let previewContent: string = "";
 
-  let previewBtn = document.querySelector("#preview") as HTMLButtonElement;
-  let previewBtnBack = document.querySelector(
-    "#preview-back"
-  ) as HTMLButtonElement;
-  let previewDialog = document.querySelector(
-    "#preview-dialog"
-  ) as HTMLDialogElement;
-  let previewListView = document.querySelector(
-    "#preview-dialog ul"
-  ) as HTMLUListElement;
-  
+    previewBtn.addEventListener("click", () => {
+      previewDialog.showModal();
+      previewListView.innerHTML = "";
+      questionsArray.forEach((el) => {
+        let li = document.createElement("li");
+        previewContent = `<p>Question no : ${el.qno}</p><br />
+            <p>Question : ${el.question}</p><br />
+            <p>Options</p>
+            <ol>`;
+        el.options.forEach((ele) => {
+          previewContent += `<li>${ele}</li>`;
+        });
+        previewContent += `</ol>
+            <br />
+            <p>Correct Answer : ${el.correctAnswer}</p><br />
+            <p>Mark for the Question : ${el.markForTheQuestion}</p>
+            <button class="delInPreview" >Delete</button>`;
+        li.innerHTML += previewContent;
+        previewListView.appendChild(li);
 
-  previewBtn.addEventListener("click", () => {
-    previewDialog.showModal();
-    let previewContent = ''
-    let li = document.createElement("li");
-    for(let i = 0; i < questionsArray.length; i++){
-      li.innerHTML = ""
-      if(temp){
-      previewContent = `<p>Question no : ${questionsArray[i].qno}</p><br />
-                        <p>Question : ${questionsArray[i].question}</p><br />
-                        <p>Options</p>
-                        <ol>`
-      questionsArray[i].options.forEach(el => {
-        previewContent += `<li>${el}</li>`
-      })
-      previewContent += `</ol>
-                        <br />
-                        <p>Correct Answer : ${questionsArray[i].correctAnswer}</p><br />
-                        <p>Mark for the Question : ${questionsArray[i].markForTheQuestion}</p>
-                        <button class="delInPreview" >Delete</button>`
-      li.innerHTML += previewContent
-      previewListView.appendChild(li);
-      }
-      if(i === questionsArray.length - 1) temp = false
-    }
-    (document.querySelectorAll("#delInPreview")).forEach((el,i) => {
-      (el as HTMLButtonElement).addEventListener('click' , () => {
-        questionsArray.splice(i, 1)
-        previewListView.removeChild(li)
-        console.log(i);
-      })
-    })
-  });
-  previewBtnBack.addEventListener("click", () => {
-    previewDialog.close();
-  });
-
-  addForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    let listItems = document.querySelectorAll(".course-list ul li");
-
-    document.querySelectorAll(".delBtnForCourse").forEach((el, i) => {
-      el.addEventListener("click", () => {
-        courseListItems.removeChild(listItems[i]);
-        courseListStorage.splice(i, 1);
-        addCourse(courseListStorage);
+        document.querySelectorAll("#delInPreview").forEach((el, i) => {
+          (el as HTMLButtonElement).addEventListener("click", () => {
+            questionsArray.splice(i, 1);
+            previewListView.removeChild(li);
+          });
+        });
       });
     });
+    previewBtnBack.addEventListener("click", () => {
+      previewDialog.close();
+    });
 
-    (courseInit.title = title.value),
-      (courseInit.description = description.value),
-      (questionForm.style.display = "block");
-    addForm.style.display = "none";
-    addForm.reset();
+    addForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      let description = document.querySelector(
+        "#description"
+      ) as HTMLTextAreaElement;
+      courseInit.description = description.value;
+
+      questionForm.style.display = "block";
+      addForm.style.display = "none";
+    });
   });
+  addForm.reset();
 });
 
 let backBtn = document.querySelector("#back") as HTMLButtonElement;
@@ -290,15 +284,58 @@ window.addEventListener("load", () => {
 
   let listItems = document.querySelectorAll(".course-list ul li");
 
+  let user = getUser();
+
   document.querySelectorAll(".delBtnForCourse").forEach((el, i) => {
-    el.addEventListener(
-      "click",
-      () => {
-        courseListItems.removeChild(listItems[i]);
-        courseListStorage.splice(i, 1);
-        addCourse(courseListStorage);
-      },
-      { once: true }
-    );
+    el.addEventListener("click", () => {
+      let temp = courseListStorage[i].title;
+
+      courseListItems.removeChild(listItems[i]);
+      courseListStorage.splice(i, 1);
+      addCourse(courseListStorage);
+
+      let indexToDel = -1;
+      user.forEach((i) => {
+        i.courseAttempt.forEach((el, index) => {
+          if (el.name === temp) {
+            console.log(el.name+" "+temp);
+            indexToDel = index;
+          }
+        });
+        if(indexToDel != -1){
+          i.courseAttempt.splice(indexToDel, 1);
+          indexToDel = -1
+        }
+      });
+      setUser(user)
+    });
   });
+});
+
+let usersData: course[] = viewCourse();
+
+let leaderTable = document
+  .querySelector("table")!
+  .getElementsByTagName("tbody")[0];
+
+let contentForTable = "";
+
+usersData.forEach((i) => {
+  i.courseAttempt.forEach((i1,index) => {
+    contentForTable += `
+                      <tr>
+                        <td>${index+1}</td>
+                        <td>${i1.userName}</td>
+                        <td>${i1.name}</td>
+                        <td>${i1.mark}</td>
+                        <td>
+                          <button>edit</button>
+                          <button>delete</button>
+                        </td>
+                      </tr>`;
+
+    console.log(i1);
+  });
+
+  leaderTable.innerHTML = contentForTable;
 });
