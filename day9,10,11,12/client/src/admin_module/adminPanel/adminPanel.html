@@ -123,14 +123,14 @@
               </ul>
               <label>Correct Option : </label>
               <select id="correct-answer" required>
-                <option selected disabled>Select Your answer</option>
+                <option value = "">Select Your answer</option>
                 <option value = 1 >1</option>
                 <option value = 2>2</option>
                 <option value = 3>3</option>
                 <option value = 4>4</option>
               </select><br/>
               <label>Marks for the question : </label>
-              <input type="number" placeholder="Mark for the question" id="marks"><br/>
+              <input type="number" placeholder="Mark for the question" id="marks" required><br/>
             <input type="submit" id="save-question" value="Add question">
           </form>
         </dialog>
@@ -167,7 +167,7 @@
             </ul>
             <label>Correct Option : </label>
             <select id="edit-correct-answer" required>
-              <option selected disabled>Select Your answer</option>
+              <option value=null selected disabled>Select Your answer</option>
               <option value = 1>1</option>
               <option value = 2>2</option>
               <option value = 3>3</option>

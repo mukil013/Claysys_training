@@ -17,7 +17,7 @@ total[currentQuiz].questions.forEach((i) => {
 let scorePercent = (score[currentUser].courseAttempt[totalLen - 1].mark / totalScore)*100;
 
 userScore.textContent =
-  scorePercent.toString() +
+  scorePercent.toFixed(2) +
   "%";
 
 let leaderTable = document

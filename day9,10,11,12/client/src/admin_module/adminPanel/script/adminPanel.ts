@@ -179,10 +179,11 @@ let addForm = document.querySelector("#add-quiz") as HTMLFormElement;
 
 let previewContent: string = "";
 
+let questionNumber:number = 1
+
 addBtn.addEventListener("click", () => {
   addDialog.showModal();
-
-  let questionNumber:number = 1
+  questionNumber = 1
   let title = document.querySelector("#title") as HTMLInputElement;
 
   title.addEventListener("blur", () => {
@@ -209,10 +210,13 @@ addBtn.addEventListener("click", () => {
 
     let questionsArray: question[] = [];
 
+    (document.querySelector("#save-question") as HTMLButtonElement).addEventListener( " click " , () => {
+      questionNumber++
+    })
+
     questionForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      questionNumberForDisplay.textContent = `Question number: ${questionNumber}`;
-      questionNumber++
+      questionNumberForDisplay.textContent = `Question number: ${questionNumber+1}`;
       let option: string[] = [];
       optionsFromInput.forEach((el) => {
         let ele = el as HTMLInputElement;
@@ -232,7 +236,7 @@ addBtn.addEventListener("click", () => {
         questionsArray.push(question);
         courseInit.questions = questionsArray;
         questionForm.reset();
-        questionNumber = questionNumber + 1
+        questionNumber++
       }
     });
 
@@ -251,7 +255,7 @@ addBtn.addEventListener("click", () => {
     "#save-changes"
   ) as HTMLButtonElement;
   saveAndExit.addEventListener("click", () => {
-    if (courseInit.questions.length != 0) {
+    if (courseInit.questions.length > 1) {
       addDialog.close();
       courseListStorage.push(courseInit);
       addCourse(courseListStorage);
