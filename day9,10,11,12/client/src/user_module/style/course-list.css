@@ -17,6 +17,10 @@ body {
   grid-template-areas: "nav", "main";
   grid-template-rows: 1fr 12fr;
 }
+.logo{
+  font-family: borel;
+  font-size: 1.2rem;
+}
 nav {
   position: relative;
   grid-area: "nav";
@@ -38,6 +42,10 @@ nav ul {
 nav ul li {
   padding: 1rem;
   list-style: none;
+}
+nav ul li button{
+  height: 100%;
+  border-bottom-width: 4px;
 }
 nav ul li:nth-child(1) {
   height: 100%;
@@ -67,10 +75,6 @@ nav ul li:nth-child(2) button {
 }
 #utils li:nth-child(1) {
   border: none;
-}
-#utils li button[active],
-#account:active {
-  color: royalblue;
 }
 .accountMenu {
   background-color: #fff;
@@ -112,10 +116,6 @@ nav ul li:nth-child(2) button {
 .accountMenu ul li:nth-child(2) button:hover {
   color: royalblue;
 }
-.logo {
-  font-weight: bold;
-  font-size: 1.2rem;
-}
 main {
   overflow: hidden;
   grid-area: "main";
@@ -130,7 +130,6 @@ main ul {
   align-content: flex-start;
   justify-content: center;
   flex-flow: wrap;
-  overflow: scroll;
   counter-reset: 0;
   align-items: center;
 }
@@ -192,6 +191,7 @@ main ul li h1::before{
   border-radius: 0.5rem;
   position: relative;
   transition: none;
+  overflow: hidden;
 }
 #dialog > *{
   transition: none;
@@ -215,13 +215,20 @@ main ul li h1::before{
 #dialog button:nth-child(1):hover{
   color: royalblue;
 }
+#dialog button:nth-child(2):hover{
+  background: green;
+  color: #fff;
+}
 #dialog form{
   width: 100%;
   height: 20%;
   border-top: 1px solid #9e9e9e55;
+}
+dialog div{
   display: flex;
   align-items: center;
   justify-content: end;
+  height: 25%;
 }
 #dialog input {
   border: 1px solid #9e9e9e55;
@@ -269,7 +276,9 @@ main ul li h1::before{
   height: 1em;
   left: 4px;
   bottom: 4px;
-  background-color: white;
+  background-image: url('../../../../assets/dark_mode_24dp_9E9E9E_FILL0_wght400_GRAD0_opsz24.png');
+  background-size: cover;
+  background-color: #fff;
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
@@ -279,7 +288,8 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-  transform: translateX(22px);
+  background-image: url('../../../../assets/wb_sunny_24dp_FFF_FILL0_wght400_GRAD0_opsz24.png');
+  transform: translateX(1.5em);
   background-color: #222;
 }
 

@@ -1,17 +1,20 @@
-import { getUser, setUser, users } from "../../../models/userModel";
+import { getUser, setUser } from "../../../models/userModel";
 import {
   course,
   addCourse,
   viewCourse,
   question,
+  viewCourse,
 } from "../../../models/courseModel";
 
 let account = document.querySelector(".accountMenu") as HTMLDivElement;
 let accountBtn = document.querySelector("#account") as HTMLButtonElement;
 let LogOut = document.querySelector("#log-out") as HTMLButtonElement;
-let checkBox = document.querySelector("nav input") as HTMLInputElement;
+let checkBox = document.querySelector(
+  "#dark-mode-toggle input"
+) as HTMLInputElement;
 let main = document.querySelectorAll(
-  "body, #account, .accountMenu li > *, .accountMenu, #add, main > *, .content ul li,.leader-board ol div, .leader-board table, .user-management table > *, #add-form input, #add-form textarea, #add-form select, #add-form button, #add-form input[type=submit]"
+  "body, #account, .accountMenu li > *, .accountMenu, #add, main > *, .content ul li,.leader-board ol div, .leader-board table, .user-management table > *, #add-form input, #add-form textarea, #add-form select, #add-form button, #add-form input[type=submit], #preview-dialog"
 );
 let courseListItems = document.querySelector(
   ".course-list ul"
@@ -49,10 +52,12 @@ checkBox.addEventListener("click", () => {
   if (checkBox.checked) {
     main.forEach((i) => {
       i.classList.add("dark-mode");
+      sessionStorage.setItem("dark-mode", "true");
     });
   } else {
     main.forEach((i) => {
       i.classList.remove("dark-mode");
+      sessionStorage.setItem("dark-mode", "false");
     });
   }
 });
@@ -75,7 +80,11 @@ window.addEventListener("load", () => {
   userCount.textContent = getUser().length.toString();
   let content = "";
   getUser().forEach((i) => {
-    content += `<tr><td class="user-email">${i.email}</td>
+    content += `<tr>
+                <td><input class="user-name" type="text" value="${i.name}" readonly/></td>
+                <td>
+                <input class="user-email" type="text" value="${i.email}" readonly/>
+                </td>
                 <td><button class="editBtnUserManage">Edit</button>
                 <button class="delBtnUserManage">Delete</button></td>
                 </tr>`;
@@ -84,7 +93,27 @@ window.addEventListener("load", () => {
 
   let delBtn = document.querySelectorAll(".delBtnUserManage");
   let users = getUser();
-
+  let userEmailEdit = document.querySelectorAll(".user-email");
+  let userNameEdit = document.querySelectorAll(".user-name");
+  document.querySelectorAll(".editBtnUserManage").forEach((el, i) => {
+    let input1 = userEmailEdit[i] as HTMLInputElement;
+    let input2 = userNameEdit[i] as HTMLInputElement;
+    el.addEventListener("click", () => {
+      if (input1.readOnly && input2.readOnly) {
+        input1.readOnly = false;
+        input2.readOnly = false;
+        el.textContent = "Save";
+      } else {
+        let temp = users;
+        temp[i].name = input2.value;
+        temp[i].email = input1.value;
+        setUser(temp);
+        input1.readOnly = true;
+        input2.readOnly = true;
+        el.textContent = "Edit";
+      }
+    });
+  });
   delBtn.forEach((el, i) => {
     el.addEventListener("click", () => {
       userTable.deleteRow(i);
@@ -94,15 +123,17 @@ window.addEventListener("load", () => {
   });
 });
 
-let staticTxt = document.querySelector(".static_text h1") as HTMLHeadingElement;
+addBtn.style.display = "flex  ";
+userManagement.setAttribute("active", "false");
+leaderBoard.setAttribute("active", "false");
+courseList.setAttribute("active", "true");
 
 let courseBtn = document.querySelector("#course-btn") as HTMLButtonElement;
 courseBtn.addEventListener("click", () => {
-  addBtn.style.display = "block";
+  addBtn.style.display = "flex";
   userManagement.setAttribute("active", "false");
   leaderBoard.setAttribute("active", "false");
   courseList.setAttribute("active", "true");
-  staticTxt.style.display = "none";
 });
 
 let leaderBtn = document.querySelector("#leader-btn") as HTMLButtonElement;
@@ -111,7 +142,6 @@ leaderBtn.addEventListener("click", () => {
   userManagement.setAttribute("active", "false");
   courseList.setAttribute("active", "false");
   leaderBoard.setAttribute("active", "true");
-  staticTxt.style.display = "none";
 });
 
 let userBtn = document.querySelector("#user-btn") as HTMLButtonElement;
@@ -120,7 +150,6 @@ userBtn.addEventListener("click", () => {
   courseList.setAttribute("active", "false");
   leaderBoard.setAttribute("active", "false");
   userManagement.setAttribute("active", "true");
-  staticTxt.style.display = "none";
 });
 
 let addDialog = document.querySelector("#add-form") as HTMLDialogElement;
@@ -132,16 +161,28 @@ let courseInit: course = {
 };
 
 let courseListStorage: course[] = viewCourse();
-let questionsArray: question[] = [];
+
+let previewBtnBack = document.querySelector(
+  "#preview-back"
+) as HTMLButtonElement;
+let previewDialog = document.querySelector(
+  "#preview-dialog"
+) as HTMLDialogElement;
+let previewListView = document.querySelector(
+  "#preview-dialog ul"
+) as HTMLUListElement;
+
+let questionForm = document.querySelector(
+  "#add-question-form"
+) as HTMLFormElement;
+let addForm = document.querySelector("#add-quiz") as HTMLFormElement;
+
+let previewContent: string = "";
 
 addBtn.addEventListener("click", () => {
-  let addForm = document.querySelector("#add-quiz") as HTMLFormElement;
-  let questionForm = document.querySelector(
-    "#add-question-form"
-  ) as HTMLFormElement;
-
   addDialog.showModal();
 
+  let questionNumber:number = 1
   let title = document.querySelector("#title") as HTMLInputElement;
 
   title.addEventListener("blur", () => {
@@ -166,12 +207,12 @@ addBtn.addEventListener("click", () => {
       "#question-number"
     ) as HTMLDivElement;
 
-    (
-      document.querySelector("#save-question") as HTMLButtonElement
-    ).addEventListener("click", () => {
-      let len = questionsArray.length;
-      questionNumberForDisplay.textContent = `Question number: ${len + 1}`;
+    let questionsArray: question[] = [];
 
+    questionForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      questionNumberForDisplay.textContent = `Question number: ${questionNumber}`;
+      questionNumber++
       let option: string[] = [];
       optionsFromInput.forEach((el) => {
         let ele = el as HTMLInputElement;
@@ -181,7 +222,7 @@ addBtn.addEventListener("click", () => {
         }
       });
       let question: question = {
-        qno: len + 1,
+        qno: questionNumber,
         question: qtitle.value.trim(),
         options: option,
         correctAnswer: Number(correctAns.value),
@@ -191,52 +232,8 @@ addBtn.addEventListener("click", () => {
         questionsArray.push(question);
         courseInit.questions = questionsArray;
         questionForm.reset();
+        questionNumber = questionNumber + 1
       }
-    });
-
-    let previewBtn = document.querySelector("#preview") as HTMLButtonElement;
-    let previewBtnBack = document.querySelector(
-      "#preview-back"
-    ) as HTMLButtonElement;
-    let previewDialog = document.querySelector(
-      "#preview-dialog"
-    ) as HTMLDialogElement;
-    let previewListView = document.querySelector(
-      "#preview-dialog ul"
-    ) as HTMLUListElement;
-
-    let previewContent: string = "";
-
-    previewBtn.addEventListener("click", () => {
-      previewDialog.showModal();
-      previewListView.innerHTML = "";
-      questionsArray.forEach((el) => {
-        let li = document.createElement("li");
-        previewContent = `<p>Question no : ${el.qno}</p><br />
-            <p>Question : ${el.question}</p><br />
-            <p>Options</p>
-            <ol>`;
-        el.options.forEach((ele) => {
-          previewContent += `<li>${ele}</li>`;
-        });
-        previewContent += `</ol>
-            <br />
-            <p>Correct Answer : ${el.correctAnswer}</p><br />
-            <p>Mark for the Question : ${el.markForTheQuestion}</p>
-            <button class="delInPreview" >Delete</button>`;
-        li.innerHTML += previewContent;
-        previewListView.appendChild(li);
-
-        document.querySelectorAll("#delInPreview").forEach((el, i) => {
-          (el as HTMLButtonElement).addEventListener("click", () => {
-            questionsArray.splice(i, 1);
-            previewListView.removeChild(li);
-          });
-        });
-      });
-    });
-    previewBtnBack.addEventListener("click", () => {
-      previewDialog.close();
     });
 
     addForm.addEventListener("submit", (e) => {
@@ -250,21 +247,33 @@ addBtn.addEventListener("click", () => {
       addForm.style.display = "none";
     });
   });
+  let saveAndExit = document.querySelector(
+    "#save-changes"
+  ) as HTMLButtonElement;
+  saveAndExit.addEventListener("click", () => {
+    if (courseInit.questions.length != 0) {
+      addDialog.close();
+      courseListStorage.push(courseInit);
+      addCourse(courseListStorage);
+      window.location.reload();
+    } else {
+      alert("Enter some question to save this quiz");
+    }
+  });
+  (document.querySelector("#exit") as HTMLButtonElement).addEventListener(
+    "click",
+    () => {
+      addDialog.close();
+      questionForm.style.display = "none";
+      addForm.style.display = "flex";
+    }
+  );
   addForm.reset();
 });
 
 let backBtn = document.querySelector("#back") as HTMLButtonElement;
 backBtn.addEventListener("click", () => {
   addDialog.close();
-});
-
-let saveAndExit = document.querySelector("#save-changes") as HTMLButtonElement;
-saveAndExit.addEventListener("click", () => {
-  addDialog.close();
-  courseListStorage.push(courseInit);
-  addCourse(courseListStorage);
-  console.log(courseListStorage);
-  window.location.reload();
 });
 
 let content = "";
@@ -275,6 +284,7 @@ window.addEventListener("load", () => {
     content = `
                <h1 class="course-title">${el.title.toUpperCase()}</h1>
                <div>
+               <button class="editBtnForCourse">Edit</button>
                <button class="delBtnForCourse">Delete</button>
                </div>
                `;
@@ -285,6 +295,140 @@ window.addEventListener("load", () => {
   let listItems = document.querySelectorAll(".course-list ul li");
 
   let user = getUser();
+  let questionArrayForEdit: question[] = [];
+
+  document.querySelectorAll(".editBtnForCourse").forEach((el, i) => {
+    el.addEventListener("click", () => {
+      let allCourse: course[] = viewCourse();
+      questionArrayForEdit = viewCourse()[i].questions;
+      previewDialog.showModal();
+      previewListView.innerHTML = `
+          <label>Quiz title
+          <input type="text" value="${viewCourse()[i].title}">
+          </label>
+          <label>Quiz Description
+          <textarea rows="3">${viewCourse()[i].description}</textarea>
+          </label>
+      `;
+
+      questionArrayForEdit.forEach((el) => {
+        let li = document.createElement("li");
+        previewContent = `<p>Question no : ${el.qno}</p><br />
+            <p>Question : ${el.question}</p><br />
+            <p>Options</p>
+            <ol>`;
+        el.options.forEach((ele) => {
+          previewContent += `<li>${ele}</li>`;
+        });
+        previewContent += `</ol>
+            <br />
+            <p>Correct Answer : ${el.correctAnswer}</p><br />
+            <p>Mark for the Question : ${el.markForTheQuestion}</p>
+            <div>
+            <button class="editInPreview" >Edit</button>
+            <button class="delInPreview" >Delete</button>
+            </div>`;
+        li.innerHTML += previewContent;
+        previewListView.appendChild(li);
+        let editDialog = document.querySelector(
+          "#edit-form"
+        ) as HTMLDialogElement;
+        document.querySelectorAll(".editInPreview").forEach((el, i) => {
+          (el as HTMLButtonElement).addEventListener("click", () => {
+            editDialog.showModal();
+
+            let exitEdit = document.querySelector(
+              "#edit-exit"
+            ) as HTMLButtonElement;
+
+            exitEdit.addEventListener("click", () => {
+              editDialog.close();
+            });
+            let qtitle = document.querySelector(
+              "#edit-qtitle"
+            ) as HTMLTextAreaElement;
+            let marks = document.querySelector(
+              "#edit-marks"
+            ) as HTMLInputElement;
+            let correctAns = document.querySelector(
+              "#edit-correct-answer"
+            ) as HTMLSelectElement;
+            let optionsFromInput = document.querySelectorAll(
+              "#edit-options li input"
+            );
+
+            let questionNumberForDisplay = document.querySelector(
+              "#edit-question-number"
+            ) as HTMLDivElement;
+
+            qtitle.value = questionArrayForEdit[i].question;
+
+            optionsFromInput.forEach((el, i1) => {
+              (el as HTMLInputElement).value =
+                questionArrayForEdit[i].options[i1];
+            });
+
+            correctAns.value = questionArrayForEdit[i].correctAnswer.toString();
+
+            marks.valueAsNumber = questionArrayForEdit[i].markForTheQuestion;
+            let editForm = document.querySelector(
+              "#edit-question-form"
+            ) as HTMLFormElement;
+
+            editForm.addEventListener("submit", (e) => {
+              e.preventDefault();
+              let len = questionArrayForEdit.length;
+              questionNumberForDisplay.textContent =
+                questionArrayForEdit[i].qno.toString();
+
+              let option: string[] = [];
+              optionsFromInput.forEach((el) => {
+                let ele = el as HTMLInputElement;
+                const optionValue = ele.value.trim();
+                if (optionValue) {
+                  option.push(optionValue);
+                }
+              });
+              let question: question = {
+                qno: len + 1,
+                question: qtitle.value.trim(),
+                options: option,
+                correctAnswer: Number(correctAns.value),
+                markForTheQuestion: marks.valueAsNumber,
+              };
+              questionArrayForEdit.push(question);
+              courseInit.questions = questionArrayForEdit;
+              editForm.reset();
+            });
+          });
+        });
+
+        (
+          document.querySelector("#save-modified") as HTMLButtonElement
+        ).addEventListener("click", () => {
+          addCourse(allCourse);
+          previewDialog.close();
+        });
+
+        document.querySelectorAll(".delInPreview").forEach((el, index) => {
+          (el as HTMLButtonElement).addEventListener("click", () => {
+            courseInit = allCourse[i];
+            if (questionArrayForEdit.length > 1) {
+              questionArrayForEdit.splice(index, 1);
+              previewListView.removeChild(li);
+              courseInit.questions = questionArrayForEdit;
+              allCourse[i] = courseInit;
+            } else {
+              alert("Cannot delete all questions, delete the quiz instead");
+            }
+          });
+        });
+      });
+    });
+  });
+  previewBtnBack.addEventListener("click", () => {
+    previewDialog.close();
+  });
 
   document.querySelectorAll(".delBtnForCourse").forEach((el, i) => {
     el.addEventListener("click", () => {
@@ -298,16 +442,16 @@ window.addEventListener("load", () => {
       user.forEach((i) => {
         i.courseAttempt.forEach((el, index) => {
           if (el.name === temp) {
-            console.log(el.name+" "+temp);
+            console.log(el.name + " " + temp);
             indexToDel = index;
           }
         });
-        if(indexToDel != -1){
+        if (indexToDel != -1) {
           i.courseAttempt.splice(indexToDel, 1);
-          indexToDel = -1
+          indexToDel = -1;
         }
       });
-      setUser(user)
+      setUser(user);
     });
   });
 });
@@ -320,22 +464,185 @@ let leaderTable = document
 
 let contentForTable = "";
 
-usersData.forEach((i) => {
-  i.courseAttempt.forEach((i1,index) => {
-    contentForTable += `
-                      <tr>
-                        <td>${index+1}</td>
-                        <td>${i1.userName}</td>
-                        <td>${i1.name}</td>
-                        <td>${i1.mark}</td>
-                        <td>
-                          <button>edit</button>
-                          <button>delete</button>
-                        </td>
-                      </tr>`;
+let list = document.querySelector("#course-list-score") as HTMLSelectElement;
 
-    console.log(i1);
+list.addEventListener("change", () => {
+  usersData.forEach((i, index) => {
+    let prev = -1;
+    let temp = 0;
+    contentForTable = `
+            <thead>
+              <tr class="header">
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Course</th>
+                <th>Score</th>
+                <th>Action</th>
+              </tr>
+            </thead>`;
+    usersData[index].courseAttempt.sort((a, b) => b.mark - a.mark);
+    usersData[index].courseAttempt.forEach((j) => {
+      if (list.value === j.name) {
+        if (prev != j.mark) {
+          temp++;
+          prev = j.mark;
+        }
+        contentForTable += `
+                          <tr>
+                            <td>${temp}</td>
+                            <td>${j.userName}</td>
+                            <td>${j.name}</td>
+                            <td><input type="number" value="${j.mark}" class="user-score" readonly/></td>
+                            <td>
+                              <button class="edit-for-score">Edit</button>
+                            </td>
+                          </tr>`;
+        leaderTable.innerHTML = contentForTable;
+
+        let scoreInput = document.querySelectorAll(".user-score");
+
+        document.querySelectorAll(".edit-for-score").forEach((el, index) => {
+          let input = scoreInput[index] as HTMLInputElement;
+          el.addEventListener("click", () => {
+            if (input.readOnly) {
+              input.readOnly = false;
+              el.textContent = "Save";
+            } else {
+              if (input.value.length !== 0) {
+                i.courseAttempt[index].mark = input.valueAsNumber;
+                console.log(usersData);
+                addCourse(usersData);
+                input.readOnly = true;
+                el.textContent = "Edit";
+              } else {
+                alert("Enter a valid score");
+              }
+            }
+          });
+        });
+      } else if (list.value === "All") {
+        contentForTable = `
+            <thead>
+              <tr class="header">
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Course</th>
+                <th>Score</th>
+              </tr>
+            </thead>`;
+
+        usersData.forEach((i) => {
+          let prev = -1;
+          let temp = 0;
+          i.courseAttempt.forEach((j) => {
+            if (prev != j.mark) {
+              temp++;
+              prev = j.mark;
+            }
+            contentForTable += `
+      <tr>
+        <td>${temp}</td>
+        <td>${j.userName}</td>
+        <td>${j.name}</td>
+        <td><input type="number" value="${j.mark}" class="user-score" readonly/></td>
+      </tr>`;
+          });
+
+          leaderTable.innerHTML = contentForTable;
+
+          let userScoreInput = document.querySelectorAll(".user-score");
+
+          document.querySelectorAll(".edit-for-score").forEach((el, index) => {
+            let input = userScoreInput[index] as HTMLInputElement;
+
+            el.addEventListener("click", () => {
+              if (input.readOnly) {
+                input.readOnly = false;
+                el.textContent = "Save";
+              } else {
+                if (input.value.length !== 0) {
+                  let tempMark = usersData[index].courseAttempt;
+                  tempMark[index].mark = input.valueAsNumber;
+                  usersData[index].courseAttempt = tempMark;
+                  console.log(tempMark);
+
+                  console.log(usersData);
+                  addCourse(usersData);
+
+                  input.readOnly = true;
+                  el.textContent = "Edit";
+                } else {
+                  alert("Enter a valid score");
+                }
+              }
+            });
+          });
+        });
+      }
+    });
+  });
+});
+contentForTable = `
+            <thead>
+              <tr class="header">
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Course</th>
+                <th>Score</th>
+              </tr>
+            </thead>`;
+
+usersData.forEach((i) => {
+  let prev = -1;
+  let temp = 0;
+  let preName = "";
+  let currentName = "";
+  i.courseAttempt.forEach((j) => {
+    currentName = j.name;
+    if (currentName != preName) {
+      list.innerHTML += `<option>${j.name}</option>`;
+      preName = currentName;
+    }
+    if (prev != j.mark) {
+      temp++;
+      prev = j.mark;
+    }
+    contentForTable += `
+      <tr>
+        <td>${temp}</td>
+        <td>${j.userName}</td>
+        <td>${j.name}</td>
+        <td><input type="number" value="${j.mark}" class="user-score" readonly/></td>
+      </tr>`;
   });
 
   leaderTable.innerHTML = contentForTable;
+
+  let userScoreInput = document.querySelectorAll(".user-score");
+
+  document.querySelectorAll(".edit-for-score").forEach((el, index) => {
+    let input = userScoreInput[index] as HTMLInputElement;
+
+    el.addEventListener("click", () => {
+      if (input.readOnly) {
+        input.readOnly = false;
+        el.textContent = "Save";
+      } else {
+        if (input.value.length !== 0) {
+          let tempMark = usersData[index].courseAttempt;
+          tempMark[index].mark = input.valueAsNumber;
+          usersData[index].courseAttempt = tempMark;
+          console.log(tempMark);
+
+          console.log(usersData);
+          addCourse(usersData);
+
+          input.readOnly = true;
+          el.textContent = "Edit";
+        } else {
+          alert("Enter a valid score");
+        }
+      }
+    });
+  });
 });

@@ -70,3 +70,7 @@ form input{
   aspect-ratio: 8/1;
   padding: .5rem;
 }
+#error{
+  color: red;
+  visibility: hidden;
+}

@@ -9,27 +9,54 @@
 body{
   height: fit-content;
   width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 2rem;
   flex-direction: column;
 }
+
+body.dark-mode{
+  background-color: #222;
+  color: #fff;
+}
 h1{
   font-size: 6rem;
 }
 #table{
+  max-height: 10rem;
   border-collapse: collapse;
-  border: 1px solid #33333355;
+  border: 1px solid #9e9e9e55;
   padding: 1rem;
 }
 table td , table th{
+  text-align: left;
+  width: 10rem;
   height: fit-content;
   padding: .5rem 0.5rem;
-  border: 1px solid #33333355;
+  border: 1px solid #9e9e9e55;
 
 }
 .highlighted {
-  background-color: rgba(0, 255, 13, 0.5);
+  background-color: rgba(65, 105, 225,.8);
   font-weight: bold;
+  color: #fff;
+  box-shadow: 0 0 1rem rgba(65, 105, 225);
+}
+button{
+  height: 2.5rem;
+  aspect-ratio: 4/1;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  outline: none;
+  border-radius: .3rem;
+  transition: scale .2s ease-in-out;
+}
+button:hover{
+  scale: 1.05;
+}
+button:active{
+  scale: .99;
 }

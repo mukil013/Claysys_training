@@ -9,15 +9,15 @@
 <body>    
   <button onclick="window.location.href = '/index.html'">Back</button>
   <h1>Register</h1>
-  <form method="post">
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email" placeholder="Enter your email">
+  <form>
     <label for="name">Name</label>
-    <input type="text" name="name" id="name" placeholder="Enter your name">
+    <input type="text" name="name" id="name" placeholder="Enter your name" required>
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" placeholder="Enter your email" required>
     <label for="password">Password</label>
-    <input type="password" name="password" id="p1" placeholder="Enter password">
+    <input type="password" name="password" id="p1" placeholder="Enter password" required>
     <label for="re-password">Retype Password</label>
-    <input type="password" name="re-password" id="p2" placeholder="Retype password"><br>
+    <input type="password" name="re-password" id="p2" placeholder="Retype password" required><br>
     <input type="submit" value="Register">
   </form>
   <script type="module" src="./script/register.ts"></script>

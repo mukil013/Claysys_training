@@ -4,6 +4,12 @@ let form = document.querySelector("form") as HTMLFormElement;
 
 let adminEmail = "admin@123.com", adminPassword = "admin@123";
 
+let email = document.querySelector("#email") as HTMLInputElement;
+
+email.addEventListener("focus" , () => {
+  (document.querySelector("#error") as HTMLParagraphElement).style.visibility = "hidden"
+})
+
 let userData: users[] = getUser();
 
 form.addEventListener("submit", (e) => {
@@ -19,11 +25,13 @@ form.addEventListener("submit", (e) => {
         if (el.password === password.value && el.email === email.value) {
           window.location.replace("../user_module/course_list/courseList.html");
           sessionStorage.setItem("userIndex" , i.toString());
-          console.log(i);
+          (document.querySelector("#error") as HTMLParagraphElement).style.visibility = "hidden"
+          form.reset();
           return
+        }else{
+          (document.querySelector("#error") as HTMLParagraphElement).style.visibility = "visible"
         }
       });
-      form.reset();
     }
   } else {
     alert("fill all feilds");

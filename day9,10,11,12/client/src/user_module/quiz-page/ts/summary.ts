@@ -14,10 +14,11 @@ total[currentQuiz].questions.forEach((i) => {
   totalScore += i.markForTheQuestion;
 });
 
+let scorePercent = (score[currentUser].courseAttempt[totalLen - 1].mark / totalScore)*100;
+
 userScore.textContent =
-  score[currentUser].courseAttempt[totalLen - 1].mark.toString() +
-  "/" +
-  totalScore;
+  scorePercent.toString() +
+  "%";
 
 let leaderTable = document
   .querySelector("table")!
@@ -57,20 +58,27 @@ let leaderTable = document
     });
   });
 
+  let tableContent = ""
+
   if (leaderTable) {
     rankedByQuiz.forEach((quiz) => {
+      let prev = -1
+      let temp = 0
       if (total[currentQuiz].title === quiz.quizName) {
-        leaderTable.innerHTML = quiz.users
-          .map(
-            (user) => `
-            <tr class="${user.name === score[currentUser].name ? 'highlighted' : ''}">
-              <td>${user.rank}</td>
-              <td>${user.name}</td>
-              <td>${user.score}</td>
+        quiz.users.forEach((el) => {
+          if(prev != el.score){
+            temp++
+            prev = el.score
+          }
+          tableContent += `
+            <tr class="${(el.name === score[currentUser].name) ? 'highlighted':''}">
+              <td>${temp}</td>
+              <td>${el.name}</td>
+              <td>${el.score}/${totalScore}</td>
             </tr>
           `
-          )
-          .join("");
+        })
+        leaderTable.innerHTML = tableContent
       }
     });
   }
@@ -81,3 +89,17 @@ let leaderTable = document
     window.location.href = "/src/user_module/course_list/courseList.html";
   }
 );
+
+
+let main = document.querySelectorAll("body");
+let darkMode = sessionStorage.getItem("dark-mode");
+
+if (darkMode === "true") {
+  main.forEach((i) => {
+    i.classList.add("dark-mode");
+  });
+} else {
+  main.forEach((i) => {
+    i.classList.remove("dark-mode");
+  });
+}

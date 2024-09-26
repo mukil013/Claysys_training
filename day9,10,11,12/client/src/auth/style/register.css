@@ -37,6 +37,7 @@ button{
   border: none;
   outline: none;
   border-radius: .3rem;
+  transition: scale .2s ease-in-out;
 }
 input[type=submit]{
   background-color: #000;
@@ -44,6 +45,13 @@ input[type=submit]{
   border: none;
   outline: none;
   border-radius: .3rem;
+  transition: all .2s ease-in-out;
+}
+input[type=submit]:hover , button:hover{
+  scale: 1.05;
+}
+input[type=submit]:active , button:active{
+  scale: .99;
 }
 form{
   width: 100%;

@@ -159,12 +159,15 @@ let homeBtn = document.querySelector("#home") as HTMLButtonElement;
 let historyBtn = document.querySelector("#history") as HTMLButtonElement;
 
 homeBtn.style.color = "royalblue";
+homeBtn.style.borderBottom = "1px solid royalblue"
 
 homeBtn.addEventListener("click", () => {
   homeBtn.style.color = "royalblue";
   historyBtn.style.color = "";
   historyUl.style.display = "none";
   mainUl.style.display = "flex";
+  homeBtn.style.borderBottom = "1px solid royalblue"
+  historyBtn.style.borderBottom = "none"
 });
 
 historyBtn.addEventListener("click", () => {
@@ -172,4 +175,6 @@ historyBtn.addEventListener("click", () => {
   homeBtn.style.color = "";
   historyUl.style.display = "flex";
   mainUl.style.display = "none";
+  homeBtn.style.borderBottom = "none"
+  historyBtn.style.borderBottom = "1px solid royalblue"
 });
