@@ -4,7 +4,6 @@ import {
   addCourse,
   viewCourse,
   question,
-  viewCourse,
 } from "../../../models/courseModel";
 
 let account = document.querySelector(".accountMenu") as HTMLDivElement;
@@ -114,10 +113,20 @@ window.addEventListener("load", () => {
       }
     });
   });
+
+  let courseAttemptDelete:course[] = viewCourse()
+
   delBtn.forEach((el, i) => {
     el.addEventListener("click", () => {
       userTable.deleteRow(i);
+      let name = users[i].name
+      courseAttemptDelete[i].courseAttempt.forEach((el,i) => {
+        if(el.name === name){
+          courseAttemptDelete.splice(i,1)
+        }
+      })
       users.splice(i, 1);
+      addCourse(courseAttemptDelete)
       setUser(users);
     });
   });
@@ -284,6 +293,8 @@ let content = "";
 
 window.addEventListener("load", () => {
   courseListStorage.forEach((el) => {
+    console.log("outer outer outer");
+    
     let li = document.createElement("li") as HTMLLIElement;
     content = `
                <h1 class="course-title">${el.title.toUpperCase()}</h1>
@@ -308,10 +319,10 @@ window.addEventListener("load", () => {
       previewDialog.showModal();
       previewListView.innerHTML = `
           <label>Quiz title
-          <input type="text" value="${viewCourse()[i].title}">
+          <input type="text" id="modified-title" value="${allCourse[i].title}">
           </label>
           <label>Quiz Description
-          <textarea rows="3">${viewCourse()[i].description}</textarea>
+          <textarea id="modified-description" rows="3">${allCourse[i].description}</textarea>
           </label>
       `;
 
@@ -334,11 +345,39 @@ window.addEventListener("load", () => {
             </div>`;
         li.innerHTML += previewContent;
         previewListView.appendChild(li);
+
+        (
+          document.querySelector("#save-modified") as HTMLButtonElement
+        ).addEventListener("click", () => {
+          allCourse[i].title = (document.querySelector("#modified-title") as HTMLInputElement).value
+          allCourse[i].description = (document.querySelector("#modified-description") as HTMLTextAreaElement).value
+          addCourse(allCourse);
+          previewDialog.close();
+        });
+
+        document.querySelectorAll(".delInPreview").forEach((el, index) => {
+          (el as HTMLButtonElement).addEventListener("click", () => {
+            courseInit = allCourse[i];
+            if (questionArrayForEdit.length > 2) {
+              questionArrayForEdit.splice(index, 1);
+              previewListView.removeChild(li);
+              courseInit.questions = questionArrayForEdit;
+              allCourse[i] = courseInit;
+              addCourse(allCourse)
+            } else {
+              alert("Cannot delete all questions, delete the quiz instead");
+            }
+          });
+        });
+        });
+
         let editDialog = document.querySelector(
           "#edit-form"
         ) as HTMLDialogElement;
-        document.querySelectorAll(".editInPreview").forEach((el, i) => {
+        document.querySelectorAll(".editInPreview").forEach((el, i1) => {
           (el as HTMLButtonElement).addEventListener("click", () => {
+            console.log("outer working");
+            
             editDialog.showModal();
 
             let exitEdit = document.querySelector(
@@ -348,6 +387,7 @@ window.addEventListener("load", () => {
             exitEdit.addEventListener("click", () => {
               editDialog.close();
             });
+
             let qtitle = document.querySelector(
               "#edit-qtitle"
             ) as HTMLTextAreaElement;
@@ -365,25 +405,24 @@ window.addEventListener("load", () => {
               "#edit-question-number"
             ) as HTMLDivElement;
 
-            qtitle.value = questionArrayForEdit[i].question;
+            qtitle.value = questionArrayForEdit[i1].question;
 
             optionsFromInput.forEach((el, i1) => {
               (el as HTMLInputElement).value =
                 questionArrayForEdit[i].options[i1];
             });
 
-            correctAns.value = questionArrayForEdit[i].correctAnswer.toString();
+            correctAns.value = questionArrayForEdit[i1].correctAnswer.toString();
 
-            marks.valueAsNumber = questionArrayForEdit[i].markForTheQuestion;
+            marks.valueAsNumber = questionArrayForEdit[i1].markForTheQuestion;
             let editForm = document.querySelector(
               "#edit-question-form"
             ) as HTMLFormElement;
 
-            editForm.addEventListener("submit", (e) => {
+            editForm.addEventListener("submit", (e) => {              
               e.preventDefault();
-              let len = questionArrayForEdit.length;
               questionNumberForDisplay.textContent =
-                questionArrayForEdit[i].qno.toString();
+                questionArrayForEdit[i1].qno.toString();
 
               let option: string[] = [];
               optionsFromInput.forEach((el) => {
@@ -393,40 +432,19 @@ window.addEventListener("load", () => {
                   option.push(optionValue);
                 }
               });
+              
               let question: question = {
-                qno: len + 1,
-                question: qtitle.value.trim(),
+                qno: i1+1,
+                question: qtitle.value,
                 options: option,
                 correctAnswer: Number(correctAns.value),
                 markForTheQuestion: marks.valueAsNumber,
-              };
-              questionArrayForEdit.push(question);
-              courseInit.questions = questionArrayForEdit;
-              editForm.reset();
+              }; 
+              allCourse[i].questions[i1] = question 
+              console.log(allCourse);
+              addCourse(allCourse);
             });
           });
-        });
-
-        (
-          document.querySelector("#save-modified") as HTMLButtonElement
-        ).addEventListener("click", () => {
-          addCourse(allCourse);
-          previewDialog.close();
-        });
-
-        document.querySelectorAll(".delInPreview").forEach((el, index) => {
-          (el as HTMLButtonElement).addEventListener("click", () => {
-            courseInit = allCourse[i];
-            if (questionArrayForEdit.length > 1) {
-              questionArrayForEdit.splice(index, 1);
-              previewListView.removeChild(li);
-              courseInit.questions = questionArrayForEdit;
-              allCourse[i] = courseInit;
-            } else {
-              alert("Cannot delete all questions, delete the quiz instead");
-            }
-          });
-        });
       });
     });
   });
@@ -495,6 +513,7 @@ list.addEventListener("change", () => {
                           <tr>
                             <td>${temp}</td>
                             <td>${j.userName}</td>
+                            <td>${j.email}</td>
                             <td>${j.name}</td>
                             <td><input type="number" value="${j.mark}" class="user-score" readonly/></td>
                             <td>

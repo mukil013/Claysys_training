@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Borel&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Borel&display=swap");
 
 * {
   padding: 0;
@@ -6,7 +6,7 @@
   box-sizing: border-box;
   font-size: 16px;
   font-family: Helvetica;
-  transition: .2s all ease;
+  transition: 0.2s all ease;
   outline-color: rgba(65, 105, 225, 0.5);
 }
 body {
@@ -14,7 +14,7 @@ body {
   height: 100vh;
   width: 100vw;
   display: grid;
-  grid-template-areas: "nav" ,"main";
+  grid-template-areas: "nav", "main";
   grid-template-rows: 1fr 12fr;
 }
 nav {
@@ -34,64 +34,64 @@ nav ul {
   align-items: center;
   width: fit-content;
   height: 100%;
-} 
+}
 nav ul li {
   padding: 1rem;
   list-style: none;
 }
-nav ul li button{
+nav ul li button {
   background-color: transparent;
   border: none;
   outline: none;
 }
-nav ul li:nth-child(1){
+nav ul li:nth-child(1) {
   height: 100%;
   display: flex;
   align-items: center;
   gap: 1rem;
 }
-.logo{
+.logo {
   font-family: borel;
   font-size: 1.2rem;
 }
-#account:active{
+#account:active {
   color: royalblue;
 }
-.accountMenu{
+.accountMenu {
   background-color: #fff;
   position: absolute;
   top: 100%;
-  right: 1% ;
+  right: 1%;
   height: fit-content;
   border: 1px solid #33333355;
   display: none;
   z-index: 100;
 }
-.accountMenu ul{
+.accountMenu ul {
   display: flex;
   flex-direction: column;
   padding: 1rem;
 }
-.accountMenu ul li{
+.accountMenu ul li {
   padding: 1rem;
   text-align: center;
-  transition: .2s all ease;
+  transition: 0.2s all ease;
 }
-.accountMenu ul li:nth-child(1){
+.accountMenu ul li:nth-child(1) {
   border-bottom: 1px solid #9e9e9e55;
 }
-.accountMenu ul li button{
+.accountMenu ul li button {
   height: 100%;
   width: 100%;
   background-color: transparent;
   border: none;
   outline: none;
-  transition: .2s all ease;
+  transition: 0.2s all ease;
 }
-.accountMenu ul li button:hover{
+.accountMenu ul li button:hover {
   color: royalblue;
 }
-.accountMenu ul li button{
+.accountMenu ul li button {
   color: red;
 }
 .switch {
@@ -126,7 +126,7 @@ nav ul li:nth-child(1){
   height: 1em;
   left: 4px;
   bottom: 4px;
-  background-image: url('../../../../assets/dark_mode_24dp_9E9E9E_FILL0_wght400_GRAD0_opsz24.png');
+  background-image: url("../../../../assets/dark_mode_24dp_9E9E9E_FILL0_wght400_GRAD0_opsz24.png");
   background-size: cover;
   background-color: #fff;
   -webkit-transition: 0.4s;
@@ -138,7 +138,7 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-  background-image: url('../../../../assets/wb_sunny_24dp_FFF_FILL0_wght400_GRAD0_opsz24.png');
+  background-image: url("../../../../assets/wb_sunny_24dp_FFF_FILL0_wght400_GRAD0_opsz24.png");
   transform: translateX(1.5em);
   background-color: #222;
 }
@@ -150,34 +150,69 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
-.dark-mode , .dark-mode > *{
+.dark-mode,
+.dark-mode > * {
   border-color: #ffffff22;
   background-color: #222;
   color: #fff;
 }
-main{
+main {
   grid-area: "main";
   display: flex;
   height: 100%;
 }
-main aside{
+@media only screen and (max-width: 791px) {
+  main {
+    min-height: 100vh;
+    flex-direction: column !important;
+  }
+  main aside{
+    height: 3rem !important;
+    width: 100% !important;
+    border-bottom: 1px solid #9e9e9e55;
+  }
+  main aside ul{
+    overflow: scroll;
+    height: 100% !important;
+    width: fit-content !important;
+    flex-direction: row !important;
+  }
+  main aside ul li button{
+    min-width: 10rem;
+    justify-content: center !important;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+    white-space: nowrap;
+  }
+  main aside ul li button:focus{
+    background-color: rgba(65, 105, 225, 0.377);
+    border-color: transparent !important;
+  }
+  #add{
+    bottom: 100vh;
+    left: 50%;
+    border-radius: 12px !important;
+  }
+}
+main aside {
   height: 100%;
   width: 15em;
   border-right: 1px solid #33333355;
 }
-main aside ul{
-  height: 50%;
+main aside ul {
+  height: 100%;
   list-style-position: inside;
   display: flex;
   align-items: end;
+  justify-content: start;
   flex-direction: column;
 }
-main aside ul li{
+main aside ul li {
   list-style: none;
   width: 100%;
   height: 3rem;
 }
-main aside ul li button{
+main aside ul li button {
   background-color: transparent;
   border: none;
   outline: none;
@@ -189,26 +224,27 @@ main aside ul li button{
   justify-content: end;
   padding-right: 1rem;
   border-right: 1px solid transparent;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
-.content{
+.content {
+  min-width: 40rem;
   height: 100%;
   width: 100%;
   position: relative;
 }
-.static_text{
+.static_text {
   z-index: 1;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
-.static_text h1{
+.static_text h1 {
   font-size: 4rem;
-  opacity: .1;
+  opacity: 0.1;
   display: block;
 }
-#add{
+#add {
   justify-content: center;
   align-items: center;
   height: 3rem;
@@ -220,23 +256,23 @@ main aside ul li button{
   border: none;
   outline: none;
   position: absolute;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   bottom: 5%;
   right: 5%;
   box-shadow: 0 0 1rem #33333355;
 }
-.course-list ul li.dark-mode{
+.course-list ul li.dark-mode {
   border-color: #ffffff22;
 }
-#add.dark-mode{
+#add.dark-mode {
   color: #222;
   box-shadow: 0 0 1rem rgba(65, 105, 225, 0.353);
 }
-#add:active{
+#add:active {
   height: 2.9rem;
   box-shadow: none;
 }
-#add-icon:hover{
+#add-icon:hover {
   transform: rotateZ(90deg);
 }
 .course-list ul {
@@ -266,18 +302,18 @@ main aside ul li button{
 .course-list ul li h1 {
   font-size: 1.5rem;
   width: 100%;
-  padding: .5rem 0;
+  padding: 0.5rem 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.course-list ul li h1::before{
-  content: counter(count)' . ';
+.course-list ul li h1::before {
+  content: counter(count) " . ";
   font-size: 1.5rem;
-  opacity: .5;
+  opacity: 0.5;
   border-radius: 100%;
 }
-.course-list ul li div{
+.course-list ul li div {
   width: 100%;
   display: flex;
   justify-content: end;
@@ -290,103 +326,107 @@ main aside ul li button{
   outline: none;
   border-radius: 6px;
 }
-.delBtnForCourse{
+.delBtnForCourse {
   color: rgb(255, 255, 255);
   background-color: rgba(255, 0, 0);
 }
-.editBtnForCourse{
+.editBtnForCourse {
   color: #9e9e9e;
   background-color: #99999955;
 }
-.editBtnForCourse:hover{
-  color: royalblue;         
+.editBtnForCourse:hover {
+  color: royalblue;
 }
-.delBtnForCourse:hover{
-  background-color: rgb(145, 0, 0)
+.delBtnForCourse:hover {
+  background-color: rgb(145, 0, 0);
 }
-.leader-board{
+.leader-board {
   height: 100%;
   width: 100%;
   list-style-position: inside;
   padding: 1rem;
   display: none;
   opacity: 0;
-  transition: display .2s , opacity .5s linear;
+  transition: display 0.2s, opacity 0.5s linear;
 }
-.leader-board h1{
+.leader-board h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
 }
-.leader-board table{
+.leader-board table {
   border-collapse: collapse;
   width: 100%;
   border: 1px solid #33333355;
   text-align: left;
   padding: 1rem;
 }
-.leader-board table.dark-mode{
+.leader-board table.dark-mode {
   border-color: #ffffff22;
 }
-.leader-board table td , .leader-board table th{
-  padding: .5rem 0.5rem;
+.leader-board table td,
+.leader-board table th {
+  padding: 0.5rem 0.5rem;
   border: 1px solid #9e9e9e55;
 }
-.leader-board table tr:nth-child(2n-2){
+.leader-board table tr:nth-child(2n-2) {
   background-color: #9e9e9e22;
 }
-.leader-board table tr td button{
+.leader-board table tr td button {
   aspect-ratio: 2/1;
   width: 4rem;
   background-color: #9e9e9e55;
   color: #9e9e9e;
   border: none;
   outline: none;
-  margin-right: .5rem;
+  margin-right: 0.5rem;
   border-radius: 4px;
 }
-.leader-board table tr td button:hover{
+.leader-board table tr td button:hover {
   color: royalblue;
 }
-.user-management{
+.user-management {
+  overflow: scroll;
   padding: 1rem;
   display: none;
   opacity: 0;
-  transition: display .2s , opacity .5s linear;
+  transition: display 0.2s, opacity 0.5s linear;
 }
-.user-management h1{
+.user-management h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
 }
-.user-management[active="true"]{
+.user-management[active="true"] {
   opacity: 1;
   display: block;
 }
-.leader-board[active="true"]{
+.leader-board[active="true"] {
   opacity: 1;
   display: block;
 }
-.course-list[active="true"]{
+.course-list[active="true"] {
   opacity: 1;
   display: block;
 }
-.user-management table{
+.user-management table {
   border-collapse: collapse;
   width: 100%;
+  min-width: 40rem;
   border: 1px solid #33333355;
   text-align: left;
   padding: 1rem;
 }
-.user-management table tr:nth-child(1){
+.user-management table tr:nth-child(1) {
   background-color: transparent;
 }
-.user-management table td , .user-management table th{
-  padding: .5rem 0.5rem;
+.user-management table td,
+.user-management table th {
+  padding: 0.5rem 0.5rem;
   border: 1px solid #9e9e9e55;
 }
-.user-management table tr:nth-child(2n-2){
+.user-management table tr:nth-child(2n-2) {
   background-color: #9e9e9e22;
 }
-.user-management table button{
+.user-management table button {
   height: 2rem;
   aspect-ratio: 2/1;
   border: none;
@@ -395,91 +435,98 @@ main aside ul li button{
   color: #9e9e9e;
   border-radius: 6px;
 }
-.user-management table button:hover{
+.user-management table button:hover {
   color: royalblue;
 }
-.user-management table  button:nth-child(2){
+.user-management table button:nth-child(2) {
   background-color: rgba(255, 0, 0, 0.493);
   color: #fff;
 }
-.user-management table  button:nth-child(2):hover{
+.user-management table button:nth-child(2):hover {
   background-color: rgba(255, 0, 0, 0.3);
   color: red;
 }
-main aside ul li button:focus{
+main aside ul li button:focus {
   color: royalblue;
-  border-color:royalblue;
+  border-color: royalblue;
 }
-.course-list{
+.course-list {
   height: 90vh;
   display: none;
   opacity: 0;
-  transition: display .2s , opacity .5s linear;
+  transition: display 0.2s, opacity 0.5s linear;
   padding: 1rem;
   overflow: auto;
 }
-.course-list main aside ul li:nth-child(1) button{
+.course-list main aside ul li:nth-child(1) button {
   color: #9e9e9e;
 }
-.course-list h1{
+.course-list h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
 }
-#add-form ,#edit-form{
+#add-form,
+#edit-form {
   height: fit-content;
   width: 50vw;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   border: none;
   border: 1px solid #9e9e9e55;
   padding: 1rem;
-  border-radius: .8rem;
-  transition: all .2s linear;
-
+  border-radius: 0.8rem;
+  transition: all 0.2s linear;
 }
 @media screen and (max-width: 757px) {
-  #add-form{
+  #add-form {
     width: 90vw;
   }
 }
-#add-form::backdrop, #edit-form::backdrop{
+#add-form::backdrop,
+#edit-form::backdrop {
   backdrop-filter: blur(5px);
 }
-#add-form button , #add-form input[type=submit] ,#edit-form button , #edit-form input[type=submit]{
+#add-form button,
+#add-form input[type="submit"],
+#edit-form button,
+#edit-form input[type="submit"] {
   padding: 6px 12px;
   border: none;
   border-radius: 6px;
   color: #9e9e9e;
 }
-#add-form button:hover , #add-form input[type=submit]:hover{
+#add-form button:hover,
+#add-form input[type="submit"]:hover {
   color: royalblue;
 }
-#add-form button.dark-mode , #add-form input[type=submit]{
+#add-form button.dark-mode,
+#add-form input[type="submit"] {
   background-color: #333;
 }
-#add-form textarea.dark-mode{
+#add-form textarea.dark-mode {
   border-color: #ffffff22;
   color: #fff;
 }
-#description{
+#description {
   background-color: transparent;
-  padding: .5rem;
+  padding: 0.5rem;
   height: 4rem;
   aspect-ratio: 4/1;
   resize: none;
   border-radius: 6px;
   border: 1px solid #9e9e9e55;
 }
-#userCount{
+#userCount {
   padding: 1rem 0.5rem;
   font-size: 2rem;
 }
-#dialog-form ul{
+#dialog-form ul {
   list-style-type: none;
 }
-#dialog-form > *, #add-form > *{
+#dialog-form > *,
+#add-form > * {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -487,36 +534,36 @@ main aside ul li button:focus{
   gap: 1rem;
   padding: 1rem;
 }
-#dialog-form button{
+#dialog-form button {
   background-color: #9e9e9e55;
   color: #9e9e9e;
 }
-#back{
+#back {
   width: fit-content;
   background-color: #9e9e9e55;
   color: #9e9e9e;
 }
-#add-form input{
+#add-form input {
   padding: 4px 8px;
   border-radius: 6px;
   border: 1px solid #9e9e9e55;
 }
-#add-form input[type=submit]{
+#add-form input[type="submit"] {
   background-color: #9e9e9e55;
   color: #9e9e9e;
 }
-#dialog-form li input[type="number"]{
+#dialog-form li input[type="number"] {
   padding: 6px 8px;
   border-radius: 6px;
   border: 1px solid #9e9e9e55;
 }
-#add-form textarea{
+#add-form textarea {
   resize: none;
   padding: 4px 8px;
   border-radius: 6px;
   border: 1px solid #33333355;
 }
-#options{
+#options {
   width: 100%;
   height: fit-content;
   display: flex;
@@ -524,55 +571,55 @@ main aside ul li button:focus{
   align-items: center;
   gap: 1rem;
 }
-#options li input{
+#options li input {
   width: 30vw;
   border: 1px solid #9e9e9e55;
 }
-#add-question-form select{
+#add-question-form select {
   background: #9e9e9e55;
   padding: 4px 8px;
   border: none;
   outline: none;
   border-radius: 6px;
   border: none;
-  margin: 4px;  
+  margin: 4px;
 }
-#add-question-form select option:disabled{
+#add-question-form select option:disabled {
   color: #9e9e9e55;
 }
-#title{
+#title {
   width: 100%;
   margin-top: 12px;
 }
-#add-question-form{
+#add-question-form {
   display: none;
 }
-#add-question-form input{
+#add-question-form input {
   margin: 8px 0;
 }
-#add-question-form textarea{
+#add-question-form textarea {
   width: 100%;
   margin: 12px 0;
 }
-#add-question-form button{
+#add-question-form button {
   background-color: #9e9e9e55;
   color: #9e9e9e;
 }
-#save-changes{
+#save-changes {
   margin-bottom: 12px;
 }
-#preview-dialog{
+#preview-dialog {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   height: 50vh;
   width: 60vw;
   border: 1px solid #9e9e9e55;
   border-radius: 6px;
   padding: 1rem;
 }
-#preview-dialog button{
+#preview-dialog button {
   background-color: #9e9e9e55;
   color: #9e9e9e;
   border: none;
@@ -582,16 +629,16 @@ main aside ul li button:focus{
   display: flex;
   justify-content: center;
 }
-#preview-dialog button:hover{
+#preview-dialog button:hover {
   color: royalblue;
 }
-#preview-back{
+#preview-back {
   margin-bottom: 1rem;
 }
-#preview-dialog::backdrop{
+#preview-dialog::backdrop {
   backdrop-filter: blur(4px);
 }
-#preview-dialog ul{
+#preview-dialog ul {
   list-style: inside;
   display: flex;
   flex-direction: column;
@@ -600,45 +647,46 @@ main aside ul li button:focus{
   padding: 0 1rem;
   overflow-y: scroll;
 }
-#preview-dialog ul input{
+#preview-dialog ul input {
   height: 2rem;
   width: 100%;
-  padding: .5rem;
-  margin-top: .5rem;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
   border-radius: 5px;
   border: 1px solid #9e9e9e55;
   background-color: transparent;
 }
-#preview-dialog.dark-mode input, #preview-dialog.dark-mode textarea{
+#preview-dialog.dark-mode input,
+#preview-dialog.dark-mode textarea {
   color: #fff;
 }
-#preview-dialog ul textarea{
-  padding: .5rem;
-  margin-top: .5rem;
+#preview-dialog ul textarea {
+  padding: 0.5rem;
+  margin-top: 0.5rem;
   width: 100%;
   resize: none;
   border-radius: 5px;
   border: 1px solid #9e9e9e55;
   background-color: transparent;
 }
-#preview-dialog ul li{
+#preview-dialog ul li {
   border-radius: 6px;
   width: 100%;
-  padding: .5rem;
+  padding: 0.5rem;
   border: 1px solid #9e9e9e55;
   list-style: none;
 }
-#preview-dialog ul li div{
+#preview-dialog ul li div {
   margin-top: 1rem;
   display: flex;
   width: 100%;
   gap: 1rem;
 }
-#preview-dialog ul li ol li{
+#preview-dialog ul li ol li {
   border: none;
-  list-style:decimal inside;
+  list-style: decimal inside;
 }
-.user-name-preview{
+.user-name-preview {
   position: absolute;
   padding: 1rem;
   border-radius: 12px;
@@ -646,65 +694,69 @@ main aside ul li button:focus{
   gap: 16px;
   top: 30%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   border: 1px solid #9e9e9e55;
 }
-.user-name-preview::backdrop{
+.user-name-preview::backdrop {
   backdrop-filter: blur(4px);
 }
-.user-name-preview button{
+.user-name-preview button {
   aspect-ratio: 2/1;
   height: 3rem;
   background-color: #9e9e9e55;
   color: #9e9e9e;
   border: none;
   border-radius: 8px;
-  transition: .2s all ease-in-out;
+  transition: 0.2s all ease-in-out;
   font-size: 1.3rem;
 }
-.user-name-preview button:hover{
+.user-name-preview button:hover {
   color: royalblue;
 }
-.user-name-preview input{
-  padding: .5rem 1rem;
+.user-name-preview input {
+  padding: 0.5rem 1rem;
   font-size: 1.5rem;
   border-radius: 8px;
   border: 1px solid #9e9e9e;
 }
-.user-email[readonly], .user-score[readonly], .user-name[readonly]{
+.user-email[readonly],
+.user-score[readonly],
+.user-name[readonly] {
   outline: none;
   border: none;
   color: #858585;
 }
-.user-email, .user-score, .user-name{
+.user-email,
+.user-score,
+.user-name {
   border: none;
   border-bottom: 1px solid royalblue;
   outline: none;
   background-color: transparent;
   color: royalblue;
 }
-#course-list-score{
-  padding: .4rem .8rem;
+#course-list-score {
+  padding: 0.4rem 0.8rem;
   width: fit-content;
   margin: 1rem 0;
   border: none;
   border-radius: 6px;
   cursor: pointer;
 }
-#save-modified{
+#save-modified {
   margin-top: 1rem;
 }
-.res-menu{
+.res-menu {
   position: relative;
 }
-#ham-menu{
+#ham-menu {
   background-color: transparent;
   border: none;
 }
-#ham-menu i{
+#ham-menu i {
   color: #fff;
 }
-#res-menu-expand{
+#res-menu-expand {
   height: fit-content;
   width: 30rem;
   position: absolute;
@@ -720,7 +772,7 @@ main aside ul li button:focus{
   padding: 1rem;
   text-wrap: nowrap;
 }
-#res-menu-expand li{
+#res-menu-expand li {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -728,6 +780,6 @@ main aside ul li button:focus{
   height: fit-content;
   border-bottom: 1px solid #9e9e9e55;
 }
-#res-menu-expand li:last-child{
+#res-menu-expand li:last-child {
   border-bottom: none;
 }

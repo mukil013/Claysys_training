@@ -6,7 +6,8 @@ export interface users {
 }
 
 export interface courseAttempt{
-  userName?: string,
+  userName: users["name"],
+  email: users["email"],
   name : string,
   mark: number
 }
