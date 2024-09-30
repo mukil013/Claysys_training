@@ -53,14 +53,17 @@ for (let i = 0; i < contentItems.questions.length; i++) {
   let ques = randomQuestion[i];
   let li = document.createElement("li");
   content = `<p>${contentItems.questions[ques].question}</p>`;
+
   for (let k = 0; k < contentItems.questions[ques].options.length; k++) {
     let opt = randomOption[k];
-    content += `<label><input type="radio" value="${opt}" name="${opt}"/>${contentItems.questions[ques].options[opt]}</label>`;
+    content += `<label><input type="radio" value="${opt}" name="${i}"/>${contentItems.questions[ques].options[opt]}</label>`;
   }
   content += `<div><button class="prev">Prev</button><button class="next">Next</button></div>`;
-  content += `<span><input type="checkbox">Mark for later
-              <button class="clear-choice">Clear choice</button></span>`
+  content += `<span><div><input type="checkbox">Mark for later</div>
+              <button class="clear-choice" title="clear selection"><i class="fa-solid fa-trash"></i></button></span>`;
+
   li.innerHTML = content;
+  li.setAttribute("question-number", ques.toString());
   li.className = "list-items";
   ul.appendChild(li);
 }
@@ -93,100 +96,58 @@ let confirmPopUpList = document.querySelector(
   "#confirm ul"
 ) as HTMLUListElement;
 let arr: number[] = new Array(listEl.length);
-let arr1: number[] = new Array(listEl.length)
+let arr1: number[] = new Array(listEl.length);
 
-for (let i = 0; i < listEl.length; i++) {
-  arr[i] = 0;
-  arr1[i] = 0
-}
-console.log(arr);
-
-document.querySelectorAll(".clear-choice").forEach((el,i) => {
-  (el as HTMLButtonElement).addEventListener("click" , () => {
+document.querySelectorAll(".clear-choice").forEach((el, i) => {
+  (el as HTMLButtonElement).addEventListener("click", () => {
     let inputs = listEl[i].querySelectorAll('input[type="radio"]');
-    inputs.forEach(ele => {
-      (ele as HTMLInputElement).checked = false
-    })
-  })
-})
+    inputs.forEach((ele) => {
+      (ele as HTMLInputElement).checked = false;
+      arr[i] = 0;
+    });
+  });
+});
+
+let attempted: boolean[] = [];
+
+for (let x = 0; x < listEl.length; x++) {
+  attempted[x] = false;
+  arr[x] = 0;
+  arr1[x] = 0;
+}
+let remaining = 0
+let bar = document.querySelector(".bar") as HTMLDivElement;
 
 next.forEach((el, i) => {
   let currentAnswer: number = 0;
 
-  if (i === listEl.length - 1) {
-    el.textContent = "Finish";
-    (el as HTMLButtonElement).addEventListener("click", (event) => {
-      confirmPopUp.showModal();
-
-      let inputs = listEl[i].querySelectorAll('input[type="radio"]');
-
-      if((listEl[i].querySelector('input[type="checkbox"]') as HTMLInputElement).checked){
-        arr1[i] = 1
-      }else{
-        arr1[i] = 0
-      }
-
-      inputs.forEach((el, indexVal) => {
-        currentAnswer = indexVal;
-        if ((el as HTMLInputElement).checked) {
-          if (currentAnswer === contentItems.questions[i].correctAnswer - 1) {
-            score += contentItems.questions[i].markForTheQuestion;
-          }
-          arr[i] = 1;
-          return
-        }else{
-          arr[i] = 0;
-        }
-
-      });
-
-      confirmPopUpList.innerHTML = ""
-
-      for (let l = 0; l < listEl.length; l++) {
-        let li = document.createElement("li");
-        li.textContent = (l+1).toString();
-        if (arr[l] === 1 && arr1[l] === 0) {
-          li.classList.add("check");
-          li.title = "Completed"
-        }else if(arr[l] === 1 || arr[l] === 0 && arr1[l] === 1){
-          li.classList.add("later");
-          li.title = "Visit later"
-        }else{
-          li.classList.remove("check")
-          li.title = "Incomplete"
-        }
-        confirmPopUpList.appendChild(li);
-      }
-      event.stopPropagation();
-    });
-
-    (document.querySelector("#back") as HTMLButtonElement).addEventListener(
-      "click",
-      () => {
-        confirmPopUp.close();
-        (listEl[i] as HTMLLIElement).style.visibility = "visible";
-      }
-    );
-  }
-
   (el as HTMLButtonElement).addEventListener("click", () => {
-
-    if((listEl[i].querySelector('input[type="checkbox"]') as HTMLInputElement).checked){
-      arr1[i] = 1
-      console.log("working");
-    }else{
-      arr1[i] = 0
+    remaining = (listEl.length) / 100;
+    console.log(remaining*100);
+    bar.style.width = `${100*remaining}%`;
+    if (
+      (listEl[i].querySelector('input[type="checkbox"]') as HTMLInputElement)
+        .checked
+    ) {
+      arr1[i] = 1;
+    } else {
+      arr1[i] = 0;
     }
 
     let inputs = listEl[i].querySelectorAll('input[type="radio"]');
 
-    inputs.forEach((el, indexVal) => {
-      currentAnswer = indexVal;
-      if ((el as HTMLInputElement).checked) {
-        if (currentAnswer === contentItems.questions[i].correctAnswer - 1) {
-          score += contentItems.questions[i].markForTheQuestion;
-        }
+    let ques = Number(listEl[i].getAttribute("question-number"));
+
+    inputs.forEach((elInp) => {
+      let inputEl = elInp as HTMLInputElement;
+      currentAnswer = Number(inputEl.value);
+      if (inputEl.checked) {
         arr[i] = 1;
+        if (currentAnswer === contentItems.questions[ques].correctAnswer - 1) {
+          score += contentItems.questions[ques].markForTheQuestion;
+          attempted[i] = true;
+          return;
+        }
       }
     });
 
@@ -199,34 +160,76 @@ next.forEach((el, i) => {
     if (i < listEl.length - 1)
       (listEl[i + 1] as HTMLLIElement).style.visibility = "visible";
 
-    (
-      document.querySelector("#submit-quiz") as HTMLButtonElement
-    ).addEventListener("click", () => {
-      window.location.href = "/src/user_module/quiz-page/quiz-summary.html";
-    });
+    if (i === listEl.length - 1) {
+      el.textContent = "Finish";
+      confirmPopUp.showModal();
+      console.log(score);
 
-    const userData: users[] = getUser();
-    const indexOfUser = Number(sessionStorage.getItem("userIndex"));
-    const userSubmit: users = userData[indexOfUser];
+      confirmPopUpList.innerHTML = "";
 
-    let courseList: course[] = viewCourse();
+      for (let l = 0; l < listEl.length; l++) {
+        let li = document.createElement("li");
 
-    const tempCourseAttempt: courseAttempt = {
-      userName: userData[indexOfUser].name,
-      email: userData[indexOfUser].email,
-      name: contentItems.title,
-      mark: score,
-    };
+        li.innerHTML = `<button class="navigator-li">${(
+          l + 1
+        ).toString()}</button>`;
+        if (arr[l] === 1 && arr1[l] === 0) {
+          li.classList.add("check");
+          li.title = "Completed";
+          console.log("working completed " + l);
+        } else if (arr1[l] === 1 && (arr[l] === 1 || arr[l] === 0)) {
+          li.classList.add("later");
+          li.title = "Visit later";
+          console.log("working visit later " + l);
+        } else if (arr[l] === 0 && arr1[l] === 0) {
+          li.title = "Incomplete";
+          console.log("working incomplete " + l);
+        }
+        confirmPopUpList.appendChild(li);
+      }
 
-    const existingAttempt = userSubmit.courseAttempt.find(
-      (ele) => ele.name === tempCourseAttempt.name
-    );
+      (
+        document.querySelector("#submit-quiz") as HTMLButtonElement
+      ).addEventListener("click", () => {
+        window.location.href = "/src/user_module/quiz-page/quiz-summary.html";
+      });
 
-    if (!existingAttempt) {
-      userSubmit.courseAttempt.push(tempCourseAttempt);
-      courseList[currentQuiz].courseAttempt.push(tempCourseAttempt);
-      addCourse(courseList);
-      setUser(userData);
+      const userData: users[] = getUser();
+      const indexOfUser = Number(sessionStorage.getItem("userIndex"));
+      let courseList: course[] = viewCourse();
+
+      const tempCourseAttempt: courseAttempt = {
+        userName: userData[indexOfUser].name,
+        email: userData[indexOfUser].email,
+        name: contentItems.title,
+        mark: score,
+      };
+
+      console.log(tempCourseAttempt);
+
+      const existingAttempt = courseList[currentQuiz].courseAttempt.find(
+        (ele) => ele.name === tempCourseAttempt.name
+      );
+
+      if (!existingAttempt) {
+        courseList[currentQuiz].courseAttempt.push(tempCourseAttempt);
+        addCourse(courseList);
+      }
+
+      document.querySelectorAll(".navigator-li").forEach((el, index) => {
+        (el as HTMLButtonElement).addEventListener("click", () => {
+          confirmPopUp.close();
+          (listEl[index] as HTMLLIElement).style.visibility = "visible";
+        });
+      });
+
+      (document.querySelector("#back") as HTMLButtonElement).addEventListener(
+        "click",
+        () => {
+          confirmPopUp.close();
+          (listEl[i] as HTMLLIElement).style.visibility = "visible";
+        }
+      );
     }
   });
 });

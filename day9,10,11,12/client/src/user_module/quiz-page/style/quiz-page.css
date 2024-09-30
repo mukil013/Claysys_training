@@ -137,29 +137,46 @@ body.dark-mode{
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  align-items: start;
+  align-items: center;
 }
 #confirm::backdrop{
   backdrop-filter: blur(8px);
 }
 #confirm ul{
+  width: 60%;
+  height: 10rem;
   list-style: none;
   display: flex;
-  gap: .5rem;
+  align-items: center;
+  justify-content: center;
+  overflow: scroll;
+  gap: 1rem;
 }
 #confirm ul li{
-  height: fit-content;
+  height: 3rem;
+  aspect-ratio: 1/1;
   border: 1px solid #9e9e9e55;
-  padding: .5rem 1rem;
   border-radius: 100%;
   cursor: pointer;
 }
+#confirm ul li button{
+  border-radius: 100%;
+  height: 100%;
+  width: 100%;
+}
 .check{
-  background-color: royalblue;
+  background-color: rgb(83, 118, 223);
+  box-shadow: 0 0 .5rem rgba(83, 118, 223, 0.5);
+  color: #fff;
+}
+.check button{
   color: #fff;
 }
 .later{
   background-color: rgb(255, 255, 0);
+  box-shadow: 0 0 .5rem rgb(255, 255, 0.2);
+}
+.later button{
   color: #222;
 }
 .ques li span{
@@ -168,6 +185,29 @@ body.dark-mode{
   height: 3rem;
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: space-between;
   gap: 1rem;
+}
+.clear-choice{
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding: 1rem;
+}
+.clear-choice i{
+  color: red;
+}
+.ques div{
+  display : flex;
+  gap: 1rem;
+}
+.navigator-li{
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+.bar{
+  width: 100%;
+  height: .2rem;
+  background-color: rgba(65, 105, 225, 0.5);
 }

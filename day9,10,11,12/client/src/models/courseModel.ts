@@ -3,8 +3,17 @@ import { courseAttempt } from "./userModel";
 export interface course {
   title: string,
   description: string,
-  questions: question[]
+  questionType: string,
+  booleanQues: boolQue[],
+  questions: question[],
   courseAttempt: courseAttempt[]
+}
+
+export interface boolQue{
+  qno: number,
+  question: string,
+  correctAnswer: string,
+  markForTheQuestion: number
 }
 
 export interface question {

@@ -19,7 +19,7 @@ let currentUserName: string = user[userIndex].name;
 
 viewCourse().forEach((i, index) => {
   let attempt = true;
-  user[userIndex].courseAttempt.forEach((el) => {
+  i.courseAttempt.forEach((el) => {
     if (el.name === i.title) {
       attempt = false;
       return;
@@ -72,7 +72,6 @@ quickStart.forEach((el, i) => {
   el.addEventListener("click", () => {
     const val = Number(oldli[i].getAttribute("index"));
     const userName = getUser();
-    console.log("User data:", userName); // Debugging
     if (userName && userName[userIndex]) {
       const name = userName[userIndex].name;
       window.location.href = "../quiz-page/quiz-page.html";

@@ -6,7 +6,13 @@
     <title>Quizzer | Admin</title>
     <link rel="stylesheet" href="./style/adminPanel.css" />
     <script type="module" src="./script/adminPanel.ts"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
   <body>
     <nav>
@@ -16,19 +22,14 @@
           <label class="switch" id="dark-mode-toggle">
             <label class="switch" title="Dark mode & Light mode">
               <input type="checkbox" />
-              <span class="slider round"></span> 
-            </label
+              <span class="slider round"></span> </label
           ></label>
         </li>
-        <li><button id="account" title="Account"><i class="fa-solid fa-user"></i></button></li>
-        <!-- <div class="res-menu">
-        <button id="ham-menu"><i class="fa-solid fa-bars"></i></button>
-          <ul id="res-menu-expand">
-            <li><button>Add/Edit Quiz</button></li>
-            <li><button>Leader Board</button></li>
-            <li><button>User Management</button></li>
-          </ul>
-        </div> -->
+        <li>
+          <button id="account" title="Account">
+            <i class="fa-solid fa-user"></i>
+          </button>
+        </li>
       </ul>
       <div class="accountMenu">
         <ul>
@@ -43,9 +44,14 @@
           <li><button id="course-btn">Add/Edit Quiz</button></li>
           <li><button id="leader-btn">LeaderBoard</button></li>
           <li><button id="user-btn">User Management</button></li>
+          <li><button id="eval-btn">Evaluation</button></li>
         </ul>
       </aside>
       <div class="content">
+        <div class="eval-quiz" active="false">
+          <h1>Evaluavate Quiz</h1>
+          <ul></ul>
+        </div>
         <div class="course-list" active="false">
           <h1>Add/Edit Quiz</h1>
           <ul></ul>
@@ -76,14 +82,19 @@
             <tbody></tbody>
           </table>
         </div>
-        <button id="add"><i class="fa-solid fa-plus fa-sm" id="add-icon"></i>   </button>
+        <button id="add">
+          <i class="fa-solid fa-plus fa-sm" id="add-icon"></i>
+        </button>
         <dialog id="add-form">
           <form id="add-quiz">
             <button type="button" id="back">Back</button>
             <label for="title"
               >Quiz title :
-              <input type="text" id="title" placeholder="Enter Quiz Title"
-              required
+              <input
+                type="text"
+                id="title"
+                placeholder="Enter Quiz Title"
+                required
             /></label>
             <label>Quiz description : </label
             ><textarea
@@ -94,44 +105,68 @@
               placeholder="Enter Quiz Description"
               required
             ></textarea>
-            <input type="submit" value="Add Quiz">
+            <input type="submit" value="Add Quiz" />
           </form>
           <form id="add-question-form">
             <button type="button" id="exit">Exit</button>
             <button type="button" id="save-changes">Save and Exit</button>
             <div id="question-number">Question number : 1</div>
-              <textarea
-                type="text"
-                id="qtitle"
-                rows="4"
-                placeholder="Enter Your Question"
-                required
-              ></textarea>
+            <textarea
+              type="text"
+              id="qtitle"
+              rows="4"
+              placeholder="Enter Your Question"
+              required
+            ></textarea>
+            <label>Type of answer</label>
+            <select id="answer-type">
+              <option value="">Select a type of answer</option>
+              <option value="written">Breif Aswer</option>
+              <option value="true-false">True false</option>
+              <option value="mcq">MCQ</option>
+            </select>
+            <div id="true-false">
+              <div id="correct-answer-tf">
+                <label>Correct answer</label>
+                <select id="tf-select" >
+                  <option value="" selected>Select true or false</option>
+                  <option value="true">True</option>
+                  <option value="false">False</option>
+                </select>
+              </div>
+            </div>
+            <div id="mcq">
               <ul id="options">
                 <li>
-                  <label>option 1 : <input type="text" required/> </label>
+                  <label>option 1 : <input type="text" /> </label>
                 </li>
                 <li>
-                  <label>option 2 : <input type="text" required/> </label>
+                  <label>option 2 : <input type="text" /> </label>
                 </li>
                 <li>
-                  <label>option 3 : <input type="text" required/> </label>
+                  <label>option 3 : <input type="text" /> </label>
                 </li>
                 <li>
-                  <label>option 4 : <input type="text" required/> </label>
+                  <label>option 4 : <input type="text" /> </label>
                 </li>
               </ul>
               <label>Correct Option : </label>
-              <select id="correct-answer" required>
-                <option value = "">Select Your answer</option>
-                <option value = 1 >1</option>
-                <option value = 2>2</option>
-                <option value = 3>3</option>
-                <option value = 4>4</option>
-              </select><br/>
-              <label>Marks for the question : </label>
-              <input type="number" placeholder="Mark for the question" id="marks" required><br/>
-            <input type="submit" id="save-question" value="Add question">
+              <select id="correct-answer">
+                <option value="">Select Your answer</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option></select
+              ><br />
+            </div>
+            <label>Marks for the question : </label>
+            <input
+              type="number"
+              placeholder="Mark for the question"
+              id="marks"
+              required
+            /><br />
+            <input type="submit" id="save-question" value="Add question" />
           </form>
         </dialog>
       </div>
@@ -144,38 +179,47 @@
         <form id="edit-question-form">
           <button type="button" id="edit-exit">Exit without saving</button>
           <div id="edit-question-number">Question number : 1</div>
-            <textarea
-              type="text"
-              id="edit-qtitle"
-              rows="4"
-              placeholder="Enter Your Question"
-              required
-            ></textarea>
+          <textarea
+            type="text"
+            id="edit-qtitle"
+            rows="4"
+            placeholder="Enter Your Question"
+            required
+          ></textarea>
+          <div id="written"></div>
+          <div id="edit-true-false"></div>
+          <div id="edit-mcq">
             <ul id="edit-options">
               <li>
-                <label>option 1 : <input type="text" required/> </label>
+                <label>option 1 : <input type="text" required /> </label>
               </li>
               <li>
-                <label>option 2 : <input type="text" required/> </label>
+                <label>option 2 : <input type="text" required /> </label>
               </li>
               <li>
-                <label>option 3 : <input type="text" required/> </label>
+                <label>option 3 : <input type="text" required /> </label>
               </li>
               <li>
-                <label>option 4 : <input type="text" required/> </label>
+                <label>option 4 : <input type="text" required /> </label>
               </li>
             </ul>
             <label>Correct Option : </label>
             <select id="edit-correct-answer" required>
-              <option value=null selected disabled>Select Your answer</option>
-              <option value = 1>1</option>
-              <option value = 2>2</option>
-              <option value = 3>3</option>
-              <option value = 4>4</option>
-            </select><br/>
-            <label>Marks for the question : </label>
-            <input type="number" placeholder="Mark for the question" id="edit-marks"><br/>
-          <input type="submit" id="save-edit-question" value="Save">
+              <option value="null" selected disabled>Select Your answer</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+          <br />
+          <label>Marks for the question : </label>
+          <input
+            type="number"
+            placeholder="Mark for the question"
+            id="edit-marks"
+          /><br />
+          <input type="submit" id="save-edit-question" value="Save" />
         </form>
       </dialog>
     </main>
