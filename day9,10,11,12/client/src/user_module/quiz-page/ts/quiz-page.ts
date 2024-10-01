@@ -2,7 +2,6 @@ import { addCourse, course, viewCourse } from "../../../models/courseModel";
 import {
   courseAttempt,
   getUser,
-  setUser,
   users,
 } from "../../../models/userModel";
 
@@ -54,9 +53,15 @@ for (let i = 0; i < contentItems.questions.length; i++) {
   let li = document.createElement("li");
   content = `<p>${contentItems.questions[ques].question}</p>`;
 
-  for (let k = 0; k < contentItems.questions[ques].options.length; k++) {
-    let opt = randomOption[k];
-    content += `<label><input type="radio" value="${opt}" name="${i}"/>${contentItems.questions[ques].options[opt]}</label>`;
+  if(contentItems.questions[ques].questionType === "mcq"){
+    for (let k = 0; k < contentItems.questions[ques].options.length; k++) {
+      let opt = randomOption[k];
+      content += `<label><input type="radio" value="${opt}" name="${i}"/>${contentItems.questions[ques].options[opt]}</label>`;
+    }
+  }else if(contentItems.questions[ques].questionType === "true-false"){
+    content += `<label><input type="radio" name="bool" value="true"> True</label><label><input type="radio" name="bool" value="False"> False</label>`
+  }else{
+    content += "<textarea rows=\"3\" class=\"breif-answer\" placeholder=\"Enter your answer\"></textarea>"
   }
   content += `<div><button class="prev">Prev</button><button class="next">Next</button></div>`;
   content += `<span><div><input type="checkbox">Mark for later</div>
@@ -68,28 +73,13 @@ for (let i = 0; i < contentItems.questions.length; i++) {
   ul.appendChild(li);
 }
 
+let breifAnswers 
+
 let prev = document.querySelectorAll(".prev");
 let next = document.querySelectorAll(".next");
 let listEl = document.querySelectorAll("body ul li");
 let elePrev: HTMLLIElement;
 let score: number = 0;
-
-prev.forEach((el, i) => {
-  if (i === 0) {
-    ((el as HTMLButtonElement).style.opacity = ".2"),
-      ((el as HTMLButtonElement).style.cursor = "not-allowed"),
-      ((el as HTMLButtonElement).style.pointerEvents = "none");
-    return;
-  }
-  (el as HTMLButtonElement).addEventListener("click", () => {
-    elePrev = listEl[i - 1] as HTMLLIElement;
-    listEl.forEach((i) => {
-      let ele = i as HTMLLIElement;
-      ele.style.visibility = "hidden";
-    });
-    elePrev.style.visibility = "visible";
-  });
-});
 
 let confirmPopUp = document.querySelector("#confirm") as HTMLDialogElement;
 let confirmPopUpList = document.querySelector(
@@ -118,13 +108,29 @@ for (let x = 0; x < listEl.length; x++) {
 let remaining = 0
 let bar = document.querySelector(".bar") as HTMLDivElement;
 
+prev.forEach((el, i) => {
+  if (i === 0) {
+    ((el as HTMLButtonElement).style.opacity = ".2"),
+      ((el as HTMLButtonElement).style.cursor = "not-allowed"),
+      ((el as HTMLButtonElement).style.pointerEvents = "none");
+    return;
+  }
+  (el as HTMLButtonElement).addEventListener("click", () => {
+    elePrev = listEl[i - 1] as HTMLLIElement;
+    listEl.forEach((i) => {
+      let ele = i as HTMLLIElement;
+      ele.style.visibility = "hidden";
+    });
+    elePrev.style.visibility = "visible";
+  });
+});
+
 next.forEach((el, i) => {
   let currentAnswer: number = 0;
 
   (el as HTMLButtonElement).addEventListener("click", () => {
-    remaining = (listEl.length) / 100;
-    console.log(remaining*100);
-    bar.style.width = `${100*remaining}%`;
+    remaining = 100/((listEl.length)-(i+1)) ;
+    bar.style.width = `${remaining}%`;
     if (
       (listEl[i].querySelector('input[type="checkbox"]') as HTMLInputElement)
         .checked
@@ -191,7 +197,7 @@ next.forEach((el, i) => {
       (
         document.querySelector("#submit-quiz") as HTMLButtonElement
       ).addEventListener("click", () => {
-        window.location.href = "/src/user_module/quiz-page/quiz-summary.html";
+        window.location.href = "/src/user_module/course_list/courseList.html";
       });
 
       const userData: users[] = getUser();
@@ -199,13 +205,19 @@ next.forEach((el, i) => {
       let courseList: course[] = viewCourse();
 
       const tempCourseAttempt: courseAttempt = {
+        validated: true,
         userName: userData[indexOfUser].name,
         email: userData[indexOfUser].email,
         name: contentItems.title,
         mark: score,
       };
 
-      console.log(tempCourseAttempt);
+      viewCourse()[currentQuiz].questions.forEach( i => {
+        if(i.questionType === "written"){
+          tempCourseAttempt.validated = false
+          return
+        }
+      })
 
       const existingAttempt = courseList[currentQuiz].courseAttempt.find(
         (ele) => ele.name === tempCourseAttempt.name

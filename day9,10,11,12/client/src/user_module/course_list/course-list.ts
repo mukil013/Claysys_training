@@ -19,12 +19,12 @@ let currentUserName: string = user[userIndex].name;
 
 viewCourse().forEach((i, index) => {
   let attempt = true;
-  i.courseAttempt.forEach((el) => {
-    if (el.name === i.title) {
-      attempt = false;
-      return;
+  i.courseAttempt.forEach(el => {
+    if(user[userIndex].email === el.email){
+      attempt = false
+      return
     }
-  });
+  })
   let content = "";
   if (attempt) {
     let description = i.description;
@@ -51,6 +51,7 @@ viewCourse().forEach((i, index) => {
               <h1>${i.title.toUpperCase()}</h1>
               <div>
                 <p>${description}</p>
+                <button class="quiz-leader">Leader board</button>
                 <button class="quick-quiz">Quick start</button>
               </div> 
               </li>`;
@@ -58,6 +59,24 @@ viewCourse().forEach((i, index) => {
     return;
   }
 });
+
+(document.querySelectorAll(".quiz-leader")).forEach((el,i) => {
+  (el as HTMLButtonElement).addEventListener('click' , () => {
+    console.log("working");
+    console.log(viewCourse()[i].courseAttempt);
+    
+    viewCourse()[i].courseAttempt.forEach( index => {
+      
+      if(index.validated){
+        window.location.href = "/src/user_module/quiz-page/quiz-summary.html"
+        return
+      }else{
+        alert("Please wait for the results...")
+        return
+      }
+    })
+  })
+})
 
 let knowMore = document.querySelectorAll(".know-more");
 let back = document.querySelectorAll(".back");

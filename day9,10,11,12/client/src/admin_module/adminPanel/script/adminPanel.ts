@@ -175,12 +175,33 @@ evalBtn.addEventListener("click", () => {
   evalQuiz.setAttribute("active", "true");
 });
 
+let ulForEval = evalQuiz.querySelector("ul") as HTMLUListElement;
+
+viewCourse().forEach((i) => {
+  let content = `<h3>${i.title.toUpperCase()}</h3><button class="view-res">View Response</button>`;
+  let li = document.createElement("li") as HTMLLIElement;
+  li.innerHTML += content;
+  ulForEval.appendChild(li);
+
+  let evalQuizDialog = document.querySelector(
+    "#eval-quiz-dialog"
+  ) as HTMLDialogElement;
+  document.querySelectorAll(".view-res").forEach((el, index) => {
+    (el as HTMLButtonElement).addEventListener("click", () => {
+      evalQuizDialog.showModal();
+      document
+        .querySelectorAll(".back")
+        [index].addEventListener("click", () => {
+          evalQuizDialog.close();
+        });
+    });
+  });
+});
+
 let addDialog = document.querySelector("#add-form") as HTMLDialogElement;
 let courseInit: course = {
   title: "",
   description: "",
-  questionType: "",
-  booleanQues: [],
   questions: [],
   courseAttempt: [],
 };
@@ -205,6 +226,8 @@ let addForm = document.querySelector("#add-quiz") as HTMLFormElement;
 let previewContent: string = "";
 
 let questionNumber: number = 1;
+
+let questionsArray: question[] = [];
 
 addBtn.addEventListener("click", () => {
   addDialog.showModal();
@@ -233,31 +256,9 @@ addBtn.addEventListener("click", () => {
       "#question-number"
     ) as HTMLDivElement;
 
-    let questionsArray: question[] = [];
-
     let mcq = document.querySelector("#mcq") as HTMLDivElement;
     let trueFalse = document.querySelector("#true-false") as HTMLDivElement;
     let ansType = document.querySelector("#answer-type") as HTMLSelectElement;
-
-    ansType.addEventListener("change", () => {
-      if (ansType.value === "mcq") {
-        mcq.style.display = "block";
-        trueFalse.style.display = "";
-        courseInit.questionType = "mcq"
-      } else if (ansType.value === "true-false") {
-        trueFalse.style.display = "block";
-        mcq.style.display = "";
-        courseInit.questionType = "boolean"
-      } else if (ansType.value === "written") {
-        trueFalse.style.display = "";
-        mcq.style.display = "";
-        courseInit.questionType = "written"
-      } else {
-        trueFalse.style.display = "";
-        mcq.style.display = "";
-        courseInit.questionType = ""
-      }
-    });
 
     (
       document.querySelector("#save-question") as HTMLButtonElement
@@ -265,32 +266,68 @@ addBtn.addEventListener("click", () => {
       questionNumber++;
     });
 
+    ansType.addEventListener("change", () => {
+      if (ansType.value === "mcq") {
+        mcq.style.display = "block";
+        trueFalse.style.display = "";
+      } else if (ansType.value === "true-false") {
+        trueFalse.style.display = "block";
+        mcq.style.display = "";
+      } else if (ansType.value === "written") {
+        trueFalse.style.display = "";
+        mcq.style.display = "";
+      } else {
+        trueFalse.style.display = "";
+        mcq.style.display = "";
+      }
+    });
+
     questionForm.addEventListener("submit", (e) => {
       e.preventDefault();
+      let question: question = {
+        qno: 0,
+        questionType: "",
+        question: "",
+        options: [],
+        correctAnswer: 0,
+        markForTheQuestion: 0,
+      };
+
+      question.questionType = ansType.value;
+
       questionNumberForDisplay.textContent = `Question number: ${
         questionNumber + 1
       }`;
-      let option: string[] = [];
-      optionsFromInput.forEach((el) => {
-        let ele = el as HTMLInputElement;
-        const optionValue = ele.value.trim();
-        if (optionValue) {
-          option.push(optionValue);
+
+      question.qno = questionNumber;
+      question.question = qtitle.value;
+
+      if (question.questionType === "mcq") {
+        let option: string[] = [];
+        optionsFromInput.forEach((el) => {
+          let ele = el as HTMLInputElement;
+          const optionValue = ele.value.trim();
+          if (optionValue) {
+            option.push(optionValue);
+          }
+        });
+        question.options = option;
+        question.correctAnswer = Number(correctAns.value);
+      } else if (question.questionType === "true-false") {
+        let tfAns = document.querySelector("#tf-select") as HTMLSelectElement;
+        if (tfAns.value === "true") {
+          question.correctAnswer = 1;
+        } else {
+          question.correctAnswer = 0;
         }
-      });
-      let question: question = {
-        qno: questionNumber,
-        question: qtitle.value.trim(),
-        options: option,
-        correctAnswer: Number(correctAns.value),
-        markForTheQuestion: marks.valueAsNumber,
-      };
-      if (question.question && question.options.length > 0) {
-        questionsArray.push(question);
-        courseInit.questions = questionsArray;
-        questionForm.reset();
-        questionNumber++;
       }
+
+      question.markForTheQuestion = marks.valueAsNumber;
+
+      questionsArray.push(question);
+      courseInit.questions = questionsArray;
+      questionForm.reset();
+      questionNumber++;
     });
 
     addForm.addEventListener("submit", (e) => {
@@ -325,7 +362,7 @@ addBtn.addEventListener("click", () => {
       addForm.style.display = "flex";
     }
   );
-  
+
   addForm.reset();
 });
 
@@ -338,7 +375,6 @@ let content = "";
 
 window.addEventListener("load", () => {
   courseListStorage.forEach((el) => {
-
     let li = document.createElement("li") as HTMLLIElement;
     content = `
                <h1 class="course-title">${el.title.toUpperCase()}</h1>
@@ -374,14 +410,20 @@ window.addEventListener("load", () => {
         let li = document.createElement("li");
         previewContent = `<p>Question no : ${el.qno}</p><br />
             <p>Question : ${el.question}</p><br />
-            <p>Options</p>
-            <ol>`;
-        el.options.forEach((ele) => {
-          previewContent += `<li>${ele}</li>`;
-        });
-        previewContent += `</ol>
-            <br />
-            <p>Correct Answer : ${el.correctAnswer}</p><br />
+            <p>Question type : ${el.questionType}</p><br/>`;
+
+        if (el.questionType === "mcq") {
+          previewContent += "<p>Options</p><ol>";
+          el.options.forEach((ele) => {
+            previewContent += `<li>${ele}</li>`;
+          });
+          previewContent += `</ol><br /><p>Correct Answer : ${el.correctAnswer}</p><br />`;
+        } else if (el.questionType === "true-false") {
+          if (el.correctAnswer === 0)
+            previewContent += `<p>Correct answer : false</p><br />`;
+          else previewContent += `<p>Correct answer : true</p><br />`;
+        }
+        previewContent += `
             <p>Mark for the Question : ${el.markForTheQuestion}</p>
             <div>
             <button class="editInPreview" >Edit</button>
