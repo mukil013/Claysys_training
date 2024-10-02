@@ -1,9 +1,5 @@
 import { addCourse, course, viewCourse } from "../../../models/courseModel";
-import {
-  courseAttempt,
-  getUser,
-  users,
-} from "../../../models/userModel";
+import { breif, courseAttempt, getUser, users } from "../../../models/userModel";
 
 let timer = document.querySelector(".timer") as HTMLParagraphElement;
 let time = 600;
@@ -19,14 +15,12 @@ setInterval(() => {
 
 let currentQuiz = Number(sessionStorage.getItem("currentQuiz"));
 
-let allCourse: course[] = viewCourse();
-
 let ul = document.querySelector("body ul") as HTMLUListElement;
 let userName = document.querySelector("#user-name") as HTMLHeadingElement;
 let courseTitle = document.querySelector("#course-title") as HTMLHeadingElement;
 
 let content = "";
-let contentItems = { ...allCourse[currentQuiz] };
+let contentItems = { ...viewCourse()[currentQuiz] };
 
 userName.textContent = "Taking as : " + sessionStorage.getItem("currentUser");
 courseTitle.textContent = "quiz : " + contentItems.title.toString();
@@ -53,15 +47,16 @@ for (let i = 0; i < contentItems.questions.length; i++) {
   let li = document.createElement("li");
   content = `<p>${contentItems.questions[ques].question}</p>`;
 
-  if(contentItems.questions[ques].questionType === "mcq"){
+  if (contentItems.questions[ques].questionType === "mcq") {
     for (let k = 0; k < contentItems.questions[ques].options.length; k++) {
       let opt = randomOption[k];
       content += `<label><input type="radio" value="${opt}" name="${i}"/>${contentItems.questions[ques].options[opt]}</label>`;
     }
-  }else if(contentItems.questions[ques].questionType === "true-false"){
-    content += `<label><input type="radio" name="bool" value="true"> True</label><label><input type="radio" name="bool" value="False"> False</label>`
-  }else{
-    content += "<textarea rows=\"3\" class=\"breif-answer\" placeholder=\"Enter your answer\"></textarea>"
+  } else if (contentItems.questions[ques].questionType === "true-false") {
+    content += `<label><input type="radio" name="bool" value="true"> True</label><label><input type="radio" name="bool" value="False"> False</label>`;
+  } else {
+    content +=
+      '<textarea rows="3" class="breif-answer" placeholder="Enter your answer"></textarea>';
   }
   content += `<div><button class="prev">Prev</button><button class="next">Next</button></div>`;
   content += `<span><div><input type="checkbox">Mark for later</div>
@@ -72,8 +67,6 @@ for (let i = 0; i < contentItems.questions.length; i++) {
   li.className = "list-items";
   ul.appendChild(li);
 }
-
-let breifAnswers 
 
 let prev = document.querySelectorAll(".prev");
 let next = document.querySelectorAll(".next");
@@ -91,6 +84,7 @@ let arr1: number[] = new Array(listEl.length);
 document.querySelectorAll(".clear-choice").forEach((el, i) => {
   (el as HTMLButtonElement).addEventListener("click", () => {
     let inputs = listEl[i].querySelectorAll('input[type="radio"]');
+    (document.querySelector("textarea") as HTMLTextAreaElement).value = "";
     inputs.forEach((ele) => {
       (ele as HTMLInputElement).checked = false;
       arr[i] = 0;
@@ -105,7 +99,7 @@ for (let x = 0; x < listEl.length; x++) {
   arr[x] = 0;
   arr1[x] = 0;
 }
-let remaining = 0
+let remaining = 0;
 let bar = document.querySelector(".bar") as HTMLDivElement;
 
 prev.forEach((el, i) => {
@@ -125,11 +119,20 @@ prev.forEach((el, i) => {
   });
 });
 
+let courseList: course[] = viewCourse();
+
+let tempCourseAttempt: courseAttempt = {
+  userName: "",
+  email: "",
+  name: "",
+  mark: 0,
+};
+
 next.forEach((el, i) => {
   let currentAnswer: number = 0;
 
   (el as HTMLButtonElement).addEventListener("click", () => {
-    remaining = 100/((listEl.length)-(i+1)) ;
+    remaining = 100 / (listEl.length - (i + 1));
     bar.style.width = `${remaining}%`;
     if (
       (listEl[i].querySelector('input[type="checkbox"]') as HTMLInputElement)
@@ -144,18 +147,45 @@ next.forEach((el, i) => {
 
     let ques = Number(listEl[i].getAttribute("question-number"));
 
-    inputs.forEach((elInp) => {
-      let inputEl = elInp as HTMLInputElement;
-      currentAnswer = Number(inputEl.value);
-      if (inputEl.checked) {
-        arr[i] = 1;
-        if (currentAnswer === contentItems.questions[ques].correctAnswer - 1) {
-          score += contentItems.questions[ques].markForTheQuestion;
-          attempted[i] = true;
-          return;
-        }
+    const userData: users[] = getUser();
+    const indexOfUser = Number(sessionStorage.getItem("userIndex"));
+
+    tempCourseAttempt = {
+      userName: userData[indexOfUser].name,
+      email: userData[indexOfUser].email,
+      name: contentItems.title,
+      mark: score,
+    };
+
+    if (viewCourse()[currentQuiz].questions[ques].questionType === "written") {
+      let textareaInput = listEl[i].querySelector(
+        "textarea"
+      ) as HTMLTextAreaElement;
+      let breif:breif = {
+        qno: ques+1,
+        question: courseList[currentQuiz].questions[ques].question,
+        answer: textareaInput.value
       }
-    });
+      contentItems.questions[ques].breif = breif
+      if (textareaInput.value.length > 0) {
+        arr[i] = 1;
+      }
+    } else {
+      inputs.forEach((elInp) => {
+        let inputEl = elInp as HTMLInputElement;
+        currentAnswer = Number(inputEl.value);
+        if (inputEl.checked) {
+          arr[i] = 1;
+          if (
+            currentAnswer ===
+            contentItems.questions[ques].correctAnswer - 1
+          ) {
+            score += contentItems.questions[ques].markForTheQuestion;
+            return;
+          }
+        }
+      });
+    }
 
     (listEl[0] as HTMLLIElement).style.visibility = "hidden";
     listEl.forEach((i) => {
@@ -167,10 +197,12 @@ next.forEach((el, i) => {
       (listEl[i + 1] as HTMLLIElement).style.visibility = "visible";
 
     if (i === listEl.length - 1) {
+      contentItems.courseAttempt.push(tempCourseAttempt);
+      courseList[currentQuiz] = contentItems;
+      console.log(courseList);
+
       el.textContent = "Finish";
       confirmPopUp.showModal();
-      console.log(score);
-
       confirmPopUpList.innerHTML = "";
 
       for (let l = 0; l < listEl.length; l++) {
@@ -182,7 +214,6 @@ next.forEach((el, i) => {
         if (arr[l] === 1 && arr1[l] === 0) {
           li.classList.add("check");
           li.title = "Completed";
-          console.log("working completed " + l);
         } else if (arr1[l] === 1 && (arr[l] === 1 || arr[l] === 0)) {
           li.classList.add("later");
           li.title = "Visit later";
@@ -192,40 +223,6 @@ next.forEach((el, i) => {
           console.log("working incomplete " + l);
         }
         confirmPopUpList.appendChild(li);
-      }
-
-      (
-        document.querySelector("#submit-quiz") as HTMLButtonElement
-      ).addEventListener("click", () => {
-        window.location.href = "/src/user_module/course_list/courseList.html";
-      });
-
-      const userData: users[] = getUser();
-      const indexOfUser = Number(sessionStorage.getItem("userIndex"));
-      let courseList: course[] = viewCourse();
-
-      const tempCourseAttempt: courseAttempt = {
-        validated: true,
-        userName: userData[indexOfUser].name,
-        email: userData[indexOfUser].email,
-        name: contentItems.title,
-        mark: score,
-      };
-
-      viewCourse()[currentQuiz].questions.forEach( i => {
-        if(i.questionType === "written"){
-          tempCourseAttempt.validated = false
-          return
-        }
-      })
-
-      const existingAttempt = courseList[currentQuiz].courseAttempt.find(
-        (ele) => ele.name === tempCourseAttempt.name
-      );
-
-      if (!existingAttempt) {
-        courseList[currentQuiz].courseAttempt.push(tempCourseAttempt);
-        addCourse(courseList);
       }
 
       document.querySelectorAll(".navigator-li").forEach((el, index) => {
@@ -244,6 +241,18 @@ next.forEach((el, i) => {
       );
     }
   });
+});
+
+(document.querySelector("#submit-quiz") as HTMLButtonElement).addEventListener("click", () => {
+  window.location.href = "/src/user_module/course_list/courseList.html";
+  let existingAttempt = viewCourse()[currentQuiz].courseAttempt.find(
+    (ele) => ele.name === tempCourseAttempt.name
+  );
+  if (!existingAttempt) {
+    console.log("Hello");
+    console.log(courseList);
+    addCourse(courseList);
+  }
 });
 
 let main = document.querySelectorAll("body, ul li");

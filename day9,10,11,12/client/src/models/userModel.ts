@@ -6,7 +6,6 @@ export interface users {
 }
 
 export interface courseAttempt{
-  validated: boolean,
   userName: users["name"],
   email: users["email"],
   name : string,

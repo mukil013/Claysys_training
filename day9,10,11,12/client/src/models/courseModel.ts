@@ -8,13 +8,20 @@ export interface course {
 }
 
 export interface question {
+  validated: boolean,
   qno: number,
   questionType: string,
+  breif?: breif,
   question: string,
   options: string[],
-  breifResponse ?: string,
   correctAnswer: number,
   markForTheQuestion: number
+}
+
+export interface breif{
+  qno: number,
+  qustion: string,
+  answer: string
 }
 
 export function addCourse(course: course[]): void {
