@@ -62,11 +62,19 @@ viewCourse().forEach((i, index) => {
 
 (document.querySelectorAll(".quiz-leader")).forEach((el,i) => {
   (el as HTMLButtonElement).addEventListener('click' , () => {
-    console.log("working");
-    console.log(viewCourse()[i].courseAttempt);
-    
-    viewCourse()[i].courseAttempt.forEach( index => {
-      
+    let history = historyUl.querySelectorAll("li")[i] as HTMLLIElement
+    let historyAttr = Number(history.getAttribute("index"))
+    let tempUser = 0
+
+    viewCourse()[historyAttr].courseAttempt.forEach( (index, i) =>{
+      if(index.name === getUser()[userIndex].name && index.email === getUser()[userIndex].email){
+        tempUser = i
+        sessionStorage.setItem("tempUser",tempUser.toString())
+        return
+      }
+    })
+
+    viewCourse()[historyAttr].courseAttempt.forEach( index => {
       if(index.validated){
         window.location.href = "/src/user_module/quiz-page/quiz-summary.html"
         return

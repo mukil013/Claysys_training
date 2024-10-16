@@ -1,0 +1,40 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Arial;
+  scroll-behavior: smooth;
+  transition: .2s all ease;
+}
+
+.add-edit ul li{
+  padding: 2px 8px 16px 8px;
+  width: 20rem;
+  height: 7rem;
+  border: 1px solid #9e9e9e55;
+  border-radius: 8px;
+}
+.add-edit ul li h1{
+  border-bottom: 1px solid #9e9e9e55;
+}
+.add-edit ul li button{
+  padding: 2px 8px;
+  background-color: #9e9e9e55;
+  margin-right: 4px;
+  border-radius: 8px;
+}
+.add-edit ul li p{
+  height: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+dialog::backdrop{
+  backdrop-filter: blur(.2rem);
+}

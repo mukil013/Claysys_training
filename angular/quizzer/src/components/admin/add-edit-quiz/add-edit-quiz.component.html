@@ -1,0 +1,43 @@
+<div class="add-edit h-full w-full relative bg-white rounded-xl shadow-md">
+  <h1 class="text-3xl font-bold shadow-md p-4" >Add / Edit quiz</h1>
+  <ul class="w-full h-5/6  p-4 overflow-y-auto flex gap-2 flex-wrap content-start">
+    <li>
+      <h1 class="font-bold">Quiz name</h1>
+      <p>Description : <span>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nam quam excepturi numquam deserunt. Reiciendis reprehenderit doloremque rem tempore odio dicta, aliquid sapiente earum quod, fuga, deleniti voluptatem veniam atque odit.
+        Quam fuga ab, vel, a rerum recusandae laudantium vitae architecto sint eveniet non blanditiis pariatur, dolorem cumque doloribus voluptatem dolore commodi consequatur. Aperiam ea sunt numquam voluptas, sint dolor rem.
+      </span></p>
+      <button class="bg-slate-400 text-gray-400 hover:text-white hover:bg-blue-500 transition-all">Add</button><button>Edit</button><button>Delete</button>
+    </li>
+  </ul>
+  <button class="absolute bottom-10 right-16 bg-blue-500 h-10 w-10 rounded-full text-2xl text-white"
+  title="Add Quiz"
+  (click) = "open()">+</button>
+  <dialog id="add-quiz-form" class="h-fit w-1/2 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg p-4 backdrop:blur-sm">
+    <button (click) = "close()" class="bg-slate-400 text-gray-200 hover:text-blue-500 hover:bg-slate-300 transition-all px-2 rounded-md">Back</button><br />
+    @if(!flag){
+      <form id="add-quiz" class="flex flex-col gap-4 mt-4"[formGroup]="addQuiz"> 
+        <label for="quiz-name">Quiz name<span class="text-red-600">*</span></label>
+        <input type="text" name="quiz-name" placeholder="Enter your course title" class="border-solid border-slate-200 border-2 rounded-md px-2"  formControlName = "quizTitle">
+        <label for="Description">Description (optional)</label>
+        <textarea class="border-solid border-slate-200 border-2 rounded-md px-2 resize-none" name="description" placeholder="Enter your description" rows="4" formControlName = "quizDes"></textarea>
+        <button class="bg-green-600 text-white rounded-md py-1.5" (click) = "submitQuiz()">Add Questions</button>
+      </form>
+    }
+
+    @if(flag){
+      <form [formGroup]="addQues">
+        <div class="qno">Question number : {{qno}}</div><br />
+        <label for="question">Question : </label><br />
+        <textarea name="question" placeholder="Enter question here" class="border-2 border-slate-200 rounded-lg resize-none p-2 w-full"></textarea><br />
+        <label for="type">Question type : </label>
+        <select name="type" class="p-2 rounded-lg">
+          <option value="" selected disabled>Select answer type</option>
+          <option value="MCQ">MCQ</option>
+          <option value="TRUE_FALSE">True or False</option>
+          <option value="Breif">Breif</option>
+        </select>
+      </form>
+    }
+  </dialog>
+</div>

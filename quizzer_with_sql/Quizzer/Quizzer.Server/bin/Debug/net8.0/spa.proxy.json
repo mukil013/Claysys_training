@@ -1,0 +1,10 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:4200",
+"RedirectUrl": "",
+"LaunchCommand": "npm start",
+"WorkingDirectory": "C:\\Users\\mukilan.m\\OneDrive - ClaySys Technologies\\dev\\Claysys_training\\quizzer_with_sql\\Quizzer\\Quizzer.Server\\..\\quizzer.client",
+"MaxTimeoutInSeconds": "120",
+"KeepRunning": "false"
+}
+}

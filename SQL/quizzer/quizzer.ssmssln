@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# SQL Server Management Studio Solution File, Format Version 20.00
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "quizzer", "quizzer\quizzer.ssmssqlproj", "{AF0872E5-539D-4A28-BA00-F51758AC394B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Default|Default = Default|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AF0872E5-539D-4A28-BA00-F51758AC394B}.Default|Default.ActiveCfg = Default
+		{A18C05CE-DB98-481F-9EC1-E455811BA9B2}.Default|Default.ActiveCfg = Default
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {205158A8-92B3-4764-8F7D-8AE229C8EA06}
+	EndGlobalSection
+EndGlobal

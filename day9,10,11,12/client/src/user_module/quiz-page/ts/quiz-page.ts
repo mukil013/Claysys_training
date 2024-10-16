@@ -1,5 +1,10 @@
-import { addCourse, course, viewCourse } from "../../../models/courseModel";
-import { breif, courseAttempt, getUser, users } from "../../../models/userModel";
+import {
+  addCourse,
+  course,
+  viewCourse,
+} from "../../../models/courseModel";
+
+import { courseAttempt, getUser, users, breif } from "../../../models/userModel";
 
 let timer = document.querySelector(".timer") as HTMLParagraphElement;
 let time = 600;
@@ -121,7 +126,10 @@ prev.forEach((el, i) => {
 
 let courseList: course[] = viewCourse();
 
+let bool = true 
+
 let tempCourseAttempt: courseAttempt = {
+  validated: bool,
   userName: "",
   email: "",
   name: "",
@@ -150,26 +158,51 @@ next.forEach((el, i) => {
     const userData: users[] = getUser();
     const indexOfUser = Number(sessionStorage.getItem("userIndex"));
 
-    tempCourseAttempt = {
-      userName: userData[indexOfUser].name,
-      email: userData[indexOfUser].email,
-      name: contentItems.title,
-      mark: score,
-    };
-
     if (viewCourse()[currentQuiz].questions[ques].questionType === "written") {
       let textareaInput = listEl[i].querySelector(
         "textarea"
       ) as HTMLTextAreaElement;
-      let breif:breif = {
-        qno: ques+1,
+
+      bool = false
+
+      let breif: breif = {
+        qno: ques + 1,
         question: courseList[currentQuiz].questions[ques].question,
-        answer: textareaInput.value
-      }
-      contentItems.questions[ques].breif = breif
-      if (textareaInput.value.length > 0) {
+        answer: textareaInput.value,
+      };
+
+      tempCourseAttempt.breif = breif
+      tempCourseAttempt.validated = bool
+
+      if (textareaInput.value != "") {
         arr[i] = 1;
+      } else {
+        arr[i] = 0;
       }
+    } else if (
+      viewCourse()[currentQuiz].questions[ques].questionType === "true-false"
+    ) {
+      tempCourseAttempt.validated = bool
+      inputs.forEach((elInp,index) => {
+        let inputEl = elInp as HTMLInputElement;
+        currentAnswer = Number(index);
+        if (inputEl.checked) {
+          arr[i] = 1;
+          let ans = Number(contentItems.questions[ques].correctAnswer);
+          
+          if (ans === 0) {
+            if(ans === currentAnswer-1){
+              score += contentItems.questions[ques].markForTheQuestion;
+              console.log(score);
+            }
+          }else if(ans === 1){
+            if(ans === currentAnswer+1){
+              score += contentItems.questions[ques].markForTheQuestion;
+              console.log(score);
+            }
+          }
+        }
+      });
     } else {
       inputs.forEach((elInp) => {
         let inputEl = elInp as HTMLInputElement;
@@ -181,7 +214,7 @@ next.forEach((el, i) => {
             contentItems.questions[ques].correctAnswer - 1
           ) {
             score += contentItems.questions[ques].markForTheQuestion;
-            return;
+            console.log(score);
           }
         }
       });
@@ -197,11 +230,15 @@ next.forEach((el, i) => {
       (listEl[i + 1] as HTMLLIElement).style.visibility = "visible";
 
     if (i === listEl.length - 1) {
+      el.textContent = "Finish";
+  
+      tempCourseAttempt.userName = userData[indexOfUser].name;
+      tempCourseAttempt.email = userData[indexOfUser].email;
+      tempCourseAttempt.name = contentItems.title;
+      tempCourseAttempt.mark = score;
+
       contentItems.courseAttempt.push(tempCourseAttempt);
       courseList[currentQuiz] = contentItems;
-      console.log(courseList);
-
-      el.textContent = "Finish";
       confirmPopUp.showModal();
       confirmPopUpList.innerHTML = "";
 
@@ -217,21 +254,11 @@ next.forEach((el, i) => {
         } else if (arr1[l] === 1 && (arr[l] === 1 || arr[l] === 0)) {
           li.classList.add("later");
           li.title = "Visit later";
-          console.log("working visit later " + l);
         } else if (arr[l] === 0 && arr1[l] === 0) {
           li.title = "Incomplete";
-          console.log("working incomplete " + l);
         }
         confirmPopUpList.appendChild(li);
       }
-
-      document.querySelectorAll(".navigator-li").forEach((el, index) => {
-        (el as HTMLButtonElement).addEventListener("click", () => {
-          confirmPopUp.close();
-          (listEl[index] as HTMLLIElement).style.visibility = "visible";
-        });
-      });
-
       (document.querySelector("#back") as HTMLButtonElement).addEventListener(
         "click",
         () => {
@@ -239,20 +266,32 @@ next.forEach((el, i) => {
           (listEl[i] as HTMLLIElement).style.visibility = "visible";
         }
       );
+
+      (document.querySelector("#submit-quiz") as HTMLButtonElement).addEventListener(
+        "click",
+        () => {
+
+          let existingAttempt = viewCourse()[currentQuiz].courseAttempt.find(
+            (ele) => ele.userName === tempCourseAttempt.userName
+          );
+          
+          if (!existingAttempt) {
+            addCourse(courseList);
+            console.log(viewCourse());
+          }
+          window.location.href = "/src/user_module/course_list/courseList.html";
+
+        }
+      );
     }
   });
 });
 
-(document.querySelector("#submit-quiz") as HTMLButtonElement).addEventListener("click", () => {
-  window.location.href = "/src/user_module/course_list/courseList.html";
-  let existingAttempt = viewCourse()[currentQuiz].courseAttempt.find(
-    (ele) => ele.name === tempCourseAttempt.name
-  );
-  if (!existingAttempt) {
-    console.log("Hello");
-    console.log(courseList);
-    addCourse(courseList);
-  }
+document.querySelectorAll(".navigator-li").forEach((el, index) => {
+  (el as HTMLButtonElement).addEventListener("click", () => {
+    confirmPopUp.close();
+    (listEl[index] as HTMLLIElement).style.visibility = "visible";
+  });
 });
 
 let main = document.querySelectorAll("body, ul li");

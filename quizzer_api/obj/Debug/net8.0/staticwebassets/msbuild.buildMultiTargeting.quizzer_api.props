@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\quizzer_api.props" />
+</Project>

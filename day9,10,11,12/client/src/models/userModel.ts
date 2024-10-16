@@ -6,10 +6,18 @@ export interface users {
 }
 
 export interface courseAttempt{
+  validated: boolean,
   userName: users["name"],
   email: users["email"],
   name : string,
-  mark: number
+  mark: number,
+  breif?: breif,
+}
+
+export interface breif{
+  qno: number,
+  question: string,
+  answer: string
 }
 
 export function setUser(user: users[]): void {

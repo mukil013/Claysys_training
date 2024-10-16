@@ -1,0 +1,23 @@
+{
+  "Version": 1,
+  "Hash": "bY2YdQ9Z7uZBtKwYV+CA9bcdWS8jnSG/NQ9YydCWic4=",
+  "Source": "Quizzer.Server",
+  "BasePath": "_content/Quizzer.Server",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "C:\\Users\\mukilan.m\\OneDrive - ClaySys Technologies\\dev\\Claysys_training\\quizzer_with_sql\\Quizzer\\quizzer.client\\quizzer.client.esproj",
+      "Version": 2,
+      "Source": "quizzer.client",
+      "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained"
+    }
+  ],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

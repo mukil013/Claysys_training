@@ -176,27 +176,68 @@ evalBtn.addEventListener("click", () => {
 });
 
 let ulForEval = evalQuiz.querySelector("ul") as HTMLUListElement;
+let insideEval = document.querySelector("#inside-eval")as HTMLUListElement;
+let liForEval = document.createElement("li");
+let evalQuizDialog = document.querySelector(
+  "#eval-quiz-dialog"
+) as HTMLDialogElement;
 
-viewCourse().forEach((i) => {
-  let content = `<h3>${i.title.toUpperCase()}</h3><button class="view-res">View Response</button>`;
-  let li = document.createElement("li") as HTMLLIElement;
-  li.innerHTML += content;
-  ulForEval.appendChild(li);
+viewCourse().forEach((i, qnoo) => {
+  let flag = true;
 
-  let evalQuizDialog = document.querySelector(
-    "#eval-quiz-dialog"
-  ) as HTMLDialogElement;
-  document.querySelectorAll(".view-res").forEach((el, index) => {
-    (el as HTMLButtonElement).addEventListener("click", () => {
-      evalQuizDialog.showModal();
-      document
-        .querySelectorAll(".back")
-        [index].addEventListener("click", () => {
-          evalQuizDialog.close();
-        });
-    });
+  i.courseAttempt.forEach((el, index) => {
+    if (!el.validated) {
+      flag = false;
+      
+      const liForEval = document.createElement('li');
+      liForEval.innerHTML = `
+        <p>User Name : ${el.userName}</p>
+        <p>User email : ${el.email}</p>
+        <p>Question : ${el.breif?.qno}</p>
+        <p>Question : ${el.breif?.question}</p>
+        <p>Answer : ${el.breif?.answer}</p>
+        <p>Mark for the question : ${i.questions[qnoo].markForTheQuestion}</p>
+        <input type="number" placeholder="Enter your score" class="eval-mark"/>
+        <button class="assign-mark" >Assign mark</button>
+      `;
+      insideEval.appendChild(liForEval);
+
+      const assignMarkButton = liForEval.querySelector('.assign-mark') as HTMLButtonElement;
+      const evalMarkInput = liForEval.querySelector('.eval-mark') as HTMLInputElement;
+
+      assignMarkButton.addEventListener("click", () => {
+        let scoreAfterEdit = Number(evalMarkInput.value);
+        el.validated = true;
+        scoreAfterEdit += Number(el.mark);
+        el.mark = scoreAfterEdit;
+
+        let all = viewCourse();
+        all[qnoo].courseAttempt[index] = el; 
+        addCourse(all); 
+        evalQuizDialog.close();
+      });
+
+      return;
+    }
   });
+
+  if (!flag) {
+    const li = document.createElement('li') as HTMLLIElement;
+    li.innerHTML = `<h3>${i.title.toUpperCase()}</h3><button class="view-res">View Response</button>`;
+    ulForEval.appendChild(li);
+
+    const viewResButton = li.querySelector('.view-res') as HTMLButtonElement;
+
+    viewResButton.addEventListener("click", () => {
+      evalQuizDialog.showModal();
+      const backButton = document.querySelector('.back') as HTMLButtonElement;
+      backButton.addEventListener("click", () => {
+        evalQuizDialog.close();
+      });
+    });
+  }
 });
+
 
 let addDialog = document.querySelector("#add-form") as HTMLDialogElement;
 let courseInit: course = {
@@ -468,7 +509,6 @@ window.addEventListener("load", () => {
       ) as HTMLDialogElement;
       document.querySelectorAll(".editInPreview").forEach((el, i1) => {
         (el as HTMLButtonElement).addEventListener("click", () => {
-          console.log("outer working");
 
           editDialog.showModal();
 
@@ -523,16 +563,17 @@ window.addEventListener("load", () => {
               }
             });
 
-            let question: question = {
-              qno: i1 + 1,
-              question: qtitle.value,
-              options: option,
-              correctAnswer: Number(correctAns.value),
-              markForTheQuestion: marks.valueAsNumber,
-            };
-            allCourse[i].questions[i1] = question;
-            console.log(allCourse);
-            addCourse(allCourse);
+            // let question: question = {
+            //   validated: true,
+            //   qno: i1 + 1,
+            //   question: qtitle.value,
+            //   options: option,
+            //   correctAnswer: Number(correctAns.value),
+            //   markForTheQuestion: marks.valueAsNumber,
+            // };
+            // allCourse[i].questions[i1] = question;
+            // console.log(allCourse);
+            // addCourse(allCourse);
           });
         });
       });
@@ -614,7 +655,9 @@ list.addEventListener("change", () => {
 
         document.querySelectorAll(".delete-attempt").forEach((el, index01) => {
           el.addEventListener("click", () => {
-            leaderBoard.getElementsByTagName("tr")[index + 1].remove();
+            console.log(usersData[index].courseAttempt[index01]);
+            
+            leaderBoard.getElementsByTagName("tr")[index].remove();
             usersData[index].courseAttempt.splice(index01, 1);
             addCourse(usersData);
           });
@@ -723,9 +766,6 @@ usersData.forEach((i) => {
           let tempMark = usersData[index].courseAttempt;
           tempMark[index].mark = input.valueAsNumber;
           usersData[index].courseAttempt = tempMark;
-          console.log(tempMark);
-
-          console.log(usersData);
           addCourse(usersData);
 
           input.readOnly = true;
